@@ -84,9 +84,6 @@
     <div class="carousel__content">
         <h1>Dịch vụ mua bán trống</h1>
         <p>Cung cấp những sản phẩm tốt nhất Việt Nam</p>
-        <a href="aboutUs.jsp">
-            <button>Tìm hiểu thêm</button>
-        </a>
     </div>
 </section>
 <!-- INTRO -->

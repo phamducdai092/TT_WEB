@@ -37,10 +37,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Chi tiết sản phẩm</title>
 
-    <!-- reset CSS -->
-    <link rel="stylesheet" href="./assets/css/reset.css"/>
-    <link rel="stylesheet" href="./assets/css/index.css"/>
-    <!-- <link rel="stylesheet" href="./assets/css/product.css"> -->
 
     <!-- embed fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -83,6 +79,10 @@
             referrerpolicy="no-referrer"
     />
     <!-- styles -->
+    <link rel="stylesheet" href="./assets/css/reset.css"/>
+    <link rel="stylesheet" href="./assets/css/index.css"/>
+    <!-- <link rel="stylesheet" href="./assets/css/product.css"> -->
+
     <link rel="stylesheet" href="./assets/css/style.css"/>
     <link rel="stylesheet" href="./assets/css/productDetail.css"/>
 

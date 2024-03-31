@@ -48,7 +48,7 @@ h2 {
 }
 
 /* HEADER */
-header {
+ body .header {
     position: fixed;
     height: 80px;
     width: 100%;
