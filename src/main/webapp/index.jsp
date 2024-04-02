@@ -7,6 +7,8 @@
 <%@ page import="dao.ImageDAO" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="java.awt.*" %>
+<%@ page import="bean.Image_Product" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
     List<Category> categories = (List<Category>) request.getAttribute("categories");
@@ -151,7 +153,12 @@
                 <div class="item">
                     <a href="productdetails?selectedProductId=<%= p.getId()%>">
                         <div class="img">
-                            <img src="<%= ImageDAO.getImageByProductId(p.getId()).get(0).getLink() %>" alt="Roland VAD 706" />
+                            <%
+                                // Kiểm tra nếu danh sách hình ảnh không rỗng trước khi truy cập
+                                List<Image_Product> images = ImageDAO.getImageByProductId(p.getId());
+                                if (!images.isEmpty()) { %>
+                            <img src="<%= images.get(0).getLink() %>" alt="Roland VAD 706" />
+                            <% } %>
                         </div>
 
                         <div class="item_content">
@@ -173,6 +180,7 @@
                     </a>
                 </div>
                 <% } %>
+
             </div>
         </div>
     </div>
@@ -292,8 +300,6 @@
         </p>
     </div>
 </footer>
-</body>
-
 <!-- MAIN JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="js/product.js"></script>
@@ -302,18 +308,7 @@
 <!-- OWL CAROUSEL JS -->
 <script src="js/owl.carousel.min.js"></script>
 <script src="js/feedback.js"></script>
-<!-- <script>
-    $(".owl-carousel").owlCarousel({
-        loop: true,
-        nav: false,
-        autoplay: true,
-        autoplayTimeout: 2000,
-        autoplayHoverPause: true,
-        responsive: {
-            0: {
-                items: 1,
-            },
-        },
-    });
-</script> -->
+</body>
+
+
 </html>
