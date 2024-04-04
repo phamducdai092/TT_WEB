@@ -18,7 +18,6 @@
                 <li class="menu__items">
                     <a href="./home">Trang chính</a>
                 </li>
-                <li class="menu__items"><a href="aboutUs.jsp">Giới thiệu</a>
                 </li>
                 <li class="menu__items">
                     <a href="products">Sản Phẩm</a>
@@ -50,6 +49,10 @@
                 <a href="logIn.jsp" class="sign__in">
                     <i class="fa fa-user"></i>
                     <span>Đăng Nhập</span>
+                </a>
+                <a href="signUp.jsp" class="sign__in">
+                    <i class="fa fa-user"></i>
+                    <span>Đăng Ký</span>
                 </a>
             </c:when>
             <c:otherwise>
