@@ -23,7 +23,7 @@ public class HomeController extends HttpServlet {
         try {
             List<Product> productList = ProductDetailService.getInstance().getProductList();
             req.setAttribute("products", productList);
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+            req.getRequestDispatcher("./index.jsp").forward(req, resp);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             resp.sendRedirect("errorPage.jsp");
