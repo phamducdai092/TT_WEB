@@ -1,4 +1,4 @@
-<%@ page import="java.util.List" %>
+f<%@ page import="java.util.List" %>
 <%@ page import="bean.Category" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="bean.Product" %>
@@ -85,14 +85,7 @@
 <!-- HEADER -->
 <c:import url="header.jsp"/>
 <div class="search-product">
-    <%--            <form action="search?indexPage=1" method="post">--%>
-    <%--                <input type="text" name="txtSearch" id="searchInput" placeholder="Tìm kiếm sản phẩm" />--%>
-    <%--                <div id="searchResults" style="display: none;"></div>--%>
-    <%--                <button class="search-btn" type="submit">--%>
-    <%--                    <i class="fa-solid fa-magnifying-glass search-ic"></i>--%>
-    <%--                </button>--%>
-    <%--            </form>--%>
-    <form action="search?indexPage=${1}" method="post">
+    <form class="search-form" action="search?indexPage=${1}" method="post">
         <input type="text" name="txtSearch" id="searchInput" placeholder="Tìm kiếm sản phẩm"/>
         <!-- Thêm hidden input để giữ giá trị txtSearch khi chưa ấn submit -->
         <input type="hidden" name="hiddenSearch" value="${empty param.txtSearch ? '' : param.txtSearch}"/>
