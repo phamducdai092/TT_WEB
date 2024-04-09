@@ -349,13 +349,12 @@
     list-style: none;
     margin: 30px;
 }
-.listPage a {
+.listPage > li {
     background-color: #ffffffBD;
     padding: 20px;
     display: inline-block;
     margin: 0 10px;
     cursor: pointer;
-
 }
 .listPage {
     background-color: black;

@@ -1,8 +1,8 @@
 package mail;
 
-import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
@@ -38,5 +38,9 @@ public class MailService {
         } catch (MessagingException | UnsupportedEncodingException e) {
             return false;
         }
+    }
+
+    public static void main(String[] args) {
+        send("cunoccho0601@gmail.com", "CODE", "test");
     }
 }

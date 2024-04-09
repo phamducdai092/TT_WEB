@@ -1,6 +1,7 @@
 let thisPage = 1;
 let limit = 9;
 let list = document.querySelectorAll('.list .item');
+
 function loadItem() {
     let beginGet = limit * (thisPage - 1);
     let endGet = limit * thisPage - 1;
@@ -15,6 +16,7 @@ function loadItem() {
 }
 
 loadItem();
+
 function listPage(){
     let count = Math.ceil(list.length / limit);
     document.querySelector('.listPage').innerHTML = '';
@@ -22,11 +24,11 @@ function listPage(){
     if(thisPage != 1) {
         let prev = document.createElement('li');
         prev.innerText = 'Trước';
-        prev.setAttribute('onclick', "changePage(" + (thisPage - i) + ")")
+        prev.setAttribute('onclick', "changePage(" + (thisPage - 1) + ")");
         document.querySelector('.listPage').appendChild(prev);
     }
-    
-    for(i = 1; i <= count; i++){
+
+    for(let i = 1; i <= count; i++){
         let newPage = document.createElement('li');
         newPage.innerText = i;
         if(i == thisPage) {
@@ -35,14 +37,15 @@ function listPage(){
         newPage.setAttribute('onclick', "changePage("  + i + ")");
         document.querySelector('.listPage').appendChild(newPage);
     }
-    
+
     if(thisPage != count) {
         let next = document.createElement('li');
-        newPage.innerText = 'Tiếp';
-        prev.setAttribute('onclick', "changePage(" + (thisPage + i) + ")")
+        next.innerText = 'Tiếp';
+        next.setAttribute('onclick', "changePage(" + (thisPage + 1) + ")");
         document.querySelector('.listPage').appendChild(next);
     }
 }
+
 function changePage(i){
     thisPage = i;
     loadItem();
