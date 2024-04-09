@@ -41,6 +41,6 @@ public class SignUpService {
 
     public static void main(String[] args) {
         SignUpService signUpService = new SignUpService();
-        System.out.println(signUpService.checkEmailExist("cunoccho0601@gmail.com"));
+        System.out.println(signUpService.checkEmailExist("furynight092@gmail.com"));
     }
 }

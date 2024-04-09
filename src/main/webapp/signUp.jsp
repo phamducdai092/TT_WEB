@@ -55,7 +55,7 @@
 
     <!-- Sign Up -->
     <div class="form-wrapper sign-up" id="sign-up">
-        <a href="index.jsp" class="back-cta">
+        <a href="./home" class="back-cta">
             <i class="fa-solid fa-chevron-left"></i>
             Trở về trang chủ
         </a>
