@@ -46,8 +46,8 @@
 <!-- Form -->
 
 <div class="content">
-    <c:set var="username__signup" value="${requestScope.username__signup}"/>
-    <c:set var="email__signup" value="${requestScope.email__signup}"/>
+<%--    <c:set var="username__signup" value="${requestScope.username__signup}"/>--%>
+<%--    <c:set var="email__signup" value="${requestScope.email__signup}"/>--%>
 
     <c:set var="emailError" value="${requestScope.emailError}"/>
     <c:set var="usernameError" value="${requestScope.usernameError}"/>
@@ -55,7 +55,7 @@
 
     <!-- Sign Up -->
     <div class="form-wrapper sign-up" id="sign-up">
-        <a href="./home" class="back-cta">
+        <a href="index.jsp" class="back-cta">
             <i class="fa-solid fa-chevron-left"></i>
             Trở về trang chủ
         </a>
@@ -76,7 +76,7 @@
                             type="text"
                             placeholder="Nhập tên tài khoản ... "
                             required
-                            value="${username__signup}"
+<%--                            value="${username__signup}"--%>
                     />
                 </div>
                 <div class="errorMessage" id="usernameError">
@@ -98,7 +98,7 @@
                             type="email"
                             placeholder="Nhập email đăng ký ... "
                             required
-                            value="${email__signup}"
+<%--                            value="${email__signup}"--%>
                     />
                 </div>
                 <div class="errorMessage" id="emailError">

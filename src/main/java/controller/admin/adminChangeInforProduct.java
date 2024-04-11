@@ -4,22 +4,18 @@ import bean.Brand;
 import bean.Category;
 import bean.Product;
 import bean.Supplier;
-import dao.BrandDAO;
-import dao.CategoryDAO;
-import dao.DiscountDAO;
-import dao.ProductDAO;
+import dao.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
 @WebServlet(value = "/changeInforProduct")
-public class adminChangeInforProduct extends HttpServlet {
+public class AdminChangeInforProduct extends HttpServlet {
 
     String nameProduct, startDate, endDate, category,
             brand, supplier, desc;
@@ -58,7 +54,7 @@ public class adminChangeInforProduct extends HttpServlet {
         int categoryId = 0;
         int supplierId = 0;
 
-        List<Supplier> supplierList = CategoryDAO.getListSupplier();
+        List<Supplier> supplierList = SupplierDAO.getListSupplier();
         for (Supplier sup : supplierList) {
             if (sup.getName().equals(supplier)) {
                 supplierId = sup.getId();
@@ -83,6 +79,6 @@ public class adminChangeInforProduct extends HttpServlet {
         Product product = new Product(idProduct, nameProduct, discountId, categoryId, brandId, supplierId, quantity, price, desc);
         ProductDAO.changeInforProduct(product);
         System.out.println(category);
-        req.getRequestDispatcher("/adminEditProduct.jsp").forward(req, resp);
+        req.getRequestDispatcher("./adminEditProduct.jsp").forward(req, resp);
     }
 }

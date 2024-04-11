@@ -1,9 +1,7 @@
 package service;
 
 import bean.Image_Product;
-import bean.Product;
 import dao.ImageDAO;
-import dao.ProductDAO;
 
 import java.util.List;
 

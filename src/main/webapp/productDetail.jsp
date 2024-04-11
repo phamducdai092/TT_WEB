@@ -37,6 +37,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Chi tiết sản phẩm</title>
 
+    <!-- reset CSS -->
+    <link rel="stylesheet" href="./assets/css/reset.css"/>
+    <link rel="stylesheet" href="./assets/css/index.css"/>
+    <!-- <link rel="stylesheet" href="./assets/css/product.css"> -->
 
     <!-- embed fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -79,10 +83,6 @@
             referrerpolicy="no-referrer"
     />
     <!-- styles -->
-    <link rel="stylesheet" href="./assets/css/reset.css"/>
-    <link rel="stylesheet" href="./assets/css/index.css"/>
-    <!-- <link rel="stylesheet" href="./assets/css/product.css"> -->
-
     <link rel="stylesheet" href="./assets/css/style.css"/>
     <link rel="stylesheet" href="./assets/css/productDetail.css"/>
 
@@ -260,20 +260,20 @@
     <div class="row">
         <div class="col-md-12">
             <div class="review__title__container">
-                <p class = "review__title" >Product Reviews</p>
+                <p class = "review__title" >ĐÁNH GIÁ SẢN PHẨM</p>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h4 id="countReview" class="card-title"><%= productReviews.size()%> reviews for <%= selectedProduct.getName() %></h4>
+                    <h4 id="countReview" class="card-title"><%= productReviews.size()%> đánh giá cho sản phẩm <%= selectedProduct.getName() %></h4>
                 </div>
                 <div>
                     <form name = "myform">
                         <!-- Your review -->
                         <div class="md-form md-outline">
-                            <textarea placeholder="Your eview" class = "card-textarea" name="content"></textarea>
+                            <textarea placeholder="Đánh giá của bạn" class = "card-textarea" name="content"></textarea>
                         </div>
                         <div class="text-right inp button-review-container">
-                            <input class="button-review" type="button" value="ADD A REVIEW" onclick="addReview(<%=selectedProductId%>)"></input>
+                            <input class="button-review" type="button" value="Thêm đánh giá" onclick="addReview(<%=selectedProductId%>)"></input>
                         </div>
                     </form>
                 </div>
@@ -312,6 +312,11 @@
 <div id="notifyLogin">
     Bạn chưa đăng nhập. Vui lòng đăng nhập để thêm đánh giá.
 </div>
+
+<div id="notifyInput">
+    Vui lòng nhập đánh giá.
+</div>
+
 <!-- FEEDBACK -->
 <section class="feedback">
     <h2>Phản hồi của khách hàng.</h2>
@@ -582,6 +587,14 @@
         var xhttp;
         var content = document.myform.content.value;
         var url = "productdetails?content=" + content + "&productId=" + productId;
+
+        if (content.trim() === '') {
+            document.getElementById('notifyInput').style.display = 'block';
+            setTimeout(function () {
+                document.getElementById('notifyInput').style.display = 'none';
+            }, 2000);
+            return;
+        }
 
         // Tạo đối tượng XMLHttpRequest
         if (window.XMLHttpRequest) {

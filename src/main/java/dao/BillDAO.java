@@ -23,7 +23,7 @@ public class BillDAO {
 
     public List<Bill> getBillsByUser(User user) {
         try (Handle handle = JDBIConnector.me().open()) {
-            return handle.createQuery("SELECT * FROM bills WHERE userId = :userId")
+            return handle.createQuery("SELECT bills.id, bills.createDate, bills.full_name, bills.phone, bills.address, bills.payment_method, bills.`status` FROM bills WHERE userId = :userId")
                     .bind("userId", user.getId())
                     .mapToBean(Bill.class)
                     .list();
@@ -97,13 +97,9 @@ public class BillDAO {
         return bill;
     }
 
-    public static void main(String[] args) {
-        Bill bill = BillDAO.getInstance().getBillById(1);
-        System.out.println(bill);
-    }
 
     public static void changeInfoBill(int id, String status) {
-        JDBIConnector.me().useHandle(handle ->
+        JDBIConnector.me().withHandle(handle ->
                 handle.createUpdate("UPDATE bills set " +
                                 "status = :status" +
                                 " where id = :id")
@@ -111,5 +107,28 @@ public class BillDAO {
                         .bind("status", status)
                         .execute()
         );
+        System.out.println("DOne");
     }
+    public static void updateQuantityInStock(int id, int quantity) {
+        String update = "UPDATE product_details SET quantity = :newQuantity WHERE product_id = :id";
+        JDBIConnector.me().withHandle(handle ->
+                handle.createUpdate(update)
+                        .bind("quantity", quantity)
+                        .bind("product_id", id)
+                        .execute()
+        );
+    }
+    public void updateProductQuantityInStock(int newQuantity, int id) {
+        JDBIConnector.me().useHandle(handle ->
+                handle.createUpdate("UPDATE product_details SET quantity = :newQuantity WHERE id = :productId")
+                        .bind("newQuantity", newQuantity)
+                        .bind("productId", id)
+                        .execute()
+        );
+    }
+
+    public static void main(String[] args) {
+//        Bill bill = BillDAO.getInstance().getBillById(1);
+    }
+
 }

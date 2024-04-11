@@ -1,11 +1,6 @@
 package service;
 
-import bean.Discount;
-import bean.Product_Color;
-import dao.ColorDAO;
 import dao.DiscountDAO;
-
-import java.util.List;
 
 public class DiscountService {
     public static DiscountService instance;

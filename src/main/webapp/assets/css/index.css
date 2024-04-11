@@ -48,7 +48,7 @@ h2 {
 }
 
 /* HEADER */
- body header {
+header {
     position: fixed;
     height: 80px;
     width: 100%;
@@ -180,13 +180,13 @@ h2 {
     top: 100%;
     left: -30%;
     background: #fff;
-    min-width: 180px;
+    min-width: 200px;
     border-radius: 6px;
     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.4);
     cursor: pointer;
 }
 
-.user-menu li:first-child,
+/*.user-menu li:first-child,*/
 .user-menu li a{
     padding: 12px 24px;
     color: #000;
@@ -198,7 +198,7 @@ h2 {
     transition: all 0.3s ease;
 }
 
-.user-menu li:first-child:hover,
+/*.user-menu li:first-child:hover,*/
 .user-menu li:hover a{
     color: #fff;
     background: #293241;
@@ -675,6 +675,7 @@ h2 {
 
     }
 
+
     .mt-32 {
         margin-top: 20px !important;
     }
@@ -713,13 +714,10 @@ h2 {
         vertical-align: middle;
 
     }
-
     .container {
         background-color: #293241;
-        padding: 32px 0;
     }
-
-    .conta  iner .list {
+    .container .list {
         width: calc(100% - 96px);
         margin: 0 auto;
         display: grid;
@@ -786,23 +784,26 @@ h2 {
     .item:hover img {
         transform: translate(0, -5px);
     }
-}
 
-.listPage {
-    text-align: center;
-    list-style: none;
-    margin: 30px;
-}
-.listPage li {
-    background-color: #ffffffBD;
-    padding: 20px;
-    display: inline-block;
-    margin: 0 10px;
-    cursor: pointer;
-}
-.listPage {
-    background-color: black;
-    color: white;
+    .listPage {
+        text-align: center;
+        list-style: none;
+        margin: 30px;
+    }
+    .listPage li {
+        background-color: #ffffffBD;
+        padding: 20px;
+        display: inline-block;
+        margin: 0 10px;
+        margin-bottom: 24px !important;
+        cursor: pointer;
+
+    }
+    .listPage  {
+        background-color: black;
+        color: white;
+
+    }
 }
 
 /* FEEDBACK */

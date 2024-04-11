@@ -18,6 +18,7 @@
                 <li class="menu__items">
                     <a href="./home">Trang chính</a>
                 </li>
+                <li class="menu__items"><a href="aboutUs.jsp">Giới thiệu</a>
                 </li>
                 <li class="menu__items">
                     <a href="products">Sản Phẩm</a>

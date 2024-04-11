@@ -1,8 +1,6 @@
 package bean;
 
-import dao.CategoryDAO;
-import dao.ImageDAO;
-import dao.ProductDAO;
+import dao.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -143,7 +141,7 @@ public class Product extends ProductDAO {
 
 
     public String getBrandName(int id) {
-        return CategoryDAO.getBrandName(id);
+        return BrandDAO.getBrandName(id);
     }
 
     public String getSupplierName(int id) {
@@ -155,15 +153,15 @@ public class Product extends ProductDAO {
     }
 
     public String getDiscountStartDay(int id){
-        return CategoryDAO.getDiscountStartDay(id);
+        return DiscountDAO.getDiscountStartDay(id);
     }
 
     public String getDiscountEndDay(int id) {
-        return CategoryDAO.getDiscountEndDay(id);
+        return DiscountDAO.getDiscountEndDay(id);
     }
 
-    public Double getDiscountAmount(int id) {
-        return 100 * CategoryDAO.getDiscountAmount(id);
+    public static Double getDiscountAmount(int id) {
+        return 100 * DiscountDAO.getDiscountAmount(id);
     }
 
     public static void main(String[] args) {
