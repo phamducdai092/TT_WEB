@@ -4,6 +4,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+:root {
+    --main-color : #ee6c4d;
+    --sub-main-color: #293241;
+}
 .clear {
     clear: both;
 
@@ -186,7 +190,6 @@ header {
     cursor: pointer;
 }
 
-/*.user-menu li:first-child,*/
 .user-menu li a{
     padding: 12px 24px;
     color: #000;
@@ -198,7 +201,7 @@ header {
     transition: all 0.3s ease;
 }
 
-/*.user-menu li:first-child:hover,*/
+.user-menu li:first-child:hover,
 .user-menu li:hover a{
     color: #fff;
     background: #293241;
@@ -207,6 +210,7 @@ header {
 .user-menu li a {
     color: #000;
 }
+
 
 .sign-out {
     display: block;
@@ -454,7 +458,7 @@ header {
     .box_products{
         width: 100%;
         float: left;
-        margin-bottom: 110px;
+        margin-bottom: 80px;
     }
 
     .box_order{
@@ -756,6 +760,10 @@ header {
     }
     .title {
         font-size: x-large;
+        /*max-width: 320px;*/
+        /*overflow: hidden;*/
+        /*white-space: nowrap;*/
+        /*text-overflow: ellipsis;*/
     }
     .item .item_content .desc {
         opacity: .7;
@@ -784,26 +792,29 @@ header {
     .item:hover img {
         transform: translate(0, -5px);
     }
+}
 
-    .listPage {
-        text-align: center;
-        list-style: none;
-        margin: 30px;
-    }
-    .listPage li {
-        background-color: #ffffffBD;
-        padding: 20px;
-        display: inline-block;
-        margin: 0 10px;
-        margin-bottom: 24px !important;
-        cursor: pointer;
+.listPage {
+    text-align: center;
+    list-style: none;
+    padding: 32px;
+    background-color: black;
+    color: var(--sub-main-color);
+}
 
-    }
-    .listPage  {
-        background-color: black;
-        color: white;
-
-    }
+.listPage li {
+    font-size: 2rem;
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 10px;
+    margin-bottom: 24px !important;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
 }
 
 /* FEEDBACK */

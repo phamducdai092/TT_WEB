@@ -2,9 +2,7 @@
 <%@ page import="bean.Category" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="bean.Product" %>
-<%@ page import="service.ImageService" %>
 <%@ page import="bean.Brand" %>
-<%@ page import="java.util.Objects" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -12,13 +10,7 @@
     List<Category> categories = (List<Category>) request.getAttribute("categories");
     if(categories == null) categories = new ArrayList<>();
 
-    List<Product> products = (List<Product>) request.getAttribute("products");String category = request.getParameter("category");
-    String brand = request.getParameter("brands");
-    String minPricePara = request.getParameter("minPrice");
-    String maxPricePara = request.getParameter("maxPrice");
-    String azorza = request.getParameter("AZorZA");
-    String images = request.getParameter("images");
-    if (products == null) products = new ArrayList<>();
+    List<Product> products = (List<Product>) request.getAttribute("products");
 
     List<Brand> brands = (List<Brand>) request.getAttribute("brands");
     if (brands == null) brands = new ArrayList<>();
@@ -76,9 +68,9 @@
             referrerpolicy="no-referrer"
     />
     <!-- styles -->
+    <link rel="stylesheet" href="assets/css/product.css" />
     <link rel="stylesheet" href="assets/css/index.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/product.css" />
 
     <!-- OWL CAROUSEL CSS -->
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
@@ -92,13 +84,6 @@
 <!-- HEADER -->
 <c:import url="header.jsp"/>
 <div class="search-product">
-    <%--            <form action="search?indexPage=1" method="post">--%>
-    <%--                <input type="text" name="txtSearch" id="searchInput" placeholder="Tìm kiếm sản phẩm" />--%>
-    <%--                <div id="searchResults" style="display: none;"></div>--%>
-    <%--                <button class="search-btn" type="submit">--%>
-    <%--                    <i class="fa-solid fa-magnifying-glass search-ic"></i>--%>
-    <%--                </button>--%>
-    <%--            </form>--%>
     <form action="search?indexPage=${1}" method="post">
         <input type="text" name="txtSearch" id="searchInput" placeholder="Tìm kiếm sản phẩm" />
         <!-- Thêm hidden input để giữ giá trị txtSearch khi chưa ấn submit -->
@@ -130,7 +115,7 @@
                             for (Category c : categories) { %>
                         <li class="directory__gerne">
                             <a href="products?category=<%= c.getName() %>&txtSearch=${param.txtSearch}" class="gerne-link">
-                                <%--@declare id="brands"--%><label for="brands"><%= c.getName() %></label>
+                               <label for="brands"><%= c.getName() %></label>
                             </a>
                         </li>
                         <%  }
@@ -219,7 +204,7 @@
                 </div>
 
                 <div class="box_order_item pull-right">
-                    <label label class="sort_order"
+                    <label class="sort_order"
                     >Sắp xếp theo
                         <i class="fa fa-caret-down caret"></i>
                     </label>
@@ -263,7 +248,7 @@
                         <c:forEach var="item" items="${products}">
                             <div class="item">
                                 <a href="productdetails?selectedProductId=${item.id}" class="img" onclick="redirectToProductDetail('${item.id}')">
-                                    <img src="${imageService.getImageByProductId(item.id).get(0).link}"/>
+                                    <img alt="" src="${imageService.getImageByProductId(item.id).get(0).link}"/>
                                 </a>
                                 <div class="item_content">
                                     <a href="" class="title">${item.name}</a>
@@ -299,7 +284,7 @@
                                             <img src="${imageService.getImageByProductId(item.id).get(0).link}"/>
                                         </a>
                                         <div class="item_content">
-                                            <a href="" class="title">${item.name}</a>
+                                            <div class="title">${item.name}</div>
                                             <div class="desc">${item.description}</div>
                                             <div class="price">
                                                 <fmt:formatNumber type="currency" value="${item.totalPrice}" currencySymbol="" currencyCode="VND" var="formattedCurrency" />
@@ -327,7 +312,7 @@
                                             <img src="${imageService.getImageByProductId(item.id).get(0).link}"/>
                                         </a>
                                         <div class="item_content">
-                                            <a href="" class="title">${item.name}</a>
+                                            <div class="title">${item.name}</div>
                                             <div class="desc">${item.description}</div>
                                             <div class="price">
                                                 <fmt:formatNumber type="currency" value="${item.totalPrice}" currencySymbol="" currencyCode="VND" var="formattedCurrency" />
@@ -352,90 +337,9 @@
                 </c:choose>
             </div>
             <%--                    Phân trang--%>
-            <div class="listPage">
-                <c:forEach begin="1" end="${endPage}" var="i">\ư
-                    <lí><a href="search?index=${i}&&txtSearch=${txtSearch}>${i}</a></lí>
-                </c:forEach>
-                    </div>
-                </div>
-            </section>
+            <div class="listPage"></div>
         </section>
-        <!-- FEEDBACK -->
-        <section class="feedback">
-                    <h2>Phản hồi của khách hàng.</h2>
-                    <div class="feedback__content">
-                        <div class="owl-carousel owl-theme">
-                            <div class="item">
-                                <p>
-                                    <i class="fa fa-quote-left"></i> Lorem ipsum dolor
-                                    sit amet consectetur adipisicing elit. Nihil facilis
-                                    aspernatur temporibus magni culpa beatae repellat
-                                    delectus accusantium explicabo veniam?
-                                    <i class="fa fa-quote-right"></i>
-                                </p>
-                                <p class="feedback__name">GIANG</p>
-                            </div>
-                            <div class="item">
-                                <p>
-                                    <i class="fa fa-quote-left"></i> Lorem ipsum dolor
-                                    sit amet consectetur adipisicing elit. Nihil facilis
-                                    aspernatur temporibus magni culpa beatae repellat
-                                    delectus accusantium explicabo veniam?
-                                    <i class="fa fa-quote-right"></i>
-                                </p>
-                                <p class="feedback__name">DAI</p>
-                            </div>
-                            <div class="item">
-                                <p>
-                                    <i class="fa fa-quote-left"></i> Lorem ipsum dolor
-                                    sit amet consectetur adipisicing elit. Nihil facilis
-                                    aspernatur temporibus magni culpa beatae repellat
-                                    delectus accusantium explicabo veniam?
-                                    <i class="fa fa-quote-right"></i>
-                                </p>
-                                <p class="feedback__name">THUONG</p>
-                            </div>
-                        </div>
-                    </div>
-    </section>
-    <!-- CONTACT -->
-    <section class="contact">
-        <h2>Liên Hệ</h2>
-        <div class="contact__form">
-            <form action="">
-                <input type="text" placeholder="Tên" />
-                <input type="text" placeholder="Họ" />
-                <input type="email" placeholder="Email" />
-                <input type="tel" placeholder="SĐT" />
-                <textarea
-                        name=""
-                        id=""
-                        cols="30"
-                        rows="10"
-                        placeholder="Message"
-                ></textarea>
-                <button type="submit">Send</button>
-            </form>
-        </div>
-        <div class="contect__map"></div>
-        <div class="contact__info">
-            <div class="contact__items">
-                <i class="fa fa-home"></i>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-            <div class="contact__items">
-                <i class="fa fa-phone"></i>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-            <div class="contact__items">
-                <i class="fa fa-envelope"></i>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-        </div>
-    </section>
+</section>
     <!-- FOOTER -->
     <footer>
         <div class="footer__main">
@@ -554,7 +458,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/product.js"></script>
     <script src="js/log.js"></script>
-    <%--        <script src="js/paging.js"></script>--%>
+    <script src="js/paging.js"></script>
 
     <!-- OWL CAROUSEL JS -->
     <script src="js/owl.carousel.min.js"></script>
