@@ -13,29 +13,32 @@ import java.io.IOException;
 
 @WebServlet(value = "/verify")
 public class VerifyController extends HttpServlet {
-    int verifyCode, userCodeEntered;
-    long codeTime, currentTime, expiredTime;
-    public String email, emailForgetPassword;
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        email = (String) session.getAttribute("email");
-        emailForgetPassword = (String) session.getAttribute("emailForgetPassword");
+        String email = (String) session.getAttribute("email");
+        String emailForgetPassword = (String) session.getAttribute("emailForgetPassword");
+        int userCodeEntered = Integer.parseInt(req.getParameter("userEnteredCode"));
 
-        userCodeEntered = Integer.parseInt(req.getParameter("userEnteredCode"));
+        int verifyCode = (int) session.getAttribute("verificationCode");
+        long codeTime = (long) session.getAttribute("verificationTime");
 
-        verifyCode = (int) session.getAttribute("verificationCode");
-        codeTime = (long) session.getAttribute("verificationTime");
+        long currentTime = System.currentTimeMillis();
+        long expiredTime = currentTime - codeTime;
 
-        currentTime = System.currentTimeMillis();
-        expiredTime = currentTime - codeTime;
-        if (SignUpService.getInstance().checkEmailExist(email) && email != null) {
+        if (email != null) {
+            handleVerification(email, userCodeEntered, verifyCode, expiredTime, req, resp);
+        } else if (emailForgetPassword != null) {
+            handleVerification(emailForgetPassword, userCodeEntered, verifyCode, expiredTime, req, resp);
+        } else {
+            req.setAttribute("emailNotExist", "Email chưa được đăng ký");
+            req.getRequestDispatcher("./verify.jsp").forward(req, resp);
+        }
+    }
+
+    private void handleVerification(String email, int userCodeEntered, int verifyCode, long expiredTime, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (SignUpService.getInstance().checkEmailExist(email)) {
             if (expiredTime < 10 * 60 * 1000) {
                 if (userCodeEntered == verifyCode) {
                     UserDAO.verifyUser(email);
@@ -46,19 +49,8 @@ public class VerifyController extends HttpServlet {
                     req.getRequestDispatcher("./verify.jsp").forward(req, resp);
                 }
             }
-        } else if (SignUpService.getInstance().checkEmailExist(emailForgetPassword) && emailForgetPassword != null) {
-            if (expiredTime < 10 * 60 * 1000) {
-                if (userCodeEntered == verifyCode) {
-                    req.setAttribute("emailForgetPassword", emailForgetPassword);
-                    req.getRequestDispatcher("./resetPassword.jsp").forward(req, resp);
-                } else {
-                    req.setAttribute("errorMessage", "Mã xác minh không hợp lệ");
-                    req.getRequestDispatcher("./verify.jsp").forward(req, resp);
-                }
-            }
         } else {
             req.setAttribute("email", email);
-            req.setAttribute("email__forget", emailForgetPassword);
             req.setAttribute("emailNotExist", "Email chưa được đăng ký");
             req.getRequestDispatcher("./verify.jsp").forward(req, resp);
         }
