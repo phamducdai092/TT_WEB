@@ -34,6 +34,16 @@
     font-size: 1.4rem;
 }
 
+.failedAttempts {
+    color: red;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.failedAttempts-grp {
+    margin-top: 20px;
+    text-align: center;
+}
 /* ========== Form ========== */
 
 .content {

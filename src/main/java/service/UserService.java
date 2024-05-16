@@ -35,10 +35,19 @@ public class UserService {
         return null;
     }
 
-    public User checkLoginByUsername (String username) {
+    public boolean isValidPassword(String username, String password) {
+        User userByEmail = UserDAO.getUserByEmail(username);
         User userByUsername = UserDAO.getUserByUsername(username);
-        if (userByUsername != null && userByUsername.getUsername().equals(username))
-        {
+
+        if (userByEmail != null && userByEmail.getEmail().equals(username) && userByEmail.getPassword().equals(password)
+        ) {
+            return true;
+        } else return userByUsername != null && userByUsername.getUsername().equals(username) && userByUsername.getPassword().equals(password);
+    }
+
+    public User checkLoginByUsername(String username) {
+        User userByUsername = UserDAO.getUserByUsername(username);
+        if (userByUsername != null && userByUsername.getUsername().equals(username)) {
             return userByUsername;
         }
         return null;
