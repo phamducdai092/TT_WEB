@@ -236,6 +236,7 @@
                                             id="save"
                                             type="submit"
                                             class="btn-submit"
+                                            onclick="return validateForm()"
                                     >
                                         Lưu thay đổi
                                     </button>
@@ -340,6 +341,39 @@
 <!-- MAIN JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="js/profile.js"></script>
+<script>
+    function validateForm() {
+        var firstName = document.getElementById('firstName').value.trim();
+        var lastName = document.getElementById('lastName').value.trim();
+        var birthDate = document.getElementById('birthDate').value;
+        var phone = document.getElementById('phone').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var gender = document.querySelector('input[name="gender"]:checked');
+
+        // Kiểm tra xem các trường bắt buộc đã được điền đầy đủ
+        if (firstName === '' || lastName === '' || birthDate === '' || phone === '' || email === '' || !gender) {
+            alert('Vui lòng điền đầy đủ thông tin.');
+            return false;
+        }
+
+        // Kiểm tra định dạng email
+        var emailRegex = /^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/;
+        if (!emailRegex.test(email)) {
+            alert('Vui lòng nhập địa chỉ email hợp lệ.');
+            return false;
+        }
+
+        // Kiểm tra định dạng số điện thoại
+        var phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(phone)) {
+            alert('Vui lòng nhập số điện thoại hợp lệ.');
+            return false;
+        }
+
+        // Nếu tất cả thông tin hợp lệ, cho phép submit form
+        return true;
+    }
+</script>
 </body>
 
 </html>

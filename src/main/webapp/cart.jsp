@@ -148,7 +148,7 @@
                             <td>
                                 <div class="_grid">
                                     <button class="_btn _column product-subtract" data-pid="<%= item.getId() %>">&minus;</button>
-                                    <div class="_column product-qty<%= item.getId() %>"><%= quantity %>
+                                    <div class="_column product-qty<%=item.getId()%>"><%= quantity %>
                                     </div>
                                     <button class="_btn _column product-plus" data-pid="<%= item.getId() %>">&plus;</button>
                                 </div>
@@ -329,7 +329,7 @@
 
             // Gửi yêu cầu Ajax để cập nhật số lượng
             $.ajax({
-                url: '<%= request.getContextPath()%>/cart?action=update',
+                url: '<%= request.getContextPath()%>/cart?action=update&&action=buy',
                 type: 'GET',
                 data: {
                     productId: productId,

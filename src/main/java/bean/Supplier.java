@@ -14,14 +14,6 @@ public class Supplier {
         this.phone = phone;
     }
 
-    public Supplier(int id, int brandId, String name, String email, int phone) {
-        this.id = id;
-        this.brandId = brandId;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-    }
-
     public Supplier() {
     }
 
@@ -31,14 +23,6 @@ public class Supplier {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(int brandId) {
-        this.brandId = brandId;
     }
 
     public String getName() {
@@ -69,7 +53,6 @@ public class Supplier {
     public String toString() {
         return "Supplier{" +
                 "id=" + id +
-                ", brandId=" + brandId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phone=" + phone +

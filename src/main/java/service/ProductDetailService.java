@@ -1,6 +1,5 @@
 package service;
 
-import bean.Item;
 import bean.Product;
 import dao.ProductDAO;
 

@@ -1,7 +1,6 @@
 package dao;
 
 import bean.Item;
-import bean.Product;
 import db.JDBIConnector;
 
 import java.util.List;

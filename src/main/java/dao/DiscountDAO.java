@@ -1,7 +1,6 @@
 package dao;
 
 import bean.Discount;
-import bean.Image_Product;
 import db.JDBIConnector;
 
 import java.util.List;
@@ -30,9 +29,74 @@ public class DiscountDAO {
         );
     }
 
-    public static void main(String[] args) {
-        double amount = DiscountDAO.getDiscount(1);
-        System.out.println(amount);
+    public static List<Discount> getDiscountList() {
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("select id, amount, startDate, endDate from discount")
+                        .mapToBean(Discount.class)
+                        .collect(Collectors.toList())
+        );
+    }
 
+    public static Double getDiscountAmount(int id){
+        return  JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT amount FROM discount WHERE id = :id")
+                        .bind("id", id)
+                        .mapTo(Double.class)
+                        .findOne()
+                        .orElse(null)
+        );
+    }
+
+    public static String getDiscountStartDay(int id){
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT startDate FROM discount WHERE id = :id")
+                        .bind("id", id)
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElse(null)
+        );
+    }
+
+    public static String getDiscountEndDay(int id){
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT endDate FROM discount WHERE id = :id")
+                        .bind("id", id)
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElse(null)
+        );
+    }
+
+    public static boolean addDiscount(double amount, String startDate, String endDate) {
+        try {
+            return JDBIConnector.me().withHandle(handle ->
+                    handle.createUpdate("insert into discount(amount, startDate, endDate) " +
+                                    "values (:amount, :startDate, :endDate)")
+                            .bind("amount", amount)
+                            .bind("startDate", startDate)
+                            .bind("endDate", endDate)
+                            .execute() > 0
+            );
+        }catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean removeDiscount(int id) {
+        try {
+            return JDBIConnector.me().withHandle(handle ->
+                    handle.createUpdate("delete from discount where id = :id")
+                            .bind("id", id)
+                            .execute() > 0
+            );
+        }catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+//        double amount = DiscountDAO.getDiscount(1);
+//        System.out.println(amount);
+        System.out.println(getDiscountList());
     }
 }

@@ -170,7 +170,7 @@
                     <div class="single-widget get-button">
                         <div class="content">
                             <div class="button">
-                                <button type="submit" id="continue-checkout">Tiếp tục</button>
+                                <button type="submit" id="continue-checkout"><a href="<%= request.getContextPath()%>/bill?action=buy">Tiếp tục</a></button>
                             </div>
                         </div>
                     </div>
