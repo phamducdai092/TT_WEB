@@ -28,22 +28,28 @@ public class VerifyController extends HttpServlet {
         long expiredTime = currentTime - codeTime;
 
         if (email != null) {
-            handleVerification(email, userCodeEntered, verifyCode, expiredTime, req, resp);
+            handleVerification(email, null, userCodeEntered, verifyCode, expiredTime, req, resp);
         } else if (emailForgetPassword != null) {
-            handleVerification(emailForgetPassword, userCodeEntered, verifyCode, expiredTime, req, resp);
+            handleVerification(null, emailForgetPassword, userCodeEntered, verifyCode, expiredTime, req, resp);
         } else {
+            req.setAttribute("emailForgetPassword", emailForgetPassword);
             req.setAttribute("emailNotExist", "Email chưa được đăng ký");
             req.getRequestDispatcher("./verify.jsp").forward(req, resp);
         }
     }
 
-    private void handleVerification(String email, int userCodeEntered, int verifyCode, long expiredTime, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (SignUpService.getInstance().checkEmailExist(email)) {
+    private void handleVerification(String email, String emailForgetPassword, int userCodeEntered, int verifyCode, long expiredTime, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (SignUpService.getInstance().checkEmailExist(email) || SignUpService.getInstance().checkEmailExist(emailForgetPassword)) {
             if (expiredTime < 10 * 60 * 1000) {
                 if (userCodeEntered == verifyCode) {
-                    UserDAO.verifyUser(email);
-                    req.setAttribute("verificationSuccess", "Xác minh thành công!");
-                    req.getRequestDispatcher("./verify.jsp").forward(req, resp);
+                    if (email != null) {
+                        UserDAO.verifyUser(email);
+                        req.setAttribute("verificationSuccess", "Xác minh thành công!");
+                        req.getRequestDispatcher("./verify.jsp").forward(req, resp);
+                    } else {
+                        req.setAttribute("emailForgetPassword", emailForgetPassword);
+                        req.getRequestDispatcher("./resetPassword.jsp").forward(req, resp);
+                    }
                 } else {
                     req.setAttribute("errorMessage", "Mã xác minh không hợp lệ");
                     req.getRequestDispatcher("./verify.jsp").forward(req, resp);

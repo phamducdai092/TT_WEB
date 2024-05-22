@@ -65,6 +65,6 @@ public class SignUpController extends HttpServlet {
         String username = req.getParameter("username__signup");
         String email = req.getParameter("email__signup");
         String password = req.getParameter("password__signup");
-        return new User(username, email, password);
+        return new User(username, password, email);
     }
 }
