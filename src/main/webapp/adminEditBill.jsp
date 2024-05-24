@@ -43,7 +43,7 @@
             rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="assets/css/adminProductView.css"/>
+    <link rel="stylesheet" href="assets/css/adminEditProduct.css"/>
     <link rel="stylesheet" href="assets/css/style.css"/>
 </head>
 <body>
@@ -71,19 +71,19 @@
                         <c:when test="${bill.getStatus() == 'IN_PROGRESS'}">
                             <option class="user-sub-input" selected="selected" value="IN_PROGRESS">Chờ xử lý</option>
                             <option class="user-sub-input" value="DONE">Đã nhận đơn</option>
-                            <option class="user-sub-input" value="SHIPPING">Đang giao hàng</option>
+                            <option class="user-sub-input" value="IN_SHIPPING">Đang giao hàng</option>
                         </c:when>
 
                         <c:when test="${bill.getStatus() == 'DONE'}">
                             <option class="user-sub-input" value="IN_PROGRESS">Chờ xử lý</option>
                             <option class="user-sub-input" selected="selected" value="DONE">Đã nhận đơn</option>
-                            <option class="user-sub-input" value="SHIPPING">Đang giao hàng</option>
+                            <option class="user-sub-input" value="IN_SHIPPING">Đang giao hàng</option>
                         </c:when>
 
                         <c:otherwise>
                             <option class="user-sub-input" value="IN_PROGRESS">Chờ xử lý</option>
                             <option class="user-sub-input" value="DONE">Đã nhận đơn</option>
-                            <option class="user-sub-input" selected="selected"  value="SHIPPING">Đang giao hàng</option>
+                            <option class="user-sub-input" selected="selected"  value="IN_SHIPPING">Đang giao hàng</option>
                         </c:otherwise>
                     </c:choose>
 
@@ -97,19 +97,6 @@
 
 
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var saveButton = document.querySelector('.add-role'); // Chọn nút "Lưu" bằng class
-
-        // Lắng nghe sự kiện click trên nút "Lưu"
-        saveButton.addEventListener('click', function (event) {
-            event.preventDefault(); // Ngăn chặn hành vi mặc định của form
-
-        });
-    });
-</script>
-
 </body>
 </html>
 

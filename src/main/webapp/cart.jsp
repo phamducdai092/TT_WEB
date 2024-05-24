@@ -316,6 +316,7 @@
             $.ajax({
                 url: '<%= request.getContextPath()%>/cart?action=update',
                 type: 'POST',
+
                 data: {
                     productId: productId,
                     quantity: newQuantity

@@ -31,7 +31,7 @@ public class BrandDAO {
     public static int getBiggestBrandId() {
         return JDBIConnector.me().withHandle(handle ->
                 handle.createQuery("select max(id) from brands")
-                        .mapToBean(Integer.class)
+                        .mapTo(Integer.class)
                         .findOne()
                         .orElse(null)
         );
@@ -47,6 +47,28 @@ public class BrandDAO {
                             .execute() > 0);
         } catch (Exception e) {
             System.out.println("Lỗi");
+            return false;
+        }
+    }
+
+    public static String getBrandName(int id) {
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT name FROM brands WHERE id = :id")
+                        .bind("id", id)
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElse(null)
+        );
+    }
+
+    public static boolean removeBrand(int id) {
+        try {
+            return JDBIConnector.me().withHandle(handle ->
+                    handle.createUpdate("delete from brands where id = :id")
+                            .bind("id", id)
+                            .execute() > 0
+            );
+        }catch (Exception e) {
             return false;
         }
     }

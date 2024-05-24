@@ -5,6 +5,7 @@ import mail.MailService;
 import service.SignUpService;
 import util.Encode;
 import util.VerificationCode;
+import bean.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,10 +22,7 @@ public class SignUpController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username__signup");
-        String email = req.getParameter("email__signup");
-        String password = req.getParameter("password__signup");
-        String confirmPassword = req.getParameter("confirm__password");
+        User user = createUserFromRequest(req);
 
         HttpSession session = req.getSession();
         session.removeAttribute("verificationCode");
@@ -32,44 +30,41 @@ public class SignUpController extends HttpServlet {
 
         int verifyCode = VerificationCode.generateVerificationCode();
         int countError = 0;
-        String emailError = null;
-        String usernameError = null;
-        String confirmWrong = null;
 
-        SignUpService signUpService = SignUpService.getInstance();
-
-        if (signUpService.checkUsernameExist(username)) {
+        if (SignUpService.getInstance().checkUsernameExist(user.getUsername())) {
             countError++;
-            usernameError = "Username đã tồn tại";
+            req.setAttribute("usernameError", "Username đã tồn tại");
         }
 
-        if (signUpService.checkEmailExist(email)) {
+        if (SignUpService.getInstance().checkEmailExist(user.getEmail())) {
             countError++;
-            emailError = "Email đã tồn tại";
+            req.setAttribute("emailError", "Email đã tồn tại");
         }
 
-        if (!signUpService.checkConfirmPassword(password, confirmPassword)) {
+        if (!SignUpService.getInstance().checkConfirmPassword(user.getPassword(), req.getParameter("confirm__password"))) {
             countError++;
-            confirmWrong = "Xác thực mật khẩu thất bại";
+            req.setAttribute("confirmWrong", "Xác thực mật khẩu thất bại");
         } else {
-            password = Encode.toSHA1(password);
-            confirmPassword = Encode.toSHA1(confirmPassword);
+            user.setPassword(Encode.toSHA1(user.getPassword()));
         }
 
         if (countError == 0) {
-            UserDAO.registerUser(username, email, password);
+            UserDAO.registerUser(user.getUsername(), user.getEmail(), user.getPassword());
             session.setAttribute("verificationCode", verifyCode);
             session.setAttribute("verificationTime", System.currentTimeMillis());
-            session.setAttribute("email", email);
+            session.setAttribute("email", user.getEmail());
             req.getRequestDispatcher("verify.jsp").forward(req, resp);
-            MailService.send(email, SUBJECT, "Đây là mã xác minh của bạn : " + verifyCode);
+            MailService.send(user.getEmail(), SUBJECT, "Đây là mã xác minh của bạn : " + verifyCode);
         } else {
-            req.setAttribute("username__signup", username);
-            req.setAttribute("email__signup", email);
-            req.setAttribute("emailError", emailError);
-            req.setAttribute("usernameError", usernameError);
-            req.setAttribute("confirmWrong", confirmWrong);
+            req.setAttribute("user", user);
             req.getRequestDispatcher("./signUp.jsp").forward(req, resp);
         }
+    }
+
+    private User createUserFromRequest(HttpServletRequest req) {
+        String username = req.getParameter("username__signup");
+        String email = req.getParameter("email__signup");
+        String password = req.getParameter("password__signup");
+        return new User(username, password, email);
     }
 }

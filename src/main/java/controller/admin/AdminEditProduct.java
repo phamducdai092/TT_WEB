@@ -1,12 +1,7 @@
 package controller.admin;
 
-import bean.Brand;
-import bean.Category;
-import bean.Product;
-import bean.Supplier;
-import dao.BrandDAO;
-import dao.CategoryDAO;
-import dao.ProductDAO;
+import bean.*;
+import dao.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(value = "/adminViewProduct")
-public class AdminViewProduct extends HttpServlet {
+public class AdminEditProduct extends HttpServlet {
     int productId;
 
     @Override
@@ -36,10 +31,13 @@ public class AdminViewProduct extends HttpServlet {
 
         List<Brand> brandList = BrandDAO.getAllBrands();
 
-        List<Supplier> supplierList = CategoryDAO.getListSupplier();
+        List<Supplier> supplierList = SupplierDAO.getListSupplier();
+
+        List<Discount> discountList = DiscountDAO.getDiscountList();
 
         HttpSession session = req.getSession();
         session.setAttribute("product", product);
+        session.setAttribute("discountList", discountList);
         session.setAttribute("categories", categoryList);
         session.setAttribute("brands", brandList);
         session.setAttribute("suppliers", supplierList);

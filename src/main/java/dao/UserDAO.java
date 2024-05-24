@@ -1,6 +1,5 @@
 package dao;
 
-import bean.Product;
 import bean.User;
 import db.JDBIConnector;
 

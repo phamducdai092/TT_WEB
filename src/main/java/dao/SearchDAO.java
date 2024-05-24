@@ -2,12 +2,8 @@ package dao;
 
 import bean.Product;
 import db.JDBIConnector;
-import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 
-import java.awt.image.DataBuffer;
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

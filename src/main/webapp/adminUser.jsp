@@ -8,8 +8,8 @@
     <title>Admin</title>
 
     <!-- reset CSS -->
-    <link rel="stylesheet" href="assets/css/reset.css"/>
-    <link rel="stylesheet" href="assets/css/index.css"/>
+    <link rel="stylesheet" href="./assets/css/reset.css"/>
+    <link rel="stylesheet" href="./assets/css/index.css"/>
     <!-- FONT AWRSOME -->
     <link
             rel="stylesheet"
@@ -43,11 +43,11 @@
             rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="assets/css/admin.css"/>
-    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="./assets/css/admin.css"/>
+    <link rel="stylesheet" href="./assets/css/style.css"/>
 </head>
 <body>
-<c:import url="header.jsp"/>
+<c:import url="./header.jsp"/>
 <div class="container">
     <c:import url="adminSideBar.jsp"/>
     <div class="main-content">
@@ -77,7 +77,7 @@
                     <tr>
                         <th class="s-cl">Chỉnh sửa</th>
                         <th class="s-cl">ID</th>
-                        <th class="l-cl">Tên</th>
+                        <th class="m-cl">Tên</th>
                         <th class="l-cl">Tài khoản</th>
                         <th class="l-cl">Email</th>
                         <th class="m-cl">Số điện thoại</th>
