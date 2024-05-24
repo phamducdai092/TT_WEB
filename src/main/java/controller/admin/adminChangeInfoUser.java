@@ -1,10 +1,6 @@
 package controller.admin;
 
-import bean.*;
-import dao.BrandDAO;
-import dao.CategoryDAO;
-import dao.DiscountDAO;
-import dao.ProductDAO;
+import bean.User;
 import dao.UserDAO;
 
 import javax.servlet.ServletException;
@@ -14,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
 
 @WebServlet(value = "/changeInfoUser")
 public class adminChangeInfoUser extends HttpServlet {
@@ -40,6 +34,6 @@ public class adminChangeInfoUser extends HttpServlet {
         HttpSession session = req.getSession();
         session.setAttribute("user", updatedUser);
         
-        req.getRequestDispatcher("/adminEditUser.jsp").forward(req, resp);
+        req.getRequestDispatcher("./adminEditUser.jsp").forward(req, resp);
     }
 }

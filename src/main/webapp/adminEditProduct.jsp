@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="java.lang.Math" %>
 
 <html lang="en">
 <head>
@@ -8,8 +10,8 @@
     <title>Admin</title>
 
     <!-- reset CSS -->
-    <link rel="stylesheet" href="assets/css/reset.css"/>
-    <link rel="stylesheet" href="assets/css/index.css"/>
+    <link rel="stylesheet" href="./assets/css/reset.css"/>
+    <link rel="stylesheet" href="./assets/css/index.css"/>
     <!-- FONT AWRSOME -->
     <link
             rel="stylesheet"
@@ -43,11 +45,15 @@
             rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="assets/css/adminProductView.css"/>
-    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="./assets/css/adminEditProduct.css"/>
+    <link rel="stylesheet" href="./assets/css/style.css"/>
 </head>
 <body>
 <div class="container">
+    <div>
+        <i class="fa-solid fa-arrow-left"></i>
+        <a class="back-cta" href="adminProductIndex">Trang Quản Lý</a>
+    </div>
     <div class="title">Chỉnh sửa sản phẩm</div>
     <c:set var="product" value="${sessionScope.product}"/>
     <c:set var="productId" value="${sessionScope.productId}"/>
@@ -60,19 +66,24 @@
                 <input id="product-name" name="product-name" class="product-sub" value="${product.getName()}"></input>
             </div>
             <div class="product product-discount">
-                <label for="product-discount" class="product-title">Giảm giá: </label>
-                <input id="product-discount" name="product-discount" class="product-sub"
-                       value="${product.getDiscountId()}"></input>
-            </div>
-            <div class="product product-discount-start">
-                <label for="product-discount-start" class="product-title">Ngày bắt đầu: </label>
-                <input id="product-discount-start" type="datetime-local" name="product-discount-start"
-                       class="product-sub" value="${product.getDiscountStartDay(product.getDiscountId())}"></input>
-            </div>
-            <div class="product product-discount-end">
-                <label for="product-discount-end" class="product-title">Ngày kết thúc: </label>
-                <input id="product-discount-end" type="datetime-local" name="product-discount-end" class="product-sub"
-                       value="${product.getDiscountEndDay(product.getDiscountId())}"></input>
+                <label for="selectOptionDiscount" class="product-title">Giảm giá: </label>
+                <select id="selectOptionDiscount" class="custom-select" name="product-discount">
+                    <c:forEach var="discount" items="${sessionScope.discountList}">
+                        <c:set var="roundedPrice" value="${Math.round(discount.getDiscountAmount(discount.getId()))}"/>
+                        <c:choose>
+                            <c:when test="${product.getDiscountId() == discount.getId()}">
+                                <option class="product-sub" selected="selected"
+                                        value="${product.getDiscountId()}">${roundedPrice}&nbsp;%
+                                </option>
+                            </c:when>
+                            <c:otherwise>
+                                <option class="product-sub"
+                                        value="${discount.getId()}">${roundedPrice}&nbsp;%
+                                </option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </select>
             </div>
             <div class="product product-category">
                 <label class="product-title">Danh mục: </label>
@@ -89,7 +100,6 @@
                         </c:choose>
                     </c:forEach>
                 </select>
-                <button type="button" class="add-category btn btn-submit btn-admin">Thêm</button>
             </div>
             <div class="product product-brand">
                 <label class="product-title">Thương hiệu: </label>
@@ -106,7 +116,6 @@
                         </c:choose>
                     </c:forEach>
                 </select>
-                <button type="button" class="add-brand btn btn-submit btn-admin">Thêm</button>
             </div>
             <div class="product product-supplier">
                 <label class="product-title">Nhà Cung Cấp</label>
@@ -114,18 +123,15 @@
                     <c:forEach var="supplier" items="${sessionScope.suppliers}">
                         <c:choose>
                             <c:when test="${product.getSupplierId() == supplier.getId()}">
-                                <option class="product-sub" selected="selected"
+                                <option class="product-sub" selected="selectedvalue="
                                         value="${product.getSupplierName(product.getSupplierId())}">${product.getSupplierName(product.getSupplierId())}</option>
                             </c:when>
                             <c:otherwise>
-                                <option class="product-sub"  value="${supplier.getName()}">${supplier.getName()}</option>
+                                <option class="product-sub" value="${supplier.getName()}">${supplier.getName()}</option>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                 </select>
-                <a href="">
-                    <button class="btn btn-submit btn-admin">Thêm</button>
-                </a>
             </div>
             <div class="product product-quantity">
                 <label for="product-quantity" class="product-title">Số lượng: </label>
@@ -134,8 +140,11 @@
             </div>
             <div class="product product-price">
                 <label for="product-price" class="product-title">Giá: </label>
+                <c:set var="price" value="${product.getTotalPrice()}"/>
+                <c:set var="roundedPrice" value="${Math.round(price)}"/>
+                <fmt:formatNumber var="formattedPrice" value="${roundedPrice}" pattern="###,###,###"/>
                 <input id="product-price" name="product-price" class="product-sub"
-                       value="${product.getTotalPrice()}"></input>
+                       value="${formattedPrice}"></input>
             </div>
             <div class="product product-desc">
                 <label for="product-desc" class="product-title">Thông tin sản phẩm: </label>
@@ -146,90 +155,78 @@
                 Cập nhập thông tin
             </button>
         </form>
-        <form class="right">
+        <div class="right">
             <p class="product-header">Hình ảnh sản phẩm</p>
             <div class="list-img">
                 <c:forEach var="o" items="${product.imageProducts(product.getId())}">
                     <div class="item">
-                        <a href="adminRemoveImg?imgId=${o.getId()}"> <i
-                                class="fa-regular fa-circle-xmark delete-ic"></i></a>
+                            <i class="fa-regular fa-circle-xmark delete-ic"></i>
                         <img class="img-product" src="${o.getLink()}" alt="">
                     </div>
+                    <form class="confirm-form" style="display: none;">
+                        <p class="form-title">Xác nhận xóa hình ảnh</p>
+                        <input type="hidden" name="imgId" value="${o.getId()}">
+                        <div class="btn-grp">
+                            <button type="button" class="cancel-btn">Hủy</button>
+                            <button type="button" class="confirm-btn">
+                                <a href="adminRemoveImg?productId=${product.getId()}&imgId=${o.getId()}">Xác nhận</a>
+                            </button>
+                        </div>
+                    </form>
                 </c:forEach>
             </div>
-            <button class="btn btn-admin">
-                <a href="addProductImage?productId=${product.getId()}" type="submit" class="btn btn-submit">
-                    Thêm hình ảnh
-                </a>
-            </button>
-
-        </form>
-        <form method="get" action="addCategory" class="dialog-category">
-            <div class="dialog-wrapper">
-                <div class="dialog-title">Thêm danh mục</div>
-                <span class="close-btn-cate" onclick="closeDialog()">X</span>
-                <label for="input1">Tên danh mục</label>
-                <input type="text" id="input1" name="new-category">
-                <button type="submit">Thêm</button>
+            <div id="imageForm" style="display: flex;">
+                <form id="addImageForm" action="addProductImage" method="GET">
+                    <!-- Chỉ định action và method của form -->
+                    <p class="form-title">Thêm hình ảnh</p>
+                    <p class="important">* Lưu ý: có thể thêm nhiều link 1 lần,</p>
+                    <p class="important">và link phải ngăn cách nhau bằng khoảng trắng</p>
+                    <input type="text" placeholder="Nhập URL" name="link-img" id="linkImg">
+                    <button type="button" id="submitBtn"> <!-- Loại button vẫn là "button" -->
+                        Thêm hình ảnh
+                    </button>
+                </form>
             </div>
-        </form>
-        <form method="get" action="addBrand" class="dialog-brand">
-            <div class="dialog-wrapper">
-                <div class="dialog-title">Thêm thương hiệu</div>
-                <span class="close-btn-brand" onclick="closeDialog()">x</span>
-                <label>Tên thương hiệu</label>
-                <input type="text" name="new-brand">
-                <button type="submit">Thêm</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var categoryButton = document.querySelector('.add-category');
-        var brandButton = document.querySelector('.add-brand');
 
-        var dialogCate = document.querySelector('.dialog-category');
-        var dialogBrand = document.querySelector('.dialog-brand');
+    document.addEventListener("DOMContentLoaded", function () {
+        const submitBtn = document.getElementById("submitBtn");
+        const addImageForm = document.getElementById("addImageForm");
 
-        var closeBtnCate = dialogCate.querySelector('.close-btn-cate');
-        var closeBtnBrand = dialogBrand.querySelector('.close-btn-brand');
+        submitBtn.addEventListener("click", function () {
+            const linkImgInput = document.getElementById("linkImg");
+            const imageUrl = linkImgInput.value;
 
-        categoryButton.addEventListener('click', function (event) {
-            event.preventDefault();
-            toggleDialogCateVisibility();
+            const productId = "${product.getId()}";
+            const addProductImageUrl = "addProductImage?productId=" + productId + "&imageUrl=" + encodeURIComponent(imageUrl);
+
+
+            window.location.href = addProductImageUrl;
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const deleteIcons = document.querySelectorAll(".delete-ic");
+
+        deleteIcons.forEach(function (icon) {
+            icon.addEventListener("click", function () {
+                const confirmForm = icon.parentElement.nextElementSibling; // Lấy ra form xác nhận (element tiếp theo của biểu tượng xóa)
+                confirmForm.style.display = "flex"; // Hiển thị form xác nhận
+            });
         });
 
-        brandButton.addEventListener('click', function (event) {
-            event.preventDefault();
-            toggleDialogBrandVisibility();
+        // Xử lý sự kiện khi nhấn nút Hủy
+        const cancelBtns = document.querySelectorAll(".cancel-btn");
+        cancelBtns.forEach(function (btn) {
+            btn.addEventListener("click", function (event) {
+                event.preventDefault();
+                const confirmForm = btn.parentElement.parentElement; // Lấy ra form chứa nút Hủy
+                confirmForm.style.display = "none"; // Ẩn form xác nhận
+            });
         });
-
-        closeBtnCate.addEventListener('click', function () {
-            toggleDialogCateVisibility();
-        });
-
-        closeBtnBrand.addEventListener('click', function () {
-            toggleDialogBrandVisibility();
-        });
-
-        function toggleDialogCateVisibility() {
-            // Hiển thị hoặc ẩn dialog-category tùy thuộc vào trạng thái hiện tại
-            if (dialogCate.style.display === 'none' || dialogCate.style.display === '') {
-                dialogCate.style.display = 'block';
-            } else {
-                dialogCate.style.display = 'none';
-            }
-        }
-
-        function toggleDialogBrandVisibility() {
-            // Hiển thị hoặc ẩn dialog-brand tùy thuộc vào trạng thái hiện tại
-            if (dialogBrand.style.display === 'none' || dialogBrand.style.display === '') {
-                dialogBrand.style.display = 'block';
-            } else {
-                dialogBrand.style.display = 'none';
-            }
-        }
     });
 
 </script>

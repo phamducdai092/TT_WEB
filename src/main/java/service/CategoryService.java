@@ -2,7 +2,6 @@ package service;
 
 import bean.Category;
 import dao.CategoryDAO;
-import db.JDBIConnector;
 
 import java.util.List;
 

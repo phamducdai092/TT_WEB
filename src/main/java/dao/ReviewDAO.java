@@ -1,7 +1,9 @@
 package dao;
 
 
-import bean.*;
+import bean.Product;
+import bean.Review;
+import bean.User;
 import db.JDBIConnector;
 
 import java.util.Date;
@@ -21,7 +23,7 @@ public class ReviewDAO {
     }
 
     private static java.sql.Date getCurrentDate() {
-        java.util.Date today = new java.util.Date();
+        Date today = new Date();
         return new java.sql.Date(today.getTime());
     }
 

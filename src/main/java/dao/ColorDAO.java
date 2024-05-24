@@ -1,10 +1,8 @@
 package dao;
 
-import bean.Image_Product;
 import bean.Product_Color;
 import db.JDBIConnector;
 
-import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 

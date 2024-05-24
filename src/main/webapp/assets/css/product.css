@@ -304,14 +304,19 @@
 }
 
 .list .item .img img {
-    height: 300px;
+    min-height: 320px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
 .list .title {
     font-size: x-large;
     color: #fff;
-
+    /*max-width: 320px;*/
+    /*overflow: hidden;*/
+    /*white-space: nowrap;*/
+    /*text-overflow: ellipsis;*/
 }
 
 .list .title a {
@@ -342,21 +347,4 @@
     padding: 20px;
     width: 100%;
     border: none;
-}
-
-.listPage {
-    text-align: center;
-    list-style: none;
-    margin: 30px;
-}
-.listPage > li {
-    background-color: #ffffffBD;
-    padding: 20px;
-    display: inline-block;
-    margin: 0 10px;
-    cursor: pointer;
-}
-.listPage {
-    background-color: black;
-    color: white;
 }

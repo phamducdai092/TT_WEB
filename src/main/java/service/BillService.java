@@ -2,7 +2,6 @@ package service;
 
 import bean.Bill;
 import dao.BillDAO;
-import dao.ProductDAO;
 
 public class BillService {
     public static BillService instance;

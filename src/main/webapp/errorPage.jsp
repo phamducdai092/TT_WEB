@@ -59,7 +59,7 @@
     <c:import url="header.jsp"/>
     <h2>Error Occurred</h2>
     <p>An error occurred while processing your request. Please try again later or contact support.</p>
-    <a href="index.jsp">Trở lại trang chủ.</a>
+    <a href="./index.jsp">Trở lại trang chủ.</a>
 </div>
 <!-- You can add more details or specific error messages as needed -->
 </body>

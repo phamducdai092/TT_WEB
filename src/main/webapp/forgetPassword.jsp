@@ -84,7 +84,7 @@
             <div class="footer">
                 <span>Quay trở lại đăng nhập</span>
                 <button type="button" class="link login-in-pw" id="">
-                    <a href="./logIn.jsp">Đăng Nhập</a>
+                    <a class="link" href="./logIn.jsp">Đăng Nhập</a>
                 </button>
             </div>
         </form>

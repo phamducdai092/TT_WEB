@@ -43,7 +43,7 @@
             rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="assets/css/adminProductView.css"/>
+    <link rel="stylesheet" href="assets/css/adminEditProduct.css"/>
     <link rel="stylesheet" href="assets/css/style.css"/>
 </head>
 <body>

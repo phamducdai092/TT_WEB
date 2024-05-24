@@ -55,7 +55,7 @@
 
     <!-- Sign Up -->
     <div class="form-wrapper sign-up" id="sign-up">
-        <a href="./home" class="back-cta">
+        <a href="./index.jsp" class="back-cta">
             <i class="fa-solid fa-chevron-left"></i>
             Trở về trang chủ
         </a>
@@ -186,8 +186,8 @@
 
                 Validator.minLength('#password__signup', 6),
 
-                Validator.isRequired('#confirm-password', 'Vui lòng nhập mật khẩu trước'),
-                Validator.confirmPassword('#confirm-password', function (){
+                Validator.isRequired('#confirm__password', 'Vui lòng nhập mật khẩu trước'),
+                Validator.confirmPassword('#confirm__password', function (){
                     return document.querySelector('#password__signup').value;
                 }, 'Mật khẩu xác thực chưa đúng, vui lòng nhập lại')
             ]
