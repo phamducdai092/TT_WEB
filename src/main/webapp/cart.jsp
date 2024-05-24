@@ -261,7 +261,7 @@
                 </div>
                 <% double sumPrice=0;
                 for(int i=0;i<shoppingCart.size();i++) {
-                    sumPrice+=shoppingCart.get(i).getPrice();
+                    sumPrice+=shoppingCart.get(i).getPrice()*shoppingCart.get(i).getQuantity();
                 }
                 %>
                 <div class="cart__sidebar">
