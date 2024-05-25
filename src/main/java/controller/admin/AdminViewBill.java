@@ -1,9 +1,7 @@
 package controller.admin;
 
 import bean.Bill;
-import bean.User;
 import dao.BillDAO;
-import dao.UserDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -5,13 +5,12 @@
 <%@ page import="bean.Brand" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     List<Category> categories = (List<Category>) request.getAttribute("categories");
-    if (categories == null) categories = new ArrayList<>();
+    if(categories == null) categories = new ArrayList<>();
 
     List<Product> products = (List<Product>) request.getAttribute("products");
-    if (products == null) products = new ArrayList<>();
 
     List<Brand> brands = (List<Brand>) request.getAttribute("brands");
     if (brands == null) brands = new ArrayList<>();
@@ -23,21 +22,21 @@
 <html lang="en">
 <head>
     <jsp:useBean id="imageService" class="service.ImageService" scope="session"/>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sản phẩm</title>
 
     <!-- reset CSS -->
-    <link rel="stylesheet" href="assets/css/reset.css"/>
+    <link rel="stylesheet" href="assets/css/reset.css" />
 
     <!-- embed fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- FONT GOOGLE -->
     <link
@@ -69,12 +68,12 @@
             referrerpolicy="no-referrer"
     />
     <!-- styles -->
-    <link rel="stylesheet" href="./assets/css/index.css"/>
-    <link rel="stylesheet" href="./assets/css/style.css"/>
-    <link rel="stylesheet" href="./assets/css/product.css"/>
+    <link rel="stylesheet" href="assets/css/product.css" />
+    <link rel="stylesheet" href="assets/css/index.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
 
     <!-- OWL CAROUSEL CSS -->
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
     <link
             rel="stylesheet"
             href="assets/css/owl.theme.default.min.css"
@@ -85,17 +84,10 @@
 <!-- HEADER -->
 <c:import url="header.jsp"/>
 <div class="search-product">
-    <%--            <form action="search?indexPage=1" method="post">--%>
-    <%--                <input type="text" name="txtSearch" id="searchInput" placeholder="Tìm kiếm sản phẩm" />--%>
-    <%--                <div id="searchResults" style="display: none;"></div>--%>
-    <%--                <button class="search-btn" type="submit">--%>
-    <%--                    <i class="fa-solid fa-magnifying-glass search-ic"></i>--%>
-    <%--                </button>--%>
-    <%--            </form>--%>
     <form action="search?indexPage=${1}" method="post">
-        <input type="text" name="txtSearch" id="searchInput" placeholder="Tìm kiếm sản phẩm"/>
+        <input type="text" name="txtSearch" id="searchInput" placeholder="Tìm kiếm sản phẩm" />
         <!-- Thêm hidden input để giữ giá trị txtSearch khi chưa ấn submit -->
-        <input type="hidden" name="hiddenSearch" value="${empty param.txtSearch ? '' : param.txtSearch}"/>
+        <input type="hidden" name="hiddenSearch" value="${empty param.txtSearch ? '' : param.txtSearch}" />
         <div id="searchResults" style="display: none;"></div>
         <button class="search-btn" type="submit">
             <i class="fa-solid fa-magnifying-glass search-ic"></i>
@@ -119,16 +111,14 @@
                 <div class="directory-title">Danh mục</div>
                 <div class="directory__list">
                     <ul class="directory__item">
-                        <% if (categories != null) {
+                        <%  if (categories != null) {
                             for (Category c : categories) { %>
                         <li class="directory__gerne">
-                            <a href="products?category=<%= c.getName() %>&txtSearch=${param.txtSearch}"
-                               class="gerne-link">
-                                <%--@declare id="brands"--%><label for="brands"><%= c.getName() %>
-                            </label>
+                            <a href="products?category=<%= c.getName() %>&txtSearch=${param.txtSearch}" class="gerne-link">
+                               <label for="brands"><%= c.getName() %></label>
                             </a>
                         </li>
-                        <% }
+                        <%  }
                         } %>
                     </ul>
                 </div>
@@ -199,16 +189,14 @@
                     <div id="sort_manufacturer" class="box_s hidden">
                         <div class="box_ss">
                             <ul>
-                                <% if (brands != null) {
+                                <%  if (brands != null) {
                                     for (Brand b : brands) { %>
                                 <li class="directory__gerne">
-                                    <a href="products?brands=<%= b.getName() %>&txtSearch=${param.txtSearch}"
-                                       class="gerne-link">
-                                        <%--@declare id="brands"--%><label for="brands"><%= b.getName() %>
-                                    </label>
+                                    <a href="products?brands=<%= b.getName() %>&txtSearch=${param.txtSearch}" class="gerne-link">
+                                        <%--@declare id="brands"--%><label for="brands"><%= b.getName() %></label>
                                     </a>
                                 </li>
-                                <% }
+                                <%  }
                                 } %>
                             </ul>
                         </div>
@@ -216,7 +204,7 @@
                 </div>
 
                 <div class="box_order_item pull-right">
-                    <label label class="sort_order"
+                    <label class="sort_order"
                     >Sắp xếp theo
                         <i class="fa fa-caret-down caret"></i>
                     </label>
@@ -259,25 +247,14 @@
                         <!-- Hiển thị danh sách sản phẩm tìm kiếm -->
                         <c:forEach var="item" items="${products}">
                             <div class="item">
-                                <a href="productdetails?selectedProductId=${item.id}" class="img"
-                                   onclick="redirectToProductDetail('${item.id}')">
-                                        <%-- Kiểm tra nếu danh sách hình ảnh không rỗng trước khi truy cập --%>
-                                    <c:choose>
-                                        <c:when test="${not empty imageService.getImageByProductId(item.id)}">
-                                            <img src="${imageService.getImageByProductId(item.id).get(0).link}"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <%-- Thêm hình ảnh mặc định nếu không có hình ảnh --%>
-                                            <img src="./assets/img/product/sp1.jpg"/>
-                                        </c:otherwise>
-                                    </c:choose>
+                                <a href="productdetails?selectedProductId=${item.id}" class="img" onclick="redirectToProductDetail('${item.id}')">
+                                    <img alt="" src="${imageService.getImageByProductId(item.id).get(0).link}"/>
                                 </a>
                                 <div class="item_content">
                                     <a href="" class="title">${item.name}</a>
                                     <div class="desc">${item.description}</div>
                                     <div class="price">
-                                        <fmt:formatNumber type="currency" value="${item.totalPrice}" currencySymbol=""
-                                                          currencyCode="VND" var="formattedCurrency"/>
+                                        <fmt:formatNumber type="currency" value="${item.totalPrice}" currencySymbol="" currencyCode="VND" var="formattedCurrency" />
                                             ${formattedCurrency}
                                     </div>
                                     <form action="/cart" method="get">
@@ -299,21 +276,18 @@
                         <c:choose>
                             <c:when test="${not empty param.hiddenSearch}">
                                 <!-- Hiển thị dữ liệu tìm kiếm sau khi submit -->
-                                <c:set var="searchText" value="${param.hiddenSearch}"/>
-                                <c:set var="searchResults" value="${yourSearchMethod(searchText)}"/>
+                                <c:set var="searchText" value="${param.hiddenSearch}" />
+                                <c:set var="searchResults" value="${yourSearchMethod(searchText)}" />
                                 <c:forEach var="item" items="${searchResults}">
                                     <div class="item">
-                                        <a href="productdetails?selectedProductId=${item.id}" class="img"
-                                           onclick="redirectToProductDetail('${item.id}')">
+                                        <a href="productdetails?selectedProductId=${item.id}" class="img" onclick="redirectToProductDetail('${item.id}')">
                                             <img src="${imageService.getImageByProductId(item.id).get(0).link}"/>
                                         </a>
                                         <div class="item_content">
-                                            <a href="" class="title">${item.name}</a>
+                                            <div class="title">${item.name}</div>
                                             <div class="desc">${item.description}</div>
                                             <div class="price">
-                                                <fmt:formatNumber type="currency" value="${item.totalPrice}"
-                                                                  currencySymbol="" currencyCode="VND"
-                                                                  var="formattedCurrency"/>
+                                                <fmt:formatNumber type="currency" value="${item.totalPrice}" currencySymbol="" currencyCode="VND" var="formattedCurrency" />
                                                     ${formattedCurrency}
                                             </div>
                                             <form action="/cart" method="get">
@@ -334,17 +308,14 @@
                                 <!-- Hiển thị dữ liệu trước khi submit -->
                                 <c:forEach var="item" items="${requestScope.products}">
                                     <div class="item">
-                                        <a href="productdetails?selectedProductId=${item.id}" class="img"
-                                           onclick="redirectToProductDetail('${item.id}')">
+                                        <a href="productdetails?selectedProductId=${item.id}" class="img" onclick="redirectToProductDetail('${item.id}')">
                                             <img src="${imageService.getImageByProductId(item.id).get(0).link}"/>
                                         </a>
                                         <div class="item_content">
-                                            <a href="" class="title">${item.name}</a>
+                                            <div class="title">${item.name}</div>
                                             <div class="desc">${item.description}</div>
                                             <div class="price">
-                                                <fmt:formatNumber type="currency" value="${item.totalPrice}"
-                                                                  currencySymbol="" currencyCode="VND"
-                                                                  var="formattedCurrency"/>
+                                                <fmt:formatNumber type="currency" value="${item.totalPrice}" currencySymbol="" currencyCode="VND" var="formattedCurrency" />
                                                     ${formattedCurrency}
                                             </div>
                                             <form action="/cart" method="get">
@@ -365,95 +336,10 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-            <%-- Phân trang--%>
-            <div class="listPage">
-<%--                <c:forEach begin="1" end="${endPage}" var="i">--%>
-<%--                    <li>--%>
-<%--                        <a href="search?index=${i}&&txtSearch=${txtSearch}>${i}">--%>
-<%--                        </a>--%>
-<%--                    </li>--%>
-<%--                </c:forEach>--%>
-            </div>
-        </div>
-    </section>
+            <%--                    Phân trang--%>
+            <div class="listPage"></div>
+        </section>
 </section>
-
-            <section class=" feedback">
-                    <h2>Phản hồi của khách hàng.</h2>
-                    <div class="feedback__content">
-                        <div class="owl-carousel owl-theme">
-                            <div class="item">
-                                <p>
-                                    <i class="fa fa-quote-left"></i> Lorem ipsum dolor
-                                    sit amet consectetur adipisicing elit. Nihil facilis
-                                    aspernatur temporibus magni culpa beatae repellat
-                                    delectus accusantium explicabo veniam?
-                                    <i class="fa fa-quote-right"></i>
-                                </p>
-                                <p class="feedback__name">GIANG</p>
-                            </div>
-                            <div class="item">
-                                <p>
-                                    <i class="fa fa-quote-left"></i> Lorem ipsum dolor
-                                    sit amet consectetur adipisicing elit. Nihil facilis
-                                    aspernatur temporibus magni culpa beatae repellat
-                                    delectus accusantium explicabo veniam?
-                                    <i class="fa fa-quote-right"></i>
-                                </p>
-                                <p class="feedback__name">DAI</p>
-                            </div>
-                            <div class="item">
-                                <p>
-                                    <i class="fa fa-quote-left"></i> Lorem ipsum dolor
-                                    sit amet consectetur adipisicing elit. Nihil facilis
-                                    aspernatur temporibus magni culpa beatae repellat
-                                    delectus accusantium explicabo veniam?
-                                    <i class="fa fa-quote-right"></i>
-                                </p>
-                                <p class="feedback__name">THUONG</p>
-                            </div>
-                        </div>
-                    </div>
-
-    </section>
-    <!-- CONTACT -->
-    <section class="contact">
-        <h2>Liên Hệ</h2>
-        <div class="contact__form">
-            <form action="">
-                <input type="text" placeholder="Tên"/>
-                <input type="text" placeholder="Họ"/>
-                <input type="email" placeholder="Email"/>
-                <input type="tel" placeholder="SĐT"/>
-                <textarea
-                        name=""
-                        id=""
-                        cols="30"
-                        rows="10"
-                        placeholder="Message"
-                ></textarea>
-                <button type="submit">Send</button>
-            </form>
-        </div>
-        <div class="contect__map"></div>
-        <div class="contact__info">
-            <div class="contact__items">
-                <i class="fa fa-home"></i>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-            <div class="contact__items">
-                <i class="fa fa-phone"></i>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-            <div class="contact__items">
-                <i class="fa fa-envelope"></i>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div>
-        </div>
-    </section>
     <!-- FOOTER -->
     <footer>
         <div class="footer__main">
@@ -566,6 +452,7 @@
             </p>
         </div>
     </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- MAIN JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

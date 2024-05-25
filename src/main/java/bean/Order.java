@@ -1,7 +1,5 @@
 package bean;
 
-import com.sun.source.doctree.SerialDataTree;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;

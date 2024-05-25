@@ -1,7 +1,6 @@
 package controller.admin;
 
 import dao.BrandDAO;
-import dao.CategoryDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,10 +24,10 @@ public class AdminAddBrand extends HttpServlet {
         boolean addSuccess = BrandDAO.addNewBrand(newBrand);
 
         if(addSuccess) {
-            req.getRequestDispatcher("/adminEditProduct.jsp").forward(req, resp);
+            req.getRequestDispatcher("./adminBrandManagement").forward(req, resp);
         }else {
             req.setAttribute("error", error);
-            req.getRequestDispatcher("/adminEditProduct.jsp").forward(req, resp);
+            req.getRequestDispatcher("./adminBrandManagement").forward(req, resp);
         }
 
     }

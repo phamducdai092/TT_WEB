@@ -4,6 +4,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+:root {
+    --main-color : #ee6c4d;
+    --sub-main-color: #293241;
+}
 .clear {
     clear: both;
 
@@ -48,7 +52,7 @@ h2 {
 }
 
 /* HEADER */
- body header {
+header {
     position: fixed;
     height: 80px;
     width: 100%;
@@ -180,13 +184,12 @@ h2 {
     top: 100%;
     left: -30%;
     background: #fff;
-    min-width: 180px;
+    min-width: 200px;
     border-radius: 6px;
     box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.4);
     cursor: pointer;
 }
 
-.user-menu li:first-child,
 .user-menu li a{
     padding: 12px 24px;
     color: #000;
@@ -207,6 +210,7 @@ h2 {
 .user-menu li a {
     color: #000;
 }
+
 
 .sign-out {
     display: block;
@@ -454,7 +458,7 @@ h2 {
     .box_products{
         width: 100%;
         float: left;
-        margin-bottom: 110px;
+        margin-bottom: 80px;
     }
 
     .box_order{
@@ -756,6 +760,10 @@ h2 {
     }
     .title {
         font-size: x-large;
+        /*max-width: 320px;*/
+        /*overflow: hidden;*/
+        /*white-space: nowrap;*/
+        /*text-overflow: ellipsis;*/
     }
     .item .item_content .desc {
         opacity: .7;
@@ -789,18 +797,24 @@ h2 {
 .listPage {
     text-align: center;
     list-style: none;
-    margin: 30px;
-}
-.listPage li {
-    background-color: #ffffffBD;
-    padding: 20px;
-    display: inline-block;
-    margin: 0 10px;
-    cursor: pointer;
-}
-.listPage {
+    padding: 32px;
     background-color: black;
-    color: white;
+    color: var(--sub-main-color);
+}
+
+.listPage li {
+    font-size: 2rem;
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 10px;
+    margin-bottom: 24px !important;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
 }
 
 /* FEEDBACK */

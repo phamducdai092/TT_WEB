@@ -10,7 +10,6 @@ public class Encode {
 
         String salt = "axrbumalqdsoa;aks,qke";
         String output = null;
-
         input = input + salt;
 
         try {

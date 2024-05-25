@@ -1,6 +1,5 @@
 package dao;
 
-import bean.Payment_Method;
 import db.JDBIConnector;
 
 public class PaymentDAO {

@@ -18,7 +18,6 @@
                 <li class="menu__items">
                     <a href="./home">Trang chính</a>
                 </li>
-                </li>
                 <li class="menu__items">
                     <a href="products">Sản Phẩm</a>
                     <ul class="drum__container">
@@ -46,14 +45,16 @@
         </nav>
         <c:choose>
             <c:when test="${empty auth}">
-                <a href="logIn.jsp" class="sign__in">
-                    <i class="fa fa-user"></i>
-                    <span>Đăng Nhập</span>
-                </a>
-                <a href="signUp.jsp" class="sign__in">
-                    <i class="fa fa-user"></i>
-                    <span>Đăng Ký</span>
-                </a>
+                <div class="user">
+                    <a href="logIn.jsp" class="sign__in">
+                        <i class="fa fa-user"></i>
+                        <span>Đăng Nhập</span>
+                    </a>
+                    <a href="signUp.jsp" class="sign__in">
+                        <i class="fa fa-user"></i>
+                        <span>Đăng Ký</span>
+                    </a>
+                </div>
             </c:when>
             <c:otherwise>
                 <div class="avatar-user" >

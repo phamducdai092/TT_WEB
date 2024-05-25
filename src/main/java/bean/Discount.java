@@ -1,5 +1,7 @@
 package bean;
 
+import dao.DiscountDAO;
+
 public class Discount {
     int id;
     double amount;
@@ -12,6 +14,8 @@ public class Discount {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public Discount() {}
 
     public int getId() {
         return id;
@@ -45,6 +49,17 @@ public class Discount {
         this.endDate = endDate;
     }
 
+    public String getDiscountStartDate(int discountId){
+        return DiscountDAO.getDiscountStartDay(discountId);
+    }
+
+    public String getDiscountEndDate(int discountId){
+        return DiscountDAO.getDiscountEndDay(discountId);
+    }
+
+    public Double getDiscountAmount(int discountId) {
+        return 100 * DiscountDAO.getDiscountAmount(id);
+    }
     @Override
     public String toString() {
         return "Discount{" +
