@@ -57,7 +57,7 @@ header {
     height: 80px;
     width: 100%;
     background: #293241;
-    display: flex;
+    display: flex !important;
     z-index: 999
 }
 .main-header {
