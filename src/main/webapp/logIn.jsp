@@ -162,8 +162,6 @@
                     <div class="forget-pw">
                         <a class="link" href="forgetPassword.jsp">Quên mật khẩu ?</a>
                     </div>
-
-                    <button type="submit" class="submit sub-btn" id="signin">ĐĂNG NHẬP</button>
                     <button
                             type="submit"
                             class="submit sub-btn"

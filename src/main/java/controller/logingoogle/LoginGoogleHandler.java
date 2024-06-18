@@ -28,10 +28,17 @@ public class LoginGoogleHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String error = request.getParameter("error");
+        if (error != null) {
+            // Xử lý trường hợp người dùng nhấn nút hủy hoặc có lỗi xảy ra
+            request.getRequestDispatcher("./logIn.jsp").forward(request, response);
+        }else {
         String code = request.getParameter("code");
-        String accessToken = getToken(code);
-        UserGoogleDto user = getUserInfo(accessToken);
-        System.out.println(user);
+            String accessToken = getToken(code);
+            UserGoogleDto user = getUserInfo(accessToken);
+            System.out.println(user);
+        }
+
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
