@@ -1,48 +1,49 @@
 package controller.logingoogle;
 
+import bean.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.io.IOException;
+import dao.UserDAO;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.fluent.Form;
+import org.apache.http.client.fluent.Request;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.SQLException;
 
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Form;
-
-/**
- * @author heaty566
- */
-@WebServlet(urlPatterns = { "/LoginGoogleHandler" })
+@WebServlet(urlPatterns = {"/LoginGoogleHandler"})
 public class LoginGoogleHandler extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String error = request.getParameter("error");
         if (error != null) {
-            // Xử lý trường hợp người dùng nhấn nút hủy hoặc có lỗi xảy ra
             request.getRequestDispatcher("./logIn.jsp").forward(request, response);
-        }else {
-        String code = request.getParameter("code");
-            String accessToken = getToken(code);
-            UserGoogleDto user = getUserInfo(accessToken);
-            System.out.println(user);
+            return;
         }
 
+        String code = request.getParameter("code");
+        if (code == null || code.isEmpty()) {
+            request.getRequestDispatcher("./logIn.jsp").forward(request, response);
+            return;
+        }
+
+        try {
+            String accessToken = getToken(code);
+            UserGoogleDto user = getUserInfo(accessToken);
+            handleUserLogin(user, request, response);
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
-        // call api to get token
         String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
                 .bodyForm(Form.form().add("client_id", Constants.GOOGLE_CLIENT_ID)
                         .add("client_secret", Constants.GOOGLE_CLIENT_SECRET)
@@ -51,54 +52,40 @@ public class LoginGoogleHandler extends HttpServlet {
                 .execute().returnContent().asString();
 
         JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
-        String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
-        return accessToken;
+        return jobj.get("access_token").getAsString();
     }
 
     public static UserGoogleDto getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
         String link = Constants.GOOGLE_LINK_GET_USER_INFO + accessToken;
         String response = Request.Get(link).execute().returnContent().asString();
-
-        UserGoogleDto googlePojo = new Gson().fromJson(response, UserGoogleDto.class);
-
-        return googlePojo;
+        return new Gson().fromJson(response, UserGoogleDto.class);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the +
-    // sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private void handleUserLogin(UserGoogleDto userGoogleDto, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        User user = UserDAO.getUserByIdGoogle(userGoogleDto.getId());
+        HttpSession session = request.getSession();
+        if (user == null) {
+            UserDAO.registerUserGoogle(userGoogleDto.getId(), userGoogleDto.getName(), userGoogleDto.getGiven_name(), userGoogleDto.getFamily_name());
+            user = UserDAO.getUserByIdGoogle(userGoogleDto.getId());
+        }
+        session.setAttribute("auth", user);
+        response.sendRedirect("./index.jsp");
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }
