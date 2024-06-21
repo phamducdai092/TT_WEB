@@ -83,8 +83,7 @@
 <body>
 <!-- HEADER -->
 <c:import url="header.jsp"/>
-<div class="search-product">
-    <form action="search?indexPage=${1}" method="post">
+    <form action="search?indexPage=${1}" method="post" class="search-product">
         <input type="text" name="txtSearch" id="searchInput" placeholder="Tìm kiếm sản phẩm" />
         <!-- Thêm hidden input để giữ giá trị txtSearch khi chưa ấn submit -->
         <input type="hidden" name="hiddenSearch" value="${empty param.txtSearch ? '' : param.txtSearch}" />
@@ -93,7 +92,6 @@
             <i class="fa-solid fa-magnifying-glass search-ic"></i>
         </button>
     </form>
-</div>
 <!-- PRODUCT -->
 
 <section class="product-wrapper">
@@ -251,7 +249,7 @@
                                     <img alt="" src="${imageService.getImageByProductId(item.id).get(0).link}"/>
                                 </a>
                                 <div class="item_content">
-                                    <a href="" class="title">${item.name}</a>
+                                    <a href="productdetails?selectedProductId=${item.id}" class="title">${item.name}</a>
                                     <div class="desc">${item.description}</div>
                                     <div class="price">
                                         <fmt:formatNumber type="currency" value="${item.totalPrice}" currencySymbol="" currencyCode="VND" var="formattedCurrency" />

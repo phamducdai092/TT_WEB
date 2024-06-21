@@ -1,14 +1,9 @@
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="service.ImageService" %>
 <%@ page import="dao.ImageDAO" %>
-<%@ page import="java.awt.*" %>
-<%@ page import="java.text.DecimalFormat" %>
 <%@ page import="bean.*" %>
 <%@ page import="service.ProductDetailService" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.text.NumberFormat" %>
-<%@ page import="dao.ColorDAO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -51,7 +46,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
     <!-- FONT GOOGLE -->
     <link
@@ -110,7 +106,7 @@
         <div id="product__detail" class="product-content detail">
             <div class="product__img">
                 <div class="product__img-spot">
-                    <img src="<%= ((List<Image_Product>)request.getAttribute("productImages")).get(0).getLink()%>"
+                    <img src="<%= productImages.get(0).getLink()%>"
                          alt=""/>
                     <button class="cta-img left">
                         <i class="fa-solid fa-arrow-left-long"></i>
@@ -122,7 +118,7 @@
                 <div class="product__img-sub">
                     <% for (Image_Product img : productImages) { %>
                     <div class="item">
-                        <img class="item-img" src="<%= ImageDAO.getImageByProductId(img.getDetailId())%>" alt=""/>
+                        <img class="item-img" src="<%= img.getLink() %>" alt=""/>
                     </div>
                     <% } %>
                 </div>
@@ -160,20 +156,15 @@
                         <p class="introduce">
                             <%= selectedProduct.getDescription()%>
                         </p>
-                        <a href="#product__info">
-                            <button class="more-detail">
-                                Thêm thông tin
-                            </button>
-                        </a>
                     </div>
                 </div>
                 <div class="product__info-row">
                     <div class="quantity">
-                        <p class="count">1</p>
                         <div class="quantity-cta">
                             <button class="up">
                                 <i class="fa-solid fa-caret-up"></i>
                             </button>
+                            <p class="count" style="color: #000">1</p>
                             <button class="down">
                                 <i class="fa-solid fa-caret-down"></i>
                             </button>
@@ -191,65 +182,12 @@
             <p class="title">
                 Sự kết hợp hoàn hảo của trống acoustic và trống điện
             </p>
-
             <p class="desc">
-                Mẫu trống điện VAD706 mang lại cho bạn một trải nghiệm
-                về trống điện tử chưa từng có trước đây, đó là sự kết
-                hợp giữa công nghệ dẫn đầu V-Drums kết hợp với các chi
-                tiết thủ công được thiết kế tinh xảo, cao cấp theo hình
-                mẫu của một bộ trống acoustic. Mẫu thiết kế của dòng
-                trống cao cấp V-Drums acoustic mang những tính năng nổi
-                bật với trống snare kỹ thuật số, ride, và hi-hat pads
-                qua đó đem đến những trải nghiệm âm thanh, cảm giác chơi
-                trống chi tiết và chân thật nhất cho người dùng.
+                <%= selectedProduct.getDescription()%>
             </p>
-
-            <p class="desc">
-                TD-50X (Hộp tiếng đi cùng trống điện Roland) - một thế
-                hệ mới sau này cũng mang đến cảm giác chơi, sự phản hồi
-                khi đánh vào trống, âm thanh độc đáo vượt trội cùng với
-                khả năng thiết lập âm thanh riêng biệt cho người chơi và
-                khả năng kết nối với các thiết bị khác qua đó người sử
-                dụng trống dễ dàng chơi trong mọi tình huống khác nhau.
-            </p>
-
-            <p class="desc">
-                Trống được thiết kế hoàn toàn bằng gỗ cùng với hệ thống
-                cảm biến trên trống nhờ vậy mà người chơi hoàn toàn có
-                thể cảm nhận được cảm giác của một bộ trống cơ thực sự.
-                Với 4 kiểu dáng bắt mắt của VAD 706 bạn cũng có thể chọn
-                lấy một bộ phù hợp với phong cách riêng của mình.
-            </p>
-
             <img
-                    src="./assets/img/product/sp1.jpg"
-                    alt=""
-                    class="info-img"
-            />
-
-            <p class="title">
-                VAD706 mang hình dáng và hiệu suất biểu diễn như một bộ
-                trống cơ chính hiệu
-            </p>
-
-            <p class="desc">
-                VAD706 tận dụng nghệ trống điện tử tiên tiến chưa từng
-                có trước đây, đó là sự kết hợp công nghệ dẫn đầu của
-                dòng trống V-Drums và các thiết kế thủ công chi tiết
-                mang lại cảm giác sang trọng và đẳng cấp hơn bao giờ
-                hết.
-            </p>
-
-            <p class="desc">
-                Với series này người chơi sẽ được tận hưởng hết tất cả
-                những âm thanh cao cấp và đặc trưng nhất của công nghệ
-                V-Drums mà Roland đem lại trong những buổi biểu diễn
-                live chuyên nghiệp của bạn.
-            </p>
-
-            <img
-                    src="./assets/img/product/sp1.jpg"
-                    alt=""
+                    src="<%= productImages.get(0).getLink() %>"
+                    alt="Ảnh sản phẩm"
                     class="info-img"
             />
         </div>
@@ -260,20 +198,23 @@
     <div class="row">
         <div class="col-md-12">
             <div class="review__title__container">
-                <p class = "review__title" >ĐÁNH GIÁ SẢN PHẨM</p>
+                <p class="review__title">ĐÁNH GIÁ SẢN PHẨM</p>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h4 id="countReview" class="card-title"><%= productReviews.size()%> đánh giá cho sản phẩm <%= selectedProduct.getName() %></h4>
+                    <h4 id="countReview" class="card-title"><%= productReviews.size()%> đánh giá cho sản
+                        phẩm <%= selectedProduct.getName() %>
+                    </h4>
                 </div>
                 <div>
-                    <form name = "myform">
+                    <form name="myform">
                         <!-- Your review -->
                         <div class="md-form md-outline">
-                            <textarea placeholder="Đánh giá của bạn" class = "card-textarea" name="content"></textarea>
+                            <textarea placeholder="Đánh giá của bạn" class="card-textarea" name="content"></textarea>
                         </div>
                         <div class="text-right inp button-review-container">
-                            <input class="button-review" type="button" value="Thêm đánh giá" onclick="addReview(<%=selectedProductId%>)"></input>
+                            <input class="button-review" type="button" value="Thêm đánh giá"
+                                   onclick="addReview(<%=selectedProductId%>)"></input>
                         </div>
                     </form>
                 </div>
@@ -286,22 +227,23 @@
 
                 <div class="d-flex flex-row comment-row">
 
-                    <div class="p-2"><span class="round"><img src="https://i.imgur.com/uIgDDDd.jpg" alt="user" width="50"></span></div>
+                    <div class="p-2"><span class="round"><img src="https://i.imgur.com/uIgDDDd.jpg" alt="user"
+                                                              width="50"></span></div>
                     <div class="comment-text w-100">
                         <% for (User user : users) { %>
                         <% if (review.getUserId() == user.getId()) {%>
-                        <p class="review__username"><%= user.getUsername()%></p>
+                        <p class="review__username"><%= user.getUsername()%>
+                        </p>
                         <% } %>
                         <% } %>
                         <div class="comment-footer">
                             <span class="dot mb-1"></span>
                             <span class="review__date"><%= review.getDateReview()%></span>
-
                         </div>
-                        <p class="review__content m-b-5 m-t-10"><%= review.getContent()%></p>
+                        <p class="review__content m-b-5 m-t-10"><%= review.getContent()%>
+                        </p>
                     </div>
                 </div>
-
                 <% } %>
             </div>
 
@@ -317,82 +259,6 @@
     Vui lòng nhập đánh giá.
 </div>
 
-<!-- FEEDBACK -->
-<section class="feedback">
-    <h2>Phản hồi của khách hàng.</h2>
-    <div class="feedback__content">
-        <div class="owl-carousel owl-theme">
-            <div class="item">
-                <p>
-                    <i class="fa fa-quote-left"></i> Lorem ipsum dolor
-                    sit amet consectetur adipisicing elit. Nihil facilis
-                    aspernatur temporibus magni culpa beatae repellat
-                    delectus accusantium explicabo veniam?
-                    <i class="fa fa-quote-right"></i>
-                </p>
-                <p class="feedback__name">GIANG</p>
-            </div>
-            <div class="item">
-                <p>
-                    <i class="fa fa-quote-left"></i> Lorem ipsum dolor
-                    sit amet consectetur adipisicing elit. Nihil facilis
-                    aspernatur temporibus magni culpa beatae repellat
-                    delectus accusantium explicabo veniam?
-                    <i class="fa fa-quote-right"></i>
-                </p>
-                <p class="feedback__name">DAI</p>
-            </div>
-            <div class="item">
-                <p>
-                    <i class="fa fa-quote-left"></i> Lorem ipsum dolor
-                    sit amet consectetur adipisicing elit. Nihil facilis
-                    aspernatur temporibus magni culpa beatae repellat
-                    delectus accusantium explicabo veniam?
-                    <i class="fa fa-quote-right"></i>
-                </p>
-                <p class="feedback__name">THUONG</p>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- CONTACT -->
-<section class="contact">
-    <h2>Liên Hệ</h2>
-    <div class="contact__form">
-        <form action="">
-            <input type="text" placeholder="Tên"/>
-            <input type="text" placeholder="Họ"/>
-            <input type="email" placeholder="Email"/>
-            <input type="tel" placeholder="SĐT"/>
-            <textarea
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="10"
-                    placeholder="Message"
-            ></textarea>
-            <button type="submit">Send</button>
-        </form>
-    </div>
-    <div class="contect__map"></div>
-    <div class="contact__info">
-        <div class="contact__items">
-            <i class="fa fa-home"></i>
-            <p>Lorem ipsum dolor sit amet.</p>
-            <p>Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div class="contact__items">
-            <i class="fa fa-phone"></i>
-            <p>Lorem ipsum dolor sit amet.</p>
-            <p>Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div class="contact__items">
-            <i class="fa fa-envelope"></i>
-            <p>Lorem ipsum dolor sit amet.</p>
-            <p>Lorem ipsum dolor sit amet.</p>
-        </div>
-    </div>
-</section>
 <!-- FOOTER -->
 <footer>
     <div class="footer__main">
@@ -564,8 +430,8 @@
         })
 
         function changeQuantity(amount) {
-            var currentCount = parseInt($('.count').text());
-            var newCount = currentCount + amount;
+            let currentCount = parseInt($('.count').text());
+            let newCount = currentCount + amount;
             if (newCount < 1) {
                 newCount = 1;
             }
@@ -584,9 +450,9 @@
             document.getElementById('notifyLogin').style.display = 'none';
         }, 2000);
         <% } else {%>
-        var xhttp;
-        var content = document.myform.content.value;
-        var url = "productdetails?content=" + content + "&productId=" + productId;
+        let xhttp;
+        let content = document.myform.content.value;
+        let url = "productdetails?content=" + content + "&productId=" + productId;
 
         if (content.trim() === '') {
             document.getElementById('notifyInput').style.display = 'block';
@@ -606,9 +472,9 @@
         // Xử lý sự kiện khi trạng thái của XMLHttpRequest thay đổi
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4) {
-                var data = xhttp.responseText;
+                let data = xhttp.responseText;
                 // Hiển thị đánh giá mới trên trang web
-                var row = document.getElementById("reviews");
+                let row = document.getElementById("reviews");
                 row.innerHTML += data;
             }
 

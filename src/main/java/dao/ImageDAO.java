@@ -36,7 +36,10 @@ public class ImageDAO {
         }));
     }
     public static void main(String[] args) {
-
+        List<Image_Product> list = getImageByProductId(1);
+        for (Image_Product i : list) {
+            System.out.println(i.getLink());
+        }
     }
 
 
