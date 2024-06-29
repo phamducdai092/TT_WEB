@@ -10,11 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Lịch sử mua hàng</title>
 
-    <!-- reset CSS -->
-
-
-    <!-- <link rel="stylesheet" href="./assets/css/product.css"> -->
-
     <!-- embed fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -66,6 +61,10 @@
     <!-- OWL CAROUSEL CSS -->
     <link rel="stylesheet" href="./assets/css/owl.carousel.min.css"/>
     <link rel="stylesheet" href="./assets/css/owl.theme.default.min.css"/>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="assets/css/custom-datatable.css"/> <!-- Custom CSS for DataTables -->
 </head>
 <body>
 
@@ -73,7 +72,7 @@
 <c:import url="header.jsp"/>
 
 
-<div class="container-fluid">
+<div class="container">
     <!-- PROFILE -->
     <div class="profile-container">
         <%--            <form action="./profile" method="post" class="form">--%>
@@ -107,34 +106,38 @@
                 </div>
             </div>
         </div>
-        <jsp:include page="sidebar-profile.jsp"/>
-        <div class="your__cart ms-2 p-2">
-            <table>
-                <thead>
-                <tr>
-                    <th scope="col">#Mã đơn hàng</th>
-                    <th scope="col">Ngày mua</th>
-                    <th scope="col">Họ và tên</th>
-                    <th scope="col">Số điện thoại</th>
-                    <th scope="col">Địa chỉ</th>
-                    <th scope="col">Phương thức thanh toán</th>
-                    <th scope="col">Trạng thái đơn hàng</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${listOrder}" var="order">
-                    <tr>
-                        <td data-label="#Mã đơn hàng">${order.id}</td>
-                        <td data-label="Ngày mua">${order.createDate}</td>
-                        <td data-label="Họ và tên">${order.fullName}</td>
-                        <td data-label="Số điện thoại">${order.phone}</td>
-                        <td data-label="Địa chỉ">${order.address}</td>
-                        <td data-label="Phương thức thanh toán">${order.paymentMethod}</td>
-                        <td data-label="Trạng thái đơn hàng">${order.status == 'IN_PROGRESS' ? 'Chờ xử lý' : (order.status == 'DONE' ? 'Đã nhận đơn' : 'Đang giao hàng')}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+        <div class="row">
+            <jsp:include page="sidebar-profile.jsp"/>
+            <div class="col-md-9">
+                <div class="your__cart ms-2 p-2">
+                    <table id="orderTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">#Mã đơn hàng</th>
+                            <th scope="col">Ngày mua</th>
+                            <th scope="col">Họ và tên</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Phương thức thanh toán</th>
+                            <th scope="col">Trạng thái đơn hàng</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${listOrder}" var="order">
+                            <tr>
+                                <td data-label="#Mã đơn hàng">${order.id}</td>
+                                <td data-label="Ngày mua">${order.createDate}</td>
+                                <td data-label="Họ và tên">${order.fullName}</td>
+                                <td data-label="Số điện thoại">${order.phone}</td>
+                                <td data-label="Địa chỉ">${order.address}</td>
+                                <td data-label="Phương thức thanh toán">${order.paymentMethod}</td>
+                                <td data-label="Trạng thái đơn hàng">${order.status == 'IN_PROGRESS' ? 'Chờ xử lý' : (order.status == 'DONE' ? 'Đã nhận đơn' : 'Đang giao hàng')}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -143,6 +146,31 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-</body>
 
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#orderTable').DataTable({
+            "dom": '<"top"lf>rt<"bottom"ip><"clear">',
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(lọc từ _MAX_ bản ghi)",
+                "search": "Tìm kiếm:",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            },
+            "lengthMenu": [5, 10, 25, 50]
+        });
+    });
+</script>
+</body>
 </html>
