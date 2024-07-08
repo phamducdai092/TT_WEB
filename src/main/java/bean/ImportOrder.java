@@ -1,17 +1,18 @@
 package bean;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 public class ImportOrder {
     int id;
-    List<Item> items;
-    Date date;
+    String pr_id;
+    String color_id;
+    int quantity;
+    LocalDateTime time;
 
-    public ImportOrder(int id, List<Item> items, Date date) {
-        this.id = id;
-        this.items = items;
-        this.date = date;
+    public ImportOrder() {
+
     }
 
     public int getId() {
@@ -22,20 +23,36 @@ public class ImportOrder {
         this.id = id;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public String getPr_id() {
+        return pr_id;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setPr_id(String pr_id) {
+        this.pr_id = pr_id;
     }
 
-    public Date getDate() {
-        return date;
+    public String getColor_id() {
+        return color_id;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setColor_id(String color_id) {
+        this.color_id = color_id;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
 

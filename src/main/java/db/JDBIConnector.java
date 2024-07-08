@@ -1,7 +1,10 @@
 package db;
 
+import bean.ImportOrder;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,6 +27,7 @@ public class JDBIConnector {
         }
 
         jdbi = Jdbi.create(mysqlDataSource);
+
     }
 
     private JDBIConnector() {}

@@ -3,6 +3,7 @@ package dao;
 import bean.Product_Color;
 import db.JDBIConnector;
 
+import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,9 +39,18 @@ public class ColorDAO {
         );
         return listColor;
     }
+    public static Product_Color getColorById(int id) {
+        Product_Color color=  JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("select * from product_color where id=?")
+                        .bind(0,id)
+                        .mapToBean(Product_Color.class)
+                        .findOne()
+                        .orElse(null));
+        return color;
+    }
     public static void main(String[] args) {
-
-        List<Product_Color> colorList = ColorDAO.getListColorCodeByIdProduct(1);
-        System.out.println(colorList);
+        System.out.println(getColorById(1).getNameColor());;
+//        List<Product_Color> colorList = ColorDAO.getListColorCodeByIdProduct(1);
+//        System.out.println(colorList);
     }
 }
