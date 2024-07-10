@@ -211,7 +211,7 @@ public class UserDAO {
 //        changePassword("cunoccho0601@gmail.com", "hahaha");
 
 //        changeInfoUserWithRole(5, 0);
-
+            registerUser("vophong", "vophong2642003@gmail.com", "tjd2+x2TK5ELZzghlrfYLLdbYY0=");
 
     }
 }
