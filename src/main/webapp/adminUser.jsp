@@ -77,6 +77,7 @@
                     <tr>
                         <th class="s-cl">Chỉnh sửa</th>
                         <th class="s-cl">ID</th>
+                        <th class="s-cl">ID_Google</th>
                         <th class="m-cl">Tên</th>
                         <th class="l-cl">Tài khoản</th>
                         <th class="l-cl">Email</th>
@@ -94,6 +95,7 @@
                                 </a>
                             </td>
                             <td>${o.getId()}</td>
+                            <td>${o.getId_google()}</td>
                             <td>${o.getFullName()}</td>
                             <td>${o.getUsername()}</td>
                             <td>${o.getEmail()}</td>

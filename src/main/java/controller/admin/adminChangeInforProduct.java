@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(value = "/changeInforProduct")
-public class AdminChangeInforProduct extends HttpServlet {
+public class adminChangeInforProduct extends HttpServlet {
 
     String nameProduct, startDate, endDate, category,
             brand, supplier, desc;

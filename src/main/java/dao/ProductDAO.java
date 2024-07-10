@@ -229,7 +229,22 @@ public class ProductDAO {
                         .execute()
         );
     }
+    public static void hiddenProduct(int id) {
+        JDBIConnector.me().withHandle(handle -> {
+            int currentStatus = handle.createQuery("SELECT status FROM product_details WHERE id = :id")
+                    .bind("id", id)
+                    .mapTo(int.class)
+                    .one();
 
+            int newStatus = (currentStatus == 1) ? 0 : 1;
+
+            handle.createUpdate("UPDATE product_details SET status = :newStatus WHERE id = :id")
+                    .bind("newStatus", newStatus)
+                    .bind("id", id)
+                    .execute();
+            return true;
+        });
+    }
     public static void addProduct(Product product) {
         JDBIConnector.me().withHandle(handle ->
                 handle.createUpdate("insert into product_details(name, discountId, categoryId, brandId, supplierId, quantity, totalPrice, description) " +
@@ -246,6 +261,18 @@ public class ProductDAO {
 
     }
 
+    public static List<Product> listHideProduct(String categoryId) {
+        int status = 0;
+        List<Product> productHideList = JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT * FROM product_details WHERE categoryId = :categoryId and status = :status")
+                        .bind("categoryId", categoryId)
+                        .bind("status", status)
+                        .mapToBean(Product.class)
+                        .collect(Collectors.toList())
+        );
+        return productHideList;
+    }
+
     public static void main(String[] args) {
 //        List<Product> productByCate = ProductDAO.getProductByCategory("Electric");
 //        List<Product> productByPrice = ProductDAO.getProductByPriceRange(0, 10000000);
@@ -254,7 +281,8 @@ public class ProductDAO {
 //        List<Product> productDiscount = ProductDAO.getProductByDiscount();
 //        int totalProductNumber = ProductDAO.getTotalProductNumber();
 //        Item item = ProductDAO.getItemById(1);
-        addProduct(new Product(0, "test", 1, 1, 1, 1, 100, 101, "test"));
+//        addProduct(new Product(0, "test", 1, 1, 1, 1, 100, 101, "test"));
+        hiddenProduct(1);
     }
 
 

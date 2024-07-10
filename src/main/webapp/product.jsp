@@ -83,7 +83,8 @@
 <body>
 <!-- HEADER -->
 <c:import url="header.jsp"/>
-    <form action="search?indexPage=${1}" method="post" class="search-product">
+<div class="search-product">
+    <form action="search?indexPage=${1}" method="post">
         <input type="text" name="txtSearch" id="searchInput" placeholder="Tìm kiếm sản phẩm" />
         <!-- Thêm hidden input để giữ giá trị txtSearch khi chưa ấn submit -->
         <input type="hidden" name="hiddenSearch" value="${empty param.txtSearch ? '' : param.txtSearch}" />
@@ -268,66 +269,107 @@
                                     </form>
                                 </div>
                             </div>
+                            <%-- Kiem tra xem san pham cho bi an khong--%>
+                            <c:if test="${item.status == 1 && item.statusCategory == 1 && item.statusBrand ==1 && item.statusSupplier==1}">
+                                <div class="item">
+                                    <a href="productdetails?selectedProductId=${item.id}" class="img"
+                                       onclick="redirectToProductDetail('${item.id}')">
+                                        <img alt="" src="${imageService.getImageByProductId(item.id).get(0).link}"/>
+                                    </a>
+                                    <div class="item_content">
+                                        <a href="" class="title">${item.name}</a>
+                                        <div class="desc">${item.description}</div>
+                                        <div class="price">
+                                            <fmt:formatNumber type="currency" value="${item.totalPrice}"
+                                                              currencySymbol="" currencyCode="VND"
+                                                              var="formattedCurrency"/>
+                                                ${formattedCurrency}
+                                        </div>
+                                        <form action="/cart" method="get">
+                                            <input type="hidden" name="productId" value="${item.id}">
+                                            <c:url var="link" value="cart">
+                                                <c:param name="action" value="buy"></c:param>
+                                                <c:param name="id" value="${item.id}"></c:param>
+                                            </c:url>
+                                            <a href="productdetails?selectedProductId=${item.id}">
+                                                <!-- Change the text to "Xem chi tiết" -->
+                                                <div class="add">Xem chi tiết</div>
+                                            </a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </c:if>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
                         <c:choose>
                             <c:when test="${not empty param.hiddenSearch}">
                                 <!-- Hiển thị dữ liệu tìm kiếm sau khi submit -->
-                                <c:set var="searchText" value="${param.hiddenSearch}" />
-                                <c:set var="searchResults" value="${yourSearchMethod(searchText)}" />
+                                <c:set var="searchText" value="${param.hiddenSearch}"/>
+                                <c:set var="searchResults" value="${yourSearchMethod(searchText)}"/>
                                 <c:forEach var="item" items="${searchResults}">
-                                    <div class="item">
-                                        <a href="productdetails?selectedProductId=${item.id}" class="img" onclick="redirectToProductDetail('${item.id}')">
-                                            <img src="${imageService.getImageByProductId(item.id).get(0).link}"/>
-                                        </a>
-                                        <div class="item_content">
-                                            <div class="title">${item.name}</div>
-                                            <div class="desc">${item.description}</div>
-                                            <div class="price">
-                                                <fmt:formatNumber type="currency" value="${item.totalPrice}" currencySymbol="" currencyCode="VND" var="formattedCurrency" />
-                                                    ${formattedCurrency}
+                                    <%-- Kiem tra xem san pham cho bi an khong--%>
+                                    <c:if test="${item.status == 1 && item.statusCategory == 1 && item.statusBrand ==1 && item.statusSupplier==1}">                                        <div class="item">
+                                            <a href="productdetails?selectedProductId=${item.id}" class="img"
+                                               onclick="redirectToProductDetail('${item.id}')">
+                                                <img src="${imageService.getImageByProductId(item.id).get(0).link}"/>
+                                            </a>
+                                            <div class="item_content">
+                                                <div class="title">${item.name}</div>
+                                                <div class="desc">${item.description}</div>
+                                                <div class="price">
+                                                    <fmt:formatNumber type="currency" value="${item.totalPrice}"
+                                                                      currencySymbol="" currencyCode="VND"
+                                                                      var="formattedCurrency"/>
+                                                        ${formattedCurrency}
+                                                </div>
+                                                <form action="/cart" method="get">
+                                                    <input type="hidden" name="productId" value="${item.id}">
+                                                    <c:url var="link" value="cart">
+                                                        <c:param name="action" value="buy"></c:param>
+                                                        <c:param name="id" value="${item.id}"></c:param>
+                                                    </c:url>
+                                                    <a href="${link}">
+                                                        <div class="add">Thêm vào giỏ hàng</div>
+                                                    </a>
+                                                </form>
                                             </div>
-                                            <form action="/cart" method="get">
-                                                <input type="hidden" name="productId" value="${item.id}">
-                                                <c:url var="link" value="cart">
-                                                    <c:param name="action" value="buy"></c:param>
-                                                    <c:param name="id" value="${item.id}"></c:param>
-                                                </c:url>
-                                                <a href="${link}">
-                                                    <div class="add">Thêm vào giỏ hàng</div>
-                                                </a>
-                                            </form>
                                         </div>
-                                    </div>
+                                    </c:if>
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
                                 <!-- Hiển thị dữ liệu trước khi submit -->
                                 <c:forEach var="item" items="${requestScope.products}">
-                                    <div class="item">
-                                        <a href="productdetails?selectedProductId=${item.id}" class="img" onclick="redirectToProductDetail('${item.id}')">
-                                            <img src="${imageService.getImageByProductId(item.id).get(0).link}"/>
-                                        </a>
-                                        <div class="item_content">
-                                            <div class="title">${item.name}</div>
-                                            <div class="desc">${item.description}</div>
-                                            <div class="price">
-                                                <fmt:formatNumber type="currency" value="${item.totalPrice}" currencySymbol="" currencyCode="VND" var="formattedCurrency" />
-                                                    ${formattedCurrency}
+                                    <%-- Kiem tra xem san pham cho bi an khong--%>
+                                    <c:if test="${item.status == 1 && item.statusCategory == 1 && item.statusBrand ==1 && item.statusSupplier==1}">
+                                        <div class="item">
+                                            <a href="productdetails?selectedProductId=${item.id}" class="img"
+                                               onclick="redirectToProductDetail('${item.id}')">
+                                                <img src="${imageService.getImageByProductId(item.id).get(0).link}"/>
+                                            </a>
+                                            <div class="item_content">
+                                                <div class="title">${item.name}</div>
+                                                <div class="desc">${item.description}</div>
+                                                <div class="price">
+                                                    <fmt:formatNumber type="currency" value="${item.totalPrice}"
+                                                                      currencySymbol="" currencyCode="VND"
+                                                                      var="formattedCurrency"/>
+                                                        ${formattedCurrency}
+                                                </div>
+                                                <form action="/cart" method="get">
+                                                    <input type="hidden" name="productId" value="${item.id}">
+                                                    <c:url var="link" value="cart">
+                                                        <c:param name="action" value="buy"></c:param>
+                                                        <c:param name="id" value="${item.id}"></c:param>
+                                                    </c:url>
+                                                    <a href="${link}">
+                                                        <div class="add">Thêm vào giỏ hàng</div>
+                                                    </a>
+                                                </form>
                                             </div>
-                                            <form action="/cart" method="get">
-                                                <input type="hidden" name="productId" value="${item.id}">
-                                                <c:url var="link" value="cart">
-                                                    <c:param name="action" value="buy"></c:param>
-                                                    <c:param name="id" value="${item.id}"></c:param>
-                                                </c:url>
-                                                <a href="${link}">
-                                                    <div class="add">Thêm vào giỏ hàng</div>
-                                                </a>
-                                            </form>
                                         </div>
-                                    </div>
+                                    </c:if>
                                 </c:forEach>
                             </c:otherwise>
                         </c:choose>

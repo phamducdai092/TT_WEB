@@ -95,7 +95,7 @@
                 <table>
                     <thead>
                     <tr>
-                        <th class="s-cl">Xóa</th>
+                        <th class="s-cl">Ẩn</th>
                         <th class="s-cl">Chỉnh sửa</th>
                         <th class="m-cl">Mã Thương Hiệu</th>
                         <th class="l-cl">Tên</th>
@@ -105,8 +105,15 @@
                     <c:forEach items="${sessionScope.brandList}" var="o">
                         <tr>
                             <td class="s-cl">
-                                <a class="link" href="removeBrand?brandId=${o.getId()}">
-                                    <i class="fa-regular fa-square-minus"></i>
+                                <a class="link" href="hiddenBrand?brandId=${o.getId()}">
+                                    <c:choose>
+                                        <c:when test="${o.getStatus() == 1}">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <i class="fa-regular fa-eye-slash"></i>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </a>
                             </td>
                             <td class="s-cl">
