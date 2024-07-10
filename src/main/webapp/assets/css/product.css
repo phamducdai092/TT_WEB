@@ -227,6 +227,7 @@ button.search-btn.btn:hover {
         width: 100%;
     }
     .box_ss label{
+        color: var(--sub-main-color);
         font-size: 14px;
         font-weight: normal;
         float: left;
