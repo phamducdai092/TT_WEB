@@ -1,30 +1,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="bean.User" %>
 
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Our Project 49</title>
 
     <!-- reset CSS -->
-    <link rel="stylesheet" href="assets/css/reset.css" />
-    <link rel="stylesheet" href="assets/css/profile.css" />
-    <link rel="stylesheet" href="assets/css/index.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/reset.css"/>
+    <link rel="stylesheet" href="assets/css/profile.css"/>
+    <link rel="stylesheet" href="assets/css/index.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
 
     <!-- <link rel="stylesheet" href="./assets/css/product.css"> -->
 
     <!-- embed fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 
     <!-- FONT GOOGLE -->
     <link
@@ -56,11 +56,11 @@
             referrerpolicy="no-referrer"
     />
     <!-- styles -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/style.css"/>
 
     <!-- OWL CAROUSEL CSS -->
-    <link rel="stylesheet" href="./assets/css/owl.carousel.min.css" />
-    <link rel="stylesheet" href="./assets/css/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="./assets/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="./assets/css/owl.theme.default.min.css"/>
 </head>
 <body>
 
@@ -83,6 +83,7 @@
         String lastName = user.getLastName();
         String birthDay = user.getBirthDate();
         String gender = user.getGender();
+        String id_google = user.getId_google();
     %>
     <!-- PROFILE -->
     <div class="profile-container">
@@ -118,7 +119,7 @@
             </div>
         </div>
         <!-- .dLDnti -->
-        <jsp:include page="sidebar-profile.jsp" />
+        <jsp:include page="sidebar-profile.jsp"/>
         <form action="./profile" method="post" class="form">
             <div id="manage-account" class="account active">
                 <div class="account_title">Thông tin tài khoản</div>
@@ -170,7 +171,7 @@
                                                             name="firstName"
                                                             maxlength="128"
                                                             placeholder="Họ"
-                                                            value = "<%=firstName%>"
+                                                            value="<%=firstName%>"
                                                     />
                                                 </div>
                                             </div>
@@ -197,7 +198,8 @@
                                     <label for="birthDate" class="input-label">Ngày sinh</label>
                                     <div class="input-content">
 
-                                        <input id="birthDate" type="date" name="birthDate" class="input-date" value="<%=birthDay%>">
+                                        <input id="birthDate" type="date" name="birthDate" class="input-date"
+                                               value="<%=birthDay%>">
 
                                     </div>
                                 </div>
@@ -216,7 +218,7 @@
                                         />
                                         <span class="radio-fake"></span><span class="label">Nam</span>
                                     </label>
-                                    <label  class="radio">
+                                    <label class="radio">
                                         <input
 
                                                 type="radio"
@@ -272,18 +274,18 @@
                                                     <%
                                                         if (phone == 0) {
                                                     %>
-                                                        value = ""
+                                                    value=""
 
                                                     <%
-                                                        } else {
+                                                    } else {
                                                     %>
-                                                        value = "0<%=phone%>"
+                                                    value="0<%=phone%>"
                                                     <%
                                                         }
                                                     %>
 
                                             />
-                                            <span id = "phone-error"></span>
+                                            <span id="phone-error"></span>
 
                                         </div>
                                     </div>
@@ -306,13 +308,18 @@
                                                     maxlength="128"
                                                     placeholder="Email"
                                                     onkeyup="validateEmail()"
-                                                    value = "<%=email%>"
+                                                    value="<%=email%>"
+                                            <%--  kiểm tra nếu đăng nhập bằng bên thứ 3 thì không thể thay đổi emali--%>
+                                                    <% if (!id_google.equals(null)) {%>
+                                                    readonly  <%}%>
                                             />
-                                            <span id = "email-error"></span>
+                                            <span id="email-error"></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <%--  Kiểm tra nếu đăng nhập bằng bên thứ 3 thì không thể thay đổi mật khẩu--%>
+                            <% if (id_google.equals(null)) {%>
                             <span class="info-title">Bảo mật</span>
                             <div class="info-contact">
                                 <div class="list-item">
@@ -330,6 +337,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <%}%>
                         </div>
                     </div>
                 </div>
