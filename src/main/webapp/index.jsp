@@ -149,7 +149,7 @@
             <div class="list">
                 <% for (Product p : productList) { %>
                 <%-- Kiem tra xem san pham cho bi an khong--%>
-                <% if (p.getStatus() == 1 && p.getStatusCategory()==1 && p.getStatusBrand()==1 && p.getStatusSupplier()==1)  { %>
+                <% if (p.getStatus() == 1 && p.getStatusCategory() == 1 && p.getStatusBrand() == 1 && p.getStatusSupplier() == 1) { %>
                 <div class="item">
                     <a href="productdetails?selectedProductId=<%= p.getId()%>">
                         <div class="img">
