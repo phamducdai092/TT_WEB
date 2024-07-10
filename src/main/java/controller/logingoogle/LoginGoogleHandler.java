@@ -22,12 +22,13 @@ public class LoginGoogleHandler extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+// xử lý khi người dùng bấm hủy khi đăng nhập bằng google
         String error = request.getParameter("error");
         if (error != null) {
             request.getRequestDispatcher("./logIn.jsp").forward(request, response);
             return;
         }
-
+// Lấy mã ủy quyền (authorization code) từ yêu cầu của Google
         String code = request.getParameter("code");
         if (code == null || code.isEmpty()) {
             request.getRequestDispatcher("./logIn.jsp").forward(request, response);
@@ -42,7 +43,7 @@ public class LoginGoogleHandler extends HttpServlet {
             throw new ServletException(e);
         }
     }
-
+    // Phương thức lấy token truy cập từ Google bằng mã ủy quyền
     public static String getToken(String code) throws ClientProtocolException, IOException {
         String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
                 .bodyForm(Form.form().add("client_id", Constants.GOOGLE_CLIENT_ID)
@@ -60,7 +61,7 @@ public class LoginGoogleHandler extends HttpServlet {
         String response = Request.Get(link).execute().returnContent().asString();
         return new Gson().fromJson(response, UserGoogleDto.class);
     }
-
+//   lưu người dùng vào databaser
     private void handleUserLogin(UserGoogleDto userGoogleDto, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         User user = UserDAO.getUserByIdGoogle(userGoogleDto.getId());
         HttpSession session = request.getSession();
