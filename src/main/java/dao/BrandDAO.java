@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class BrandDAO {
     public static List<Brand> getAllBrands(){
         List<Brand> brandList = JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("select id, name from brands")
+                handle.createQuery("select id, name, status from brands")
                         .mapToBean(Brand.class)
                         .collect(Collectors.toList())
         );
@@ -71,6 +71,27 @@ public class BrandDAO {
         }catch (Exception e) {
             return false;
         }
+    }
+    public static void hiddenBrand(int id) {
+        JDBIConnector.me().withHandle(handle -> {
+            int currentStatus = handle.createQuery("SELECT status FROM brands WHERE id = :id")
+                    .bind("id", id)
+                    .mapTo(int.class)
+                    .one();
+
+            int newStatus = (currentStatus == 1) ? 0 : 1;
+
+            handle.createUpdate("UPDATE brands SET status = :newStatus WHERE id = :id")
+                    .bind("newStatus", newStatus)
+                    .bind("id", id)
+                    .execute();
+
+            handle.createUpdate("UPDATE product_details SET statusBrand = :newStatus WHERE id = :id")
+                    .bind("newStatus", newStatus)
+                    .bind("id", id)
+                    .execute();
+            return true;
+        });
     }
 
     public static void main(String[] args) {

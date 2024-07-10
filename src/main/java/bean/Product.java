@@ -15,6 +15,10 @@ public class Product extends ProductDAO {
     private double totalPrice;
     private String description;
     private int status;
+    private int statusCategory;
+    private int statusBrand;
+    private int statusSupplier;
+
     private Image_Product image;
 
     public Product() {
@@ -112,13 +116,32 @@ public class Product extends ProductDAO {
     public void setDescription(String description) {
         this.description = description;
     }
-
     public int getStatus() {
         return status;
     }
 
     public void setStatus(int status) {
         this.status = status;
+    }
+    public int getStatusCategory() {return statusCategory;
+    }
+
+    public void setStatusCategory(int statusCategory) {
+        this.statusCategory = statusCategory;
+    }
+    public int getStatusBrand() {
+        return statusBrand;
+    }
+
+    public void setStatusBrand(int statusBrand) {
+        this.statusBrand = statusBrand;
+    }
+    public int getStatusSupplier() {
+        return statusSupplier;
+    }
+
+    public void setStatusSupplier(int statusSupplier) {
+        this.statusSupplier = statusSupplier;
     }
 
     public String getCategoryName(int id) {

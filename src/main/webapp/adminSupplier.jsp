@@ -100,7 +100,7 @@
                 <table>
                     <thead>
                     <tr>
-                        <th class="s-cl">Xóa</th>
+                        <th class="s-cl">Ẩn</th>
                         <th class="s-cl">Chỉnh sửa</th>
                         <th class="m-cl">Mã nhà cung cấp</th>
                         <th class="l-cl">Tên nhà cung cấp</th>
@@ -112,8 +112,15 @@
                     <c:forEach items="${sessionScope.supplierList}" var="o">
                         <tr>
                             <td class="s-cl">
-                                <a class="link" target="_blank" href="removeSupplier?supplierId=${o.getId()}">
-                                    <i class="fa-regular fa-square-minus"></i>
+                                <a class="link" href="hiddenSupplier?supplierId=${o.getId()}">
+                                    <c:choose>
+                                        <c:when test="${o.getStatus() == 1}">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <i class="fa-regular fa-eye-slash"></i>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </a>
                             </td>
                             <td class="s-cl">

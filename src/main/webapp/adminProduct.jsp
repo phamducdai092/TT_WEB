@@ -86,7 +86,7 @@
                 <table>
                     <thead>
                     <tr>
-                        <th class="s-cl">Xóa</th>
+                        <th class="s-cl">Ẩn</th>
                         <th class="s-cl">Chỉnh sửa</th>
                         <th class="m-cl">Product ID</th>
                         <th class="l-cl">Tên</th>
@@ -103,8 +103,15 @@
 
                         <tr>
                             <td class="s-cl">
-                                <a class="link" href="removeProduct?productId=${o.getId()}">
-                                    <i class="fa-regular fa-square-minus"></i>
+                                <a class="link hide-product-btn" href="hiddenProduct?productId=${o.getId()}">
+                                    <c:choose>
+                                        <c:when test="${o.getStatus() == 1}">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <i class="fa-regular fa-eye-slash"></i>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </a>
                             </td>
 
@@ -221,6 +228,21 @@
         overlay.style.display = 'none';
     }
 </script>
+<%--<script>--%>
+<%--    document.addEventListener('DOMContentLoaded', function () {--%>
+<%--        let hideCategoryButtons = document.querySelectorAll('.hide-product-btn');--%>
+
+<%--        hideCategoryButtons.forEach(button => {--%>
+<%--            button.addEventListener('click', function (event) {--%>
+<%--                event.preventDefault();--%>
+<%--                // Thay đổi giao diện của nút ẩn/hiện --%>
+<%--                let icon = button.querySelector('i');--%>
+<%--                icon.classList.toggle('fa-eye-slash');--%>
+<%--                icon.classList.toggle('fa-eye');--%>
+<%--            });--%>
+<%--        });--%>
+<%--    });--%>
+<%--</script>--%>
 <script src="./js/adminJS/dialogForm.js"></script>
 </body>
 </html>

@@ -38,7 +38,7 @@ public class Category {
     public int getStatus(){return status;}
 
 
-    public void setStatus(String name) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

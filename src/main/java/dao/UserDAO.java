@@ -82,7 +82,6 @@ public class UserDAO {
     }
 
 
-
     public static List<User> getListUserById(int id) {
         List<User> userList = JDBIConnector.me().withHandle(handle ->
                 handle.createQuery("SELECT * FROM users WHERE user.id = ?")
@@ -147,7 +146,7 @@ public class UserDAO {
         Date date = new Date();
         String gender = "";
         int role = 0;
-        int status = 0;
+        int status = 1;
         JDBIConnector.me().withHandle(handle -> {
             return handle.createUpdate("INSERT INTO users VALUE (:id, :id_google, :username, :password, :email, :phone, :first, :last, :date, :gender, :role, :status)")
                     .bind("id", id)
