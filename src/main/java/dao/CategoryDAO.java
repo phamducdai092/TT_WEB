@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 
 public class CategoryDAO {
 
-    public static List<Category> getAllCategory(){
+    public static List<Category> getAllCategory() {
         List<Category> categoryList = JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("select id, name from categories")
+                handle.createQuery("select id, name, status from categories")
                         .mapToBean(Category.class)
                         .collect(Collectors.toList())
         );
@@ -26,7 +26,6 @@ public class CategoryDAO {
                         .orElse(null)
         );
     }
-
 
 
     public static String getSupplierName(int id) {
@@ -58,15 +57,37 @@ public class CategoryDAO {
                             .bind("id", id)
                             .execute() > 0
             );
-        }catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
+    }
+
+    public static void hiddenCategory(String categoryId) {
+        JDBIConnector.me().withHandle(handle -> {
+            int currentStatus = handle.createQuery("SELECT status FROM categories WHERE id = :categoryId")
+                    .bind("categoryId", categoryId)
+                    .mapTo(int.class)
+                    .one();
+
+            int newStatus = (currentStatus == 1) ? 0 : 1;
+
+            handle.createUpdate("UPDATE categories SET status = :newStatus WHERE id = :categoryId")
+                    .bind("newStatus", newStatus)
+                    .bind("categoryId", categoryId)
+                    .execute();
+
+            handle.createUpdate("UPDATE product_details SET statusCategory = :newStatus WHERE categoryId = :categoryId")
+                    .bind("newStatus", newStatus)
+                    .bind("categoryId", categoryId)
+                    .execute();
+            return true;
+        });
     }
 
     public static void main(String[] args) {
 //        Product product = ProductDAO.getProductById(4).get(0);
 //        System.out.println(product.toString());
 //        System.out.println(getDiscountAmount(product.getDiscountId()));
-        System.out.println(addNewCategory("new cate"));
+        CategoryDAO.hiddenCategory("1");
     }
 }

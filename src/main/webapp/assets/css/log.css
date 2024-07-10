@@ -154,6 +154,17 @@
     background: var(--blue-color);
 }
 
+.login-fb-gg{
+    margin-top: 12px;
+}
+
+.login-fb, .login-gg{
+    margin: 0 6px
+}
+.login-fb:hover, .login-gg:hover{
+    opacity: 0.8;
+}
+
 .footer {
     display: flex;
     flex-direction: column;

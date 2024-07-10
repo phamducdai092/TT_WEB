@@ -162,8 +162,27 @@
                     <div class="forget-pw">
                         <a class="link" href="forgetPassword.jsp">Quên mật khẩu ?</a>
                     </div>
+                    <button
+                            type="submit"
+                            class="submit sub-btn"
+                            id="signin"
+                    >
+                        ĐĂNG NHẬP
+                    </button>
+                    <p class="divider">or</p>
+                    <div class="login-fb-gg">
+                        <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/LoginGoogleHandler&response_type=code
+		   &client_id=792220056066-o9nj6cocon8fi0uppnq0u973bd42rl6t.apps.googleusercontent.com&approval_prompt=force"
+                           class="login-gg">
+                            <img width="129px" height="37px" alt="google-login-button"
+                                 src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg">
+                        </a>
 
-                    <button type="submit" class="submit sub-btn" id="signin">ĐĂNG NHẬP</button>
+                        <a href="" class="login-fb">
+                            <img width="129px" height="37px" alt="facebook-login-button"
+                                 src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg">
+                        </a>
+                    </div>
 
                     <div class="footer">
                         <span>Chưa đăng ký tài khoản ?</span>

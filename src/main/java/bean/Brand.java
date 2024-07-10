@@ -4,9 +4,12 @@ public class Brand {
     int id;
     String name;
 
-    public Brand(int id, String name) {
+    int status;
+
+    public Brand(int id, String name, int status) {
         this.id = id;
         this.name = name;
+        this.status = status;
     }
     public Brand() {
 
@@ -26,6 +29,13 @@ public class Brand {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override
