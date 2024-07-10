@@ -70,7 +70,7 @@ public class LoginGoogleHandler extends HttpServlet {
             user = UserDAO.getUserByIdGoogle(userGoogleDto.getId());
         }
         session.setAttribute("auth", user);
-        response.sendRedirect("./index.jsp");
+        response.sendRedirect("./home");
     }
 
     @Override
