@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="bean.User" %>
 
 
@@ -10,11 +10,12 @@
     <title>Our Project 49</title>
 
     <!-- reset CSS -->
-    <link rel="stylesheet" href="assets/css/reset.css"/>
-    <link rel="stylesheet" href="assets/css/profile.css"/>
-    <link rel="stylesheet" href="assets/css/index.css"/>
-    <link rel="stylesheet" href="assets/css/style.css"/>
-
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <link rel="stylesheet" href="assets/css/profile.css" />
+    <link rel="stylesheet" href="assets/css/index.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="./assets/css/product.css"> -->
 
     <!-- embed fonts -->
@@ -123,15 +124,7 @@
         <form action="./profile" method="post" class="form">
             <div id="manage-account" class="account active">
                 <div class="account_title">Thông tin tài khoản</div>
-                <!-- Thông báo -->
-                <%--                    <div class="submit-alert">--%>
-                <%--                        <div class="process">--%>
-                <%--                            <div class="process-content">--%>
-                <%--                                <i class="fa fa-check"></i>--%>
-                <%--                                <span>Bạn đã thay đổi thành công</span>--%>
-                <%--                            </div>--%>
-                <%--                        </div>--%>
-                <%--                    </div>--%>
+
                 <div class="style_info">
                     <div class="info">
                         <div class="info-left">
@@ -198,22 +191,21 @@
                                     <label for="birthDate" class="input-label">Ngày sinh</label>
                                     <div class="input-content">
 
-                                        <input id="birthDate" type="date" name="birthDate" class="input-date"
-                                               value="<%=birthDay%>">
+                                            <input id="birthDate" type="date" name="birthDate" class="input-date" value="<%=birthDay%>">
 
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-control">
-                                    <label class="input-label"
-                                    >Giới tính</label
-                                    >
-                                    <label class="radio">
-                                        <input
+                                    <div class="my-form-control">
+                                        <label class="input-label"
+                                        >Giới tính</label
+                                        >
+                                        <label class="radio">
+                                            <input
 
-                                                type="radio"
-                                                name="gender"
-                                                value="male"
-                                                <%= "male".equals(gender) ? "checked" : "" %>
+                                                    type="radio"
+                                                    name="gender"
+                                                    value="male"
+                                                    <%= "male".equals(gender) ? "checked" : "" %>
 
                                         />
                                         <span class="radio-fake"></span><span class="label">Nam</span>
@@ -221,55 +213,53 @@
                                     <label class="radio">
                                         <input
 
-                                                type="radio"
-                                                name="gender"
-                                                value="female"
-                                                <%= "female".equals(gender) ? "checked" : "" %>
-                                        />
-                                        <span class="radio-fake"></span><span class="label">Nữ</span>
-                                    </label>
-                                </div>
+                                                    type="radio"
+                                                    name="gender"
+                                                    value="female"
+                                                    <%= "female".equals(gender) ? "checked" : "" %>
+                                            />
+                                            <span class="radio-fake"></span><span class="label">Nữ</span>
+                                        </label>
+                                    </div>
 
-                                <div class="form-control">
-                                    <label class="input-label"
-                                    >&nbsp;</label
-                                    >
-                                    <button
-                                            id="save"
-                                            type="submit"
-                                            class="btn-submit"
-                                            onclick="return validateForm()"
-                                    >
-                                        Lưu thay đổi
-                                    </button>
-                                    <%--                                    <button id="save" type="submit" class="input-submit-btn submit-phone">Lưu thay đổi</button>--%>
+                                    <div class="my-form-control">
+                                        <label class="input-label">
+                                            &nbsp;
+                                        </label>
+                                        <button
+                                                id="save"
+                                                type="submit"
+                                                class="btn-submit"
+                                                onclick="return validateForm()"
+                                        >
+                                            Lưu thay đổi
+                                        </button>
+                                    </div>
                                 </div>
-                                <%--                                  </form>--%>
                             </div>
-                        </div>
-                        <div class="info-right">
+                            <div class="info-right">
                             <span class="info-title"
                             >Số điện thoại và Email</span
                             >
-                            <!-- lCUBE -->
-                            <div class="info-contact">
-                                <div class="list-item">
-                                    <div class="info">
-                                        <i class="fa fa-phone icon-profile"></i>
-                                        <div class="detail">
-                                            <label for="phone" class="input-label">Số điện thoại</label>
+                                <!-- lCUBE -->
+                                <div class="info-contact">
+                                    <div class="list-item">
+                                        <div class="info">
+                                            <i class="fa fa-phone icon-profile"></i>
+                                            <div class="detail">
+                                                <label for="phone" class="input-label">Số điện thoại</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <div class="input-content">
-                                            <input
-                                                    id="phone"
-                                                    class="input-phone"
-                                                    type="tel"
-                                                    name="phone"
-                                                    maxlength="128"
-                                                    placeholder="Phone"
-                                                    onkeyup="validatePhone()"
+                                        <div>
+                                            <div class="input-content">
+                                                <input
+                                                        id="phone"
+                                                        class="input-phone"
+                                                        type="tel"
+                                                        name="phone"
+                                                        maxlength="128"
+                                                        placeholder="Phone"
+                                                        onkeyup="validatePhone()"
 
                                                     <%
                                                         if (phone == 0) {
@@ -349,6 +339,9 @@
 <!-- MAIN JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="js/profile.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 <script>
     function validateForm() {
         var firstName = document.getElementById('firstName').value.trim();

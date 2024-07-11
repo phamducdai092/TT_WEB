@@ -1,7 +1,7 @@
 package controller.admin;
 
-import bean.User;
-import dao.UserDAO;
+import bean.Bill;
+import dao.BillDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(value = "/changeInfoUser")
-public class adminChangeInfoUser extends HttpServlet {
+@WebServlet(value = "/changeInfoBill")
+public class AdminChangeInfoBill extends HttpServlet {
 
 
     @Override
@@ -22,18 +22,18 @@ public class adminChangeInfoUser extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int role = Integer.parseInt(req.getParameter("user-role"));
-        int userId = Integer.parseInt(req.getParameter("userId"));
+
+        String status = req.getParameter("bill-status");
+        int billId = Integer.parseInt(req.getParameter("billId"));
 
 
+        BillDAO.changeInfoBill(billId, status);
 
-
-        UserDAO.changeInfoUserWithRole(userId, role);
-
-        User updatedUser = UserDAO.getUserById(userId);
+        Bill updatedBill = BillDAO.getInstance().getBillById(billId);
         HttpSession session = req.getSession();
-        session.setAttribute("user", updatedUser);
-        
-        req.getRequestDispatcher("./adminEditUser.jsp").forward(req, resp);
+        session.setAttribute("bill", updatedBill);
+
+
+        req.getRequestDispatcher("./adminEditBill.jsp").forward(req, resp);
     }
 }

@@ -89,7 +89,7 @@
         <!-- Thêm hidden input để giữ giá trị txtSearch khi chưa ấn submit -->
         <input type="hidden" name="hiddenSearch" value="${empty param.txtSearch ? '' : param.txtSearch}" />
         <div id="searchResults" style="display: none;"></div>
-        <button class="search-btn" type="submit">
+        <button class="search-btn btn" type="submit">
             <i class="fa-solid fa-magnifying-glass search-ic"></i>
         </button>
     </form>
@@ -212,26 +212,26 @@
                             class="box_s box_orderss hidden"
                     >
                         <div class="box_ss">
-                            <ul>
-                                <li>
-                                    <a href="products?AZorZA=ASC">
+                            <ul class="directory__item">
+                                <li class="directory__gerne">
+                                    <a href="products?AZorZA=ASC" class="gerne-link">
                                         <label>Giá thấp đến cao</label>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="products?AZorZA=DESC">
+                                <li class="directory__gerne">
+                                    <a href="products?AZorZA=DESC" class="gerne-link">
                                         <label>Giá cao xuống thấp</label>
                                     </a>
                                 </li>
 
-                                <li>
-                                    <a href="products?AZorZA=ASC">
+                                <li class="directory__gerne">
+                                    <a href="products?AZorZA=ASC" class="gerne-link">
                                         <%--@declare id="azorza"--%><label>Tên A-Z</label>
                                     </a>
                                 </li>
 
-                                <li>
-                                    <a href="products?AZorZA=DESC">
+                                <li class="directory__gerne" >
+                                    <a href="products?AZorZA=DESC" class="gerne-link">
                                         <label>Tên Z-A</label>
                                     </a>
                                 </li>
@@ -253,7 +253,7 @@
                                     <a href="productdetails?selectedProductId=${item.id}" class="title">${item.name}</a>
                                     <div class="desc">${item.description}</div>
                                     <div class="price">
-                                        <fmt:formatNumber type="currency" value="${item.totalPrice}" currencySymbol="" currencyCode="VND" var="formattedCurrency" />
+                                        <fmt:formatNumber type="currency" value="${item.totalPrice}" currencyCode="VND" pattern="#,##0 ₫" var="formattedCurrency" />
                                             ${formattedCurrency}
                                     </div>
                                     <form action="/cart" method="get">

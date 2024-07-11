@@ -106,12 +106,11 @@
         <div id="product__detail" class="product-content detail">
             <div class="product__img">
                 <div class="product__img-spot">
-                    <img src="<%= productImages.get(0).getLink()%>"
-                         alt=""/>
-                    <button class="cta-img left">
+                    <img id="mainImage" src="<%= productImages.get(0).getLink()%>" alt=""/>
+                    <button class="cta-img left" onclick="changeImage(-1)">
                         <i class="fa-solid fa-arrow-left-long"></i>
                     </button>
-                    <button class="cta-img right">
+                    <button class="cta-img right" onclick="changeImage(1)">
                         <i class="fa-solid fa-arrow-right-long"></i>
                     </button>
                 </div>
@@ -379,67 +378,19 @@
 <!-- OWL CAROUSEL JS -->
 <script src="./js/owl.carousel.min.js"></script>
 <script>
-    $(".owl-carousel").owlCarousel({
-        loop: true,
-        nav: false,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        responsive: {
-            0: {
-                items: 1,
-            },
-        },
-    });
-    $(document).ready(function () {
-        $('.up').on('click', function () {
-            changeQuantity(1);
-        });
+    let currentIndex = 0;
+    let images = [<% for (Image_Product img : productImages) { %>"<%= img.getLink() %>",<% } %>];
 
-        $('.down').on('click', function () {
-            changeQuantity(-1);
-        });
-
-        $('.add__cart').on('click', function () {
-            const quantity = parseInt($('.count').text());
-            let selectedCodeColor = $('input[name="selectedCodeColor"]:checked').val();
-
-            if (selectedCodeColor == null) {
-                alert('Nếu bạn không chọn màu sắc, mặc định sẽ là màu đầu tiên');
-                selectedCodeColor = $('.option_color').first().attr('title');
-            }
-
-            $.ajax({
-                url: '<%= request.getContextPath()%>/cart',
-                type: 'POST',
-                data: {
-                    selectedCodeColor: selectedCodeColor,
-                    quantity: quantity,
-                    id: <%=selectedProduct.getId()%>
-                },
-                success: function (response) {
-                    alert('Thêm vào giỏ hàng thành công');
-                    // direct to cart page
-                    window.location.href = '<%= request.getContextPath()%>/cart';
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                }
-            });
-
-        })
-
-        function changeQuantity(amount) {
-            let currentCount = parseInt($('.count').text());
-            let newCount = currentCount + amount;
-            if (newCount < 1) {
-                newCount = 1;
-            }
-            $('.count').text(newCount);
+    function changeImage(offset) {
+        currentIndex += offset;
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1;
+        } else if (currentIndex >= images.length) {
+            currentIndex = 0;
         }
-    });
+        document.getElementById("mainImage").src = images[currentIndex];
+    }
 </script>
-
 <script type="text/javascript">
     function addReview(productId) {
         <%if(u == null) {%>
