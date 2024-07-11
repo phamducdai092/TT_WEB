@@ -4,22 +4,26 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 .clear {
     clear: both;
 
 
 }
-body{
+
+body {
     font-family: 'Montserrat', sans-serif;
     color: black;
     background-color: #fff;
     letter-spacing: 1px;
 }
+
 html {
     font-size: 18px;
     /* 1rem = 18px */
     /* Nếu không khai báo font-size thì 1rem tự động là 16px */
 }
+
 button {
     background-color: #ee6c4d;
     border: 1px solid #293241;
@@ -137,16 +141,17 @@ h2 {
 }
 
 .profile-function-list {
-    height: 408px;
-    padding: 46px 0 0;
-    padding: 0px;
+    height: 420px;
+    padding: 12px;
     list-style: none;
     font-size: 13px;
+    border-radius: 4px;
 }
 
 .profile-function-list a:hover, .profile-function-list a:active, .profile-function-list a:focus, .profile-function-list a.is-active {
     background-color: #ee6c4d;
     color: #fff;
+    border-radius: 4px;
 }
 
 .profile-function-list a {
@@ -156,26 +161,21 @@ h2 {
     padding: 7px 18px;
     color: #fff;
 }
+
 .profile-function-list a i, .profile-function-list a .icon {
     width: 24px;
     height: 24px;
-    margin: 0px 22px 0px 0px;
+    margin-right: 22px;
     font-size: 20px;
     color: #fff;
 }
 
 
-.account_title
-{
+.account_title {
     font-size: 20px;
     line-height: 32px;
     font-weight: 300;
-    margin: 4px 0px 12px 36px;
-}
-
-.style_info {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 4px 0 12px 0;
 }
 
 .style_info .info {
@@ -208,7 +208,7 @@ h2 {
 
 .style_info .info-right {
     width: calc(100% - 55%);
-    padding: 16px 16px 16px 24px;
+    padding-left: 16px;
     display: flex;
     flex-direction: column;
 }
@@ -260,7 +260,7 @@ h2 {
     width: 50px;
     height: 50px;
     max-width: 100%;
-    border-style: none  ;
+    border-style: none;
     border-radius: 24px;
 }
 
@@ -300,8 +300,8 @@ h2 {
 }
 
 .form-profile .input-label {
-    width: 110px;
-    min-width: 110px;
+    /*width: px;*/
+    min-width: 50px;
     font-size: 14px;
     color: rgb(51, 51, 51);
     margin-right: 16px;
@@ -318,13 +318,12 @@ h2 {
     width: 100%;
 }
 
- .input-content .input-name,
- .input-content .input-nickname,
- .input-content .input-country,
- .input-content .input-mail,
- .input-content .input-phone,
- .input-content .input-date
-{
+.input-content .input-name,
+.input-content .input-nickname,
+.input-content .input-country,
+.input-content .input-mail,
+.input-content .input-phone,
+.input-content .input-date {
     height: 36px;
     width: 100%;
     border-radius: 4px;
@@ -336,41 +335,25 @@ h2 {
 }
 
 
-
 #phone {
     position: relative;
-    width: 150%;
     float: right;
     z-index: 10;
 }
 
-#phone-error {
-    position: absolute;
+#phone-error,
+#email-error {
     color: red;
     font-weight: 400;
-    top: 24%;
-    left: 73.5%;
+    margin: 12px 0;
     transition: top 0.5s;
 }
 
 #email {
     position: relative;
-    width: 150%;
     float: right;
     z-index: 10;
 }
-
-#email-error
-{
-    position: absolute;
-    color: red;
-    font-weight: 400;
-    top: 40%;
-    left: 73.5%;
-    transition: top 0.5s;
-}
-
-
 
 .form-profile .my-form-control > div {
     display: flex;
@@ -458,9 +441,6 @@ h2 {
     width: 24px;
 }
 
-.form-profile .btn-submit {
-    width: 176px;
-}
 
 .btn-submit {
     border: 0px;
@@ -486,16 +466,18 @@ h2 {
 .info-contact .list-item {
     border-top: 1px solid rgb(248, 248, 248);
     display: flex;
+    flex-direction: column;
     -webkit-box-align: center;
-    align-items: center;
+    align-items: start;
     width: 100%;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    padding: 19px 0px;
+    padding: 19px 0;
 }
 
 .info-contact .info {
     display: flex;
+    position: relative;
 }
 
 .info-contact .list-item .icon-profile {
@@ -514,7 +496,7 @@ h2 {
     background-position: 0px 0px;
 }
 
-.info-contact .detail  {
+.info-contact .detail {
     display: flex;
     flex-direction: column;
 }
@@ -548,18 +530,20 @@ h2 {
     padding: 0px 12px;
     color: #ee6c4d;
 }
+
 .footer__items nav ul li a {
     text-decoration: none;
     color: white;
     line-height: 32px;
 }
-.footer__items .about__us .about__us__icon i{
+
+.footer__items .about__us .about__us__icon i {
     width: 35px;
     height: 35px;
     line-height: 35px;
     text-align: center;
     font-size: 2rem;
-    margin-right: 10px ;
+    margin-right: 10px;
     border: 1px solid white;
     transition: all .5s;
     cursor: pointer;
@@ -644,8 +628,7 @@ h2 {
 }
 
 .my-form-control .input-label,
-.input-label
-{
+.input-label {
     font-size: 14px;
     color: rgb(56, 56, 61);
     margin-bottom: 10px;
@@ -682,8 +665,7 @@ h2 {
 
 /* Thông báo */
 
-.submit-alert
-{
+.submit-alert {
     width: 400px;
     height: 70px;
     display: flex;
@@ -697,8 +679,7 @@ h2 {
     transition: all 0.4s;
 }
 
-.account .process
-{
+.account .process {
     height: 70px;
     border-left: 5px solid #ee6c4d;
     top: 0;
@@ -709,17 +690,13 @@ h2 {
 }
 
 
-
-.submit-alert .fa-check
-
-{
+.submit-alert .fa-check {
     padding: 0 10px;
     font-size: 20px;
     color: #ee6c4d;
 }
 
-.process > span
-{
+.process > span {
     font-size: 16px;
 }
 

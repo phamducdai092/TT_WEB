@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="bean.User" %>
 
 
@@ -10,10 +10,10 @@
     <title>Our Project 49</title>
 
     <!-- reset CSS -->
-    <link rel="stylesheet" href="assets/css/reset.css" />
-    <link rel="stylesheet" href="assets/css/profile.css" />
-    <link rel="stylesheet" href="assets/css/index.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/reset.css"/>
+    <link rel="stylesheet" href="assets/css/profile.css"/>
+    <link rel="stylesheet" href="assets/css/index.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="./assets/css/product.css"> -->
@@ -120,78 +120,80 @@
             </div>
         </div>
         <!-- .dLDnti -->
-        <jsp:include page="sidebar-profile.jsp"/>
-        <form action="./profile" method="post" class="form">
-            <div id="manage-account" class="account active">
-                <div class="account_title">Thông tin tài khoản</div>
+        <div class="row">
+            <jsp:include page="sidebar-profile.jsp"/>
+            <form action="./profile" method="post" class="my-form col-md-9">
+                <div id="manage-account" class="account active">
+                    <div class="account_title">Thông tin tài khoản</div>
 
-                <div class="style_info">
-                    <div class="info">
-                        <div class="info-left">
-                            <span class="info-title">Thông tin cá nhân</span>
-                            <div class="form-profile">
-                                <%--                                 <form action="./profile" method="post" class="form">--%>
-                                <div class="form-info">
-                                    <div class="form-avatar">
-                                        <div class="form-avatar-image">
-                                            <div>
-                                                <div class="avatar-view">
-                                                    <img
-                                                            src="https://png.pngtree.com/png-clipart/20210613/original/pngtree-gray-silhouette-avatar-png-image_6404679.jpg"
-                                                            alt="avatar"
-                                                            class="default"
-                                                    />
-                                                    <div class="edit">
+                    <div class="style_info">
+                        <div class="info">
+                            <div class="info-left">
+                                <span class="info-title">Thông tin cá nhân</span>
+                                <div class="form-profile">
+                                    <%--                                 <form action="./profile" method="post" class="form">--%>
+                                    <div class="form-info">
+                                        <div class="form-avatar">
+                                            <div class="form-avatar-image">
+                                                <div>
+                                                    <div class="avatar-view">
                                                         <img
-                                                                src="https://frontend.tikicdn.com/_desktop-next/static/img/account/edit.png"
-                                                                class="edit_img"
-                                                                alt=""
+                                                                src="https://png.pngtree.com/png-clipart/20210613/original/pngtree-gray-silhouette-avatar-png-image_6404679.jpg"
+                                                                alt="avatar"
+                                                                class="default"
+                                                        />
+                                                        <div class="edit">
+                                                            <img
+                                                                    src="https://frontend.tikicdn.com/_desktop-next/static/img/account/edit.png"
+                                                                    class="edit_img"
+                                                                    alt=""
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-name">
+                                            <div class="my-form-control">
+                                                <label for="firstName" class="input-label">Họ</label>
+                                                <div>
+                                                    <div class="input-content">
+                                                        <input
+                                                                id="firstName"
+                                                                class="input-name"
+                                                                type="search"
+                                                                name="firstName"
+                                                                maxlength="128"
+                                                                placeholder="Họ"
+                                                                value="<%=firstName%>"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="my-form-control">
+                                                <label for="lastName" class="input-label">Tên</label>
+                                                <div>
+                                                    <div class="input-content">
+                                                        <input
+                                                                id="lastName"
+                                                                class="input-nickname"
+                                                                name="lastName"
+                                                                maxlength="128"
+                                                                placeholder="Tên"
+                                                                type="search"
+                                                                value="<%=lastName%>"
                                                         />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-name">
-                                        <div class="form-control">
-                                            <label for="firstName" class="input-label">Họ</label>
-                                            <div>
-                                                <div class="input-content">
-                                                    <input
-                                                            id="firstName"
-                                                            class="input-name"
-                                                            type="search"
-                                                            name="firstName"
-                                                            maxlength="128"
-                                                            placeholder="Họ"
-                                                            value="<%=firstName%>"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-control">
-                                            <label for="lastName" class="input-label">Tên</label>
-                                            <div>
-                                                <div class="input-content">
-                                                    <input
-                                                            id="lastName"
-                                                            class="input-nickname"
-                                                            name="lastName"
-                                                            maxlength="128"
-                                                            placeholder="Tên"
-                                                            type="search"
-                                                            value="<%=lastName%>"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-control">
-                                    <label for="birthDate" class="input-label">Ngày sinh</label>
-                                    <div class="input-content">
+                                    <div class="my-form-control">
+                                        <label for="birthDate" class="input-label">Ngày sinh</label>
+                                        <div class="input-content">
 
-                                            <input id="birthDate" type="date" name="birthDate" class="input-date" value="<%=birthDay%>">
+                                            <input id="birthDate" type="date" name="birthDate" class="input-date"
+                                                   value="<%=birthDay%>">
 
                                         </div>
                                     </div>
@@ -207,11 +209,11 @@
                                                     value="male"
                                                     <%= "male".equals(gender) ? "checked" : "" %>
 
-                                        />
-                                        <span class="radio-fake"></span><span class="label">Nam</span>
-                                    </label>
-                                    <label class="radio">
-                                        <input
+                                            />
+                                            <span class="radio-fake"></span><span class="label">Nam</span>
+                                        </label>
+                                        <label class="radio">
+                                            <input
 
                                                     type="radio"
                                                     name="gender"
@@ -223,9 +225,9 @@
                                     </div>
 
                                     <div class="my-form-control">
-                                        <label class="input-label">
-                                            &nbsp;
-                                        </label>
+                                        <%--                                        <label class="input-label">--%>
+                                        <%--                                            &nbsp;--%>
+                                        <%--                                        </label>--%>
                                         <button
                                                 id="save"
                                                 type="submit"
@@ -250,16 +252,16 @@
                                                 <label for="phone" class="input-label">Số điện thoại</label>
                                             </div>
                                         </div>
-                                        <div>
-                                            <div class="input-content">
-                                                <input
-                                                        id="phone"
-                                                        class="input-phone"
-                                                        type="tel"
-                                                        name="phone"
-                                                        maxlength="128"
-                                                        placeholder="Phone"
-                                                        onkeyup="validatePhone()"
+                                        <%--                                        <div>--%>
+                                        <div class="input-content">
+                                            <input
+                                                    id="phone"
+                                                    class="input-phone"
+                                                    type="tel"
+                                                    name="phone"
+                                                    maxlength="128"
+                                                    placeholder="Phone"
+                                                    onkeyup="validatePhone()"
 
                                                     <%
                                                         if (phone == 0) {
@@ -275,20 +277,19 @@
                                                     %>
 
                                             />
-                                            <span id="phone-error"></span>
-
                                         </div>
-                                    </div>
+                                        <span id="phone-error"></span>
+                                        <%--                                        </div>--%>
 
-                                </div>
-                                <div class="list-item">
-                                    <div class="info">
-                                        <i class="fa fa-envelope icon-profile"></i>
-                                        <div class="detail">
-                                            <label for="email" class="input-label">Địa chỉ email</label>
-                                        </div>
                                     </div>
-                                    <div>
+                                    <div class="list-item">
+                                        <div class="info">
+                                            <i class="fa fa-envelope icon-profile"></i>
+                                            <div class="detail">
+                                                <label for="email" class="input-label">Địa chỉ email</label>
+                                            </div>
+                                        </div>
+                                        <%--                                        <div>--%>
                                         <div class="input-content">
                                             <input
                                                     id="email"
@@ -303,36 +304,38 @@
                                                     <% if (!id_google.equals(null)) {%>
                                                     readonly  <%}%>
                                             />
-                                            <span id="email-error"></span>
+
+                                        </div>
+                                        <%--                                        </div>--%>
+                                        <span id="email-error"></span>
+                                    </div>
+                                </div>
+                                <%--  Kiểm tra nếu đăng nhập bằng bên thứ 3 thì không thể thay đổi mật khẩu--%>
+                                <% if (id_google.equals(null)) {%>
+                                <span class="info-title">Bảo mật</span>
+                                <div class="info-contact">
+                                    <div class="list-item">
+                                        <div>
+                                            <i class="fa fa-lock icon-profile"></i>
+                                            <span>Thiết lập mật khẩu</span>
+                                        </div>
+                                        <div class="status">
+                                            <span></span>
+                                            <a href="./resetPassword.jsp" id="updatePasswordLink">
+                                                <button class="button active account-password">
+                                                    Cập nhật
+                                                </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
+                                <%}%>
                             </div>
-                            <%--  Kiểm tra nếu đăng nhập bằng bên thứ 3 thì không thể thay đổi mật khẩu--%>
-                            <% if (id_google.equals(null)) {%>
-                            <span class="info-title">Bảo mật</span>
-                            <div class="info-contact">
-                                <div class="list-item">
-                                    <div>
-                                        <i class="fa fa-lock icon-profile"></i>
-                                        <span>Thiết lập mật khẩu</span>
-                                    </div>
-                                    <div class="status">
-                                        <span></span>
-                                        <a href="./resetPassword.jsp" id="updatePasswordLink">
-                                            <button class="button active account-password">
-                                                Cập nhật
-                                            </button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <%}%>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
 
     </div>
 </div>
