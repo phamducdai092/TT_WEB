@@ -47,6 +47,8 @@
 
     <link rel="stylesheet" href="./assets/css/adminEditProduct.css"/>
     <link rel="stylesheet" href="./assets/css/style.css"/>
+
+    <script src="./ckeditor/ckeditor.js"></script>
 </head>
 <body>
 <div class="container">
@@ -63,7 +65,7 @@
             <div class="product product-name">
                 <label for="product-name" class="product-title">Tên sản phẩm:</label>
                 <input value="${productId}" hidden="hidden" name="productId">
-                <input id="product-name" name="product-name" class="product-sub" value="${product.getName()}"></input>
+                <input id="product-name" name="product-name" class="product-sub" value="${product.getName()}">
             </div>
             <div class="product product-discount">
                 <label for="selectOptionDiscount" class="product-title">Giảm giá: </label>
@@ -123,7 +125,7 @@
                     <c:forEach var="supplier" items="${sessionScope.suppliers}">
                         <c:choose>
                             <c:when test="${product.getSupplierId() == supplier.getId()}">
-                                <option class="product-sub" selected="selectedvalue="
+                                <option class="product-sub" selected="selected"
                                         value="${product.getSupplierName(product.getSupplierId())}">${product.getSupplierName(product.getSupplierId())}</option>
                             </c:when>
                             <c:otherwise>
@@ -136,7 +138,7 @@
             <div class="product product-quantity">
                 <label for="product-quantity" class="product-title">Số lượng: </label>
                 <input id="product-quantity" name="product-quantity" class="product-sub"
-                       value="${product.getQuantity()}"></input>
+                       value="${product.getQuantity()}">
             </div>
             <div class="product product-price">
                 <label for="product-price" class="product-title">Giá: </label>
@@ -144,7 +146,7 @@
                 <c:set var="roundedPrice" value="${Math.round(price)}"/>
                 <fmt:formatNumber var="formattedPrice" value="${roundedPrice}" pattern="###,###,###"/>
                 <input id="product-price" name="product-price" class="product-sub"
-                       value="${formattedPrice}"></input>
+                       value="${formattedPrice}">
             </div>
             <div class="product product-desc">
                 <label for="product-desc" class="product-title">Thông tin sản phẩm: </label>
@@ -160,7 +162,7 @@
             <div class="list-img">
                 <c:forEach var="o" items="${product.imageProducts(product.getId())}">
                     <div class="item">
-                            <i class="fa-regular fa-circle-xmark delete-ic"></i>
+                        <i class="fa-regular fa-circle-xmark delete-ic"></i>
                         <img class="img-product" src="${o.getLink()}" alt="">
                     </div>
                     <form class="confirm-form" style="display: none;">
@@ -176,37 +178,33 @@
                 </c:forEach>
             </div>
             <div id="imageForm" style="display: flex;">
-                <form id="addImageForm" action="addProductImage" method="GET">
-                    <!-- Chỉ định action và method của form -->
+                <form id="addImageForm" action="addProductImage?productId=${productId}" method="POST" enctype="multipart/form-data">
                     <p class="form-title">Thêm hình ảnh</p>
-                    <p class="important">* Lưu ý: có thể thêm nhiều link 1 lần,</p>
-                    <p class="important">và link phải ngăn cách nhau bằng khoảng trắng</p>
-                    <input type="text" placeholder="Nhập URL" name="link-img" id="linkImg">
-                    <button type="button" id="submitBtn"> <!-- Loại button vẫn là "button" -->
-                        Thêm hình ảnh
-                    </button>
+                    <input type="file" name="upload" id="linkImg"> <!-- Changed to match servlet -->
+                    <button type="submit" id="submitBtn">Thêm hình ảnh</button> <!-- Changed to type="submit" -->
                 </form>
             </div>
+
         </div>
     </div>
 </div>
 <script>
+    CKEDITOR.replace('product-desc');
+    <%--document.addEventListener("DOMContentLoaded", function () {--%>
+    <%--    const submitBtn = document.getElementById("submitBtn");--%>
+    <%--    const addImageForm = document.getElementById("addImageForm");--%>
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const submitBtn = document.getElementById("submitBtn");
-        const addImageForm = document.getElementById("addImageForm");
+    <%--    submitBtn.addEventListener("click", function () {--%>
+    <%--        const linkImgInput = document.getElementById("linkImg");--%>
+    <%--        const imageUrl = linkImgInput.value;--%>
 
-        submitBtn.addEventListener("click", function () {
-            const linkImgInput = document.getElementById("linkImg");
-            const imageUrl = linkImgInput.value;
-
-            const productId = "${product.getId()}";
-            const addProductImageUrl = "addProductImage?productId=" + productId + "&imageUrl=" + encodeURIComponent(imageUrl);
+    <%--        const productId = "${product.getId()}";--%>
+    <%--        const addProductImageUrl = "addProductImage?productId=" + productId + "&imageUrl=" + encodeURIComponent(imageUrl);--%>
 
 
-            window.location.href = addProductImageUrl;
-        });
-    });
+    <%--        window.location.href = addProductImageUrl;--%>
+    <%--    });--%>
+    <%--});--%>
 
     document.addEventListener("DOMContentLoaded", function () {
         const deleteIcons = document.querySelectorAll(".delete-ic");
@@ -228,6 +226,7 @@
             });
         });
     });
+
 
 </script>
 </body>

@@ -7,8 +7,6 @@
 
 .clear {
     clear: both;
-
-
 }
 
 body {
@@ -24,20 +22,6 @@ html {
     /* Nếu không khai báo font-size thì 1rem tự động là 16px */
 }
 
-button {
-    background-color: #ee6c4d;
-    border: 1px solid #293241;
-    border-radius: 7px;
-    color: black;
-    padding: 12px 25px;
-    font-weight: 600;
-    font-size: 1.2rem;
-    font-family: inherit;
-    cursor: pointer;
-    letter-spacing: 1px;
-    transition: all .5s;
-}
-
 h2 {
     margin-top: 50px;
     font-size: 3rem;
@@ -46,6 +30,11 @@ h2 {
     margin-bottom: 3rem;
     letter-spacing: 2px;
     text-align: center;
+}
+
+.is-active {
+    background-color: #ee6c4d;
+    color: #fff;
 }
 
 /* PROFILE */
