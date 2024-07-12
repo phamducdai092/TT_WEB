@@ -301,7 +301,7 @@
                                                     onkeyup="validateEmail()"
                                                     value="<%=email%>"
                                             <%--  kiểm tra nếu đăng nhập bằng bên thứ 3 thì không thể thay đổi emali--%>
-                                                    <% if (!id_google.equals(null)) {%>
+                                                    <% if (!id_google.isEmpty()) {%>
                                                     readonly  <%}%>
                                             />
 
@@ -311,7 +311,7 @@
                                     </div>
                                 </div>
                                 <%--  Kiểm tra nếu đăng nhập bằng bên thứ 3 thì không thể thay đổi mật khẩu--%>
-                                <% if (id_google.equals(null)) {%>
+                                <% if (id_google.isEmpty()) {%>
                                 <span class="info-title">Bảo mật</span>
                                 <div class="info-contact">
                                     <div class="list-item">
