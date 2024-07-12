@@ -6,6 +6,7 @@ public class Supplier {
     private String name;
     private String email;
     private int phone;
+    private int status;
 
     public Supplier(int id, String name, String email, int phone) {
         this.id = id;
@@ -13,6 +14,14 @@ public class Supplier {
         this.email = email;
         this.phone = phone;
     }
+    public Supplier(int id, String name, String email, int phone, int status) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.status=status;
+    }
+
 
     public Supplier() {
     }
@@ -48,7 +57,13 @@ public class Supplier {
     public void setPhone(int phone) {
         this.phone = phone;
     }
+    public int getStatus() {
+        return status;
+    }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
     @Override
     public String toString() {
         return "Supplier{" +

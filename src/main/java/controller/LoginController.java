@@ -87,7 +87,7 @@ public class LoginController extends HttpServlet {
             }
             if (user.getStatus() != 0) {
                 session.setAttribute("auth", user);
-                resp.sendRedirect("./index.jsp");
+                resp.sendRedirect("./home");
             }
         } else {
             failedAttempts++; // Tăng số lần nhập sai

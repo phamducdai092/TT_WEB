@@ -35,6 +35,14 @@ public class UserDAO {
         ));
         return user.isEmpty() ? null : user.get();
     }
+    public static User getUserByIdGoogle(String id_google) {
+        Optional<User> user = JDBIConnector.me().withHandle((handle ->
+                handle.createQuery("select * from users where users.id_google = ?")
+                        .bind(0, id_google)
+                        .mapToBean(User.class).stream().findFirst()
+        ));
+        return user.isEmpty() ? null : user.get();
+    }
 
     public static User adminViewUser(int id) {
         User user = JDBIConnector.me().withHandle(handle ->
@@ -74,7 +82,6 @@ public class UserDAO {
     }
 
 
-
     public static List<User> getListUserById(int id) {
         List<User> userList = JDBIConnector.me().withHandle(handle ->
                 handle.createQuery("SELECT * FROM users WHERE user.id = ?")
@@ -105,6 +112,7 @@ public class UserDAO {
 
     public static void registerUser(String username, String email, String password) {
         int id = 0;
+        String id_google = "";
         int phone = 0;
         String first = "";
         String last = "";
@@ -113,8 +121,36 @@ public class UserDAO {
         int role = 0;
         int status = 0;
         JDBIConnector.me().withHandle(handle -> {
-            return handle.createUpdate("INSERT INTO users VALUE (:id, :username, :password, :email, :phone, :first, :last, :date, :gender, :role, :status)")
+            return handle.createUpdate("INSERT INTO users VALUE (:id, :id_google, :username, :password, :email, :phone, :first, :last, :date, :gender, :role, :status)")
                     .bind("id", id)
+                    .bind("id_google", id_google)
+                    .bind("username", username)
+                    .bind("password", password)
+                    .bind("email", email)
+                    .bind("phone", phone)
+                    .bind("first", first)
+                    .bind("last", last)
+                    .bind("date", date)
+                    .bind("gender", gender)
+                    .bind("role", role)
+                    .bind("status", status)
+
+                    .execute();
+        });
+    }
+    public static void registerUserGoogle(String id_google, String username, String first, String last) {
+        int id = 0;
+        int phone = 0;
+        String email = "";
+        String password = "";
+        Date date = new Date();
+        String gender = "";
+        int role = 0;
+        int status = 1;
+        JDBIConnector.me().withHandle(handle -> {
+            return handle.createUpdate("INSERT INTO users VALUE (:id, :id_google, :username, :password, :email, :phone, :first, :last, :date, :gender, :role, :status)")
+                    .bind("id", id)
+                    .bind("id_google", id_google)
                     .bind("username", username)
                     .bind("password", password)
                     .bind("email", email)
@@ -174,7 +210,8 @@ public class UserDAO {
     public static void main(String[] args) {
 //        changePassword("cunoccho0601@gmail.com", "hahaha");
 
-        changeInfoUserWithRole(5, 0);
+//        changeInfoUserWithRole(5, 0);
+            registerUser("vophong", "vophong2642003@gmail.com", "tjd2+x2TK5ELZzghlrfYLLdbYY0=");
 
     }
 }
