@@ -2,6 +2,7 @@ package bean;
 
 public class User {
     private int id;
+    private String id_google;
     private String username;
     private String password;
     private String email;
@@ -13,8 +14,9 @@ public class User {
     private int role;
     private int status;
 
-    public User(int id, String username, String password, String email, int phone, String firstName, String lastName, String birthDate, String gender, int role, int status) {
+    public User(int id, String id_google, String username, String password, String email, int phone, String firstName, String lastName, String birthDate, String gender, int role, int status) {
         this.id = id;
+        this.id_google = id_google;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -53,7 +55,13 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+    public String getId_google() {
+        return id_google;
+    }
 
+    public void setId_google(String id_google) {
+        this.id_google = id_google;
+    }
     public String getUsername() {
         return username;
     }
@@ -141,6 +149,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", id_google='" + id_google + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

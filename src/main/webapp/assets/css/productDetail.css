@@ -184,6 +184,10 @@ body {
     padding: 12px 16px;
     border-radius: 8px;
 }
+.days-left {
+    padding-left: 10px;
+    margin-left: 20px;
+}
 
 .rate {
     text-align: center;
@@ -255,7 +259,7 @@ body {
     height: 100%;
     display: flex;
     gap: 4px;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
     color: #fff;

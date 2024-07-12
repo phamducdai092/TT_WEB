@@ -10,7 +10,7 @@ public class SupplierDAO {
 
     public static List<Supplier> getListSupplier() {
         List<Supplier> supplierList = JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("select id, name, email, phone from suppliers")
+                handle.createQuery("select id, name, email, phone, status from suppliers")
                         .mapToBean(Supplier.class)
                         .collect(Collectors.toList())
         );
@@ -37,6 +37,27 @@ public class SupplierDAO {
         }catch (Exception e) {
             return false;
         }
+    }
+    public static void hiddenSupplier(int id) {
+        JDBIConnector.me().withHandle(handle -> {
+            int currentStatus = handle.createQuery("SELECT status FROM suppliers WHERE id = :id")
+                    .bind("id", id)
+                    .mapTo(int.class)
+                    .one();
+
+            int newStatus = (currentStatus == 1) ? 0 : 1;
+
+            handle.createUpdate("UPDATE suppliers SET status = :newStatus WHERE id = :id")
+                    .bind("newStatus", newStatus)
+                    .bind("id", id)
+                    .execute();
+
+            handle.createUpdate("UPDATE product_details SET statusSupplier = :newStatus WHERE id = :id")
+                    .bind("newStatus", newStatus)
+                    .bind("id", id)
+                    .execute();
+            return true;
+        });
     }
 
 

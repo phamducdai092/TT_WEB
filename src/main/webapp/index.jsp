@@ -10,7 +10,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
     List<Category> categories = (List<Category>) request.getAttribute("categories");
-    if(categories == null) categories = new ArrayList<>();
+    if (categories == null) categories = new ArrayList<>();
 
     List<Product> productList = (List<Product>) request.getAttribute("products");
     if (productList == null) productList = new ArrayList<>();
@@ -148,15 +148,20 @@
         <div class="container">
             <div class="list">
                 <% for (Product p : productList) { %>
+                <%-- Kiem tra xem san pham cho bi an khong--%>
+                <% if (p.getStatus() == 1 && p.getStatusCategory() == 1 && p.getStatusBrand() == 1 && p.getStatusSupplier() == 1) { %>
                 <div class="item">
                     <a href="productdetails?selectedProductId=<%= p.getId()%>">
                         <div class="img">
-                            <img src="<%= ImageDAO.getImageByProductId(p.getId()).get(0).getLink() %>" alt="Roland VAD 706" />
+                            <img src="<%= ImageDAO.getImageByProductId(p.getId()).get(0).getLink() %>"
+                                 alt="Roland VAD 706"/>
                         </div>
 
                         <div class="item_content">
-                            <div class="title"><%= p.getName() %></div>
-                            <div class="desc"><%= p.getDescription() %></div>
+                            <div class="title"><%= p.getName() %>
+                            </div>
+                            <div class="desc"><%= p.getDescription() %>
+                            </div>
                             <div class="icon-review">
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
@@ -165,13 +170,15 @@
                                 <i class="fa-solid fa-star"></i>
                             </div>
                             <% String basePrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(p.getTotalPrice()); %>
-                            <div class="price"><%= basePrice %></div>
+                            <div class="price"><%= basePrice %>
+                            </div>
                             <a href="productdetails?selectedProductId=<%= p.getId() %>">
                                 <button class="add">Thêm vào giỏ hàng</button>
                             </a>
                         </div>
                     </a>
                 </div>
+                <% } %>
                 <% } %>
             </div>
         </div>
@@ -292,6 +299,19 @@
         </p>
     </div>
 </footer>
+<%--<script>--%>
+<%--    $(document).ready(function() {--%>
+<%--    $.ajax({--%>
+<%--        url: 'hiddenCategory',--%>
+<%--        type: 'POST',--%>
+<%--        success: function(response) {--%>
+<%--            response.producthideList.forEach(function(productId) {--%>
+<%--                $(`.product[data-product-id="${productId}"]`).hide();--%>
+<%--            });--%>
+<%--        }--%>
+<%--    });--%>
+<%--});--%>
+<%--</script>--%>
 </body>
 
 <!-- MAIN JS -->
