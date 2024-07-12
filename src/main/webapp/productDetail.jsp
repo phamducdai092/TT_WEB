@@ -4,15 +4,35 @@
 <%@ page import="service.ProductDetailService" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="dao.DiscountDAO" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
-
     int selectedProductId = Integer.parseInt(request.getParameter("selectedProductId"));
     Product selectedProduct = ProductDetailService.getInstance().getProductById(selectedProductId);
     String selectedBrandName = selectedProduct.getName();
     double discount = (double) request.getAttribute("discount");
+    String endDateString = DiscountDAO.getDiscountEndDay(selectedProduct.getDiscountId());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //dinh dang ngay thang
+    Date endDate = new Date();
+    try {
+        if (endDateString != null && !endDateString.isEmpty()) {
+            endDate = dateFormat.parse(endDateString);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    Date currentDate = new Date();
+    long daysLeft = 0;
+    if (endDate != null) {
+        // Calculate the difference in milliseconds
+        long diff = endDate.getTime() - currentDate.getTime();
+        // Convert milliseconds to days
+        daysLeft = diff / (1000 * 60 * 60 * 24);
+    }
     List<Image_Product> productImages = (List<Image_Product>) request.getAttribute("productImages");
     List<Product_Color> productColors = (List<Product_Color>) request.getAttribute("productColors");
 
@@ -20,11 +40,16 @@
     List<User> users = (List<User>) request.getAttribute("users");
 
     // Check if selectedProduct is not null before accessing its properties
+    String discountPrice;
     if (selectedProduct != null) {
         String basePrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(selectedProduct.getTotalPrice());
-        double priceDiscount = selectedProduct.getTotalPrice() * (1 - discount);
-        String discountPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(priceDiscount);
-        // Calculate discounted price
+        if (daysLeft > 0) {
+            double priceDiscount = selectedProduct.getTotalPrice() * (1 - discount);
+            discountPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(priceDiscount);
+        } else {
+            discountPrice = basePrice;
+        }
+    // Calculate discounted price
 %>
 <html lang="en">
 <head>
@@ -106,12 +131,11 @@
         <div id="product__detail" class="product-content detail">
             <div class="product__img">
                 <div class="product__img-spot">
-                    <img src="<%= productImages.get(0).getLink()%>"
-                         alt=""/>
-                    <button class="cta-img left">
+                    <img id="mainImage" src="<%= productImages.get(0).getLink()%>" alt=""/>
+                    <button class="cta-img left" onclick="changeImage(-1)">
                         <i class="fa-solid fa-arrow-left-long"></i>
                     </button>
-                    <button class="cta-img right">
+                    <button class="cta-img right" onclick="changeImage(1)">
                         <i class="fa-solid fa-arrow-right-long"></i>
                     </button>
                 </div>
@@ -127,9 +151,14 @@
                 <div class="product__info-row">
                     <div class="product__info-price">
                         <p class="discount-price"><%= discountPrice %> VND</p>
+                        <% if (discount != 0 && daysLeft > 0) { %>
                         <p class="base-price"><%= basePrice %> VND</p>
+                        <%}%>
                     </div>
+                    <% if (discount != 0 && daysLeft > 0) { %>
                     <p class="discount"><%= (discount * 100) %> %</p>
+                    <p class="days-left">Còn <%= daysLeft%> ngày</p>
+                    <%}%>
                 </div>
                 <div class="product__info-row">
                     <div class="product-color title">Màu sắc</div>
@@ -379,67 +408,19 @@
 <!-- OWL CAROUSEL JS -->
 <script src="./js/owl.carousel.min.js"></script>
 <script>
-    $(".owl-carousel").owlCarousel({
-        loop: true,
-        nav: false,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        responsive: {
-            0: {
-                items: 1,
-            },
-        },
-    });
-    $(document).ready(function () {
-        $('.up').on('click', function () {
-            changeQuantity(1);
-        });
+    let currentIndex = 0;
+    let images = [<% for (Image_Product img : productImages) { %>"<%= img.getLink() %>",<% } %>];
 
-        $('.down').on('click', function () {
-            changeQuantity(-1);
-        });
-
-        $('.add__cart').on('click', function () {
-            const quantity = parseInt($('.count').text());
-            let selectedCodeColor = $('input[name="selectedCodeColor"]:checked').val();
-
-            if (selectedCodeColor == null) {
-                alert('Nếu bạn không chọn màu sắc, mặc định sẽ là màu đầu tiên');
-                selectedCodeColor = $('.option_color').first().attr('title');
-            }
-
-            $.ajax({
-                url: '<%= request.getContextPath()%>/cart',
-                type: 'POST',
-                data: {
-                    selectedCodeColor: selectedCodeColor,
-                    quantity: quantity,
-                    id: <%=selectedProduct.getId()%>
-                },
-                success: function (response) {
-                    alert('Thêm vào giỏ hàng thành công');
-                    // direct to cart page
-                    window.location.href = '<%= request.getContextPath()%>/cart';
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                }
-            });
-
-        })
-
-        function changeQuantity(amount) {
-            let currentCount = parseInt($('.count').text());
-            let newCount = currentCount + amount;
-            if (newCount < 1) {
-                newCount = 1;
-            }
-            $('.count').text(newCount);
+    function changeImage(offset) {
+        currentIndex += offset;
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1;
+        } else if (currentIndex >= images.length) {
+            currentIndex = 0;
         }
-    });
+        document.getElementById("mainImage").src = images[currentIndex];
+    }
 </script>
-
 <script type="text/javascript">
     function addReview(productId) {
         <%if(u == null) {%>

@@ -2,6 +2,7 @@ package controller;
 
 import bean.*;
 import dao.ColorDAO;
+import dao.DiscountDAO;
 import dao.ReviewDAO;
 import service.*;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "ProductDetailController", value = "/productdetails")
@@ -33,6 +35,7 @@ public class ProductDetailController extends HttpServlet {
                 // Lấy thông tin thương hiệu của sản phẩm (nếu cần)
                 Brand selectedBrand = BrandService.getInstance().getNameBrandById(selectedProduct.getBrandId());
                 double discount = DiscountService.getInstance().getDiscount(selectedProduct.getDiscountId());
+                String endDate = DiscountDAO.getDiscountEndDay(selectedProduct.getDiscountId());
 
                 // Lấy thông tin ảnh và màu sắc của sản phẩm
                 List<Image_Product> productImages = ImageService.getInstance().getImageByProductId(selectedProductId);
@@ -43,6 +46,7 @@ public class ProductDetailController extends HttpServlet {
 
                 // Đặt thông tin vào request
                 req.setAttribute("discount", discount);
+                req.setAttribute("endDate", endDate);
                 req.setAttribute("selectedProduct", selectedProduct);
                 req.setAttribute("brands", selectedBrand);
                 req.setAttribute("productImages", productImages);

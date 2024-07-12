@@ -1,13 +1,15 @@
 <%@ page import="bean.ShoppingCart" %>
 <%@ page import="bean.Product" %>
+<%@ page import="bean.Category" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="bean.Item" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <header>
+    <c:set var="categories" value="${requestScope.categories}"/>
     <c:set var="auth" value="${sessionScope.auth}"/>
     <div class="header__content">
         <p>
@@ -21,21 +23,11 @@
                 <li class="menu__items">
                     <a href="products">Sản Phẩm</a>
                     <ul class="drum__container">
-                        <li class="drum__item">
-                            <a href="">Cymbal</a>
-                        </li>
-                        <li class="drum__item">
-                            <a href="#">Trống bộ</a>
-                        </li>
-                        <li class="drum__item">
-                            <a href="#">Trống lẻ</a>
-                        </li>
-                        <li class="drum__item">
-                            <a href="#">Percussion</a>
-                        </li>
-                        <li class="drum__item">
-                            <a href="#">Symbal</a>
-                        </li>
+                        <c:forEach items="${categories}" var="o" >
+                            <li class="drum__item">
+                                <a href="products?category=${o.name}">${o.name}</a>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </li>
                 <li class="menu__items">
