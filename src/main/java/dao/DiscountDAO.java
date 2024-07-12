@@ -95,8 +95,10 @@ public class DiscountDAO {
     }
 
     public static void main(String[] args) {
-//        double amount = DiscountDAO.getDiscount(1);
+//        double amount = DiscountDAO.getDiscount(4);
 //        System.out.println(amount);
-        System.out.println(getDiscountList());
+//        System.out.println(getDiscountList());
+//        System.out.println(getDiscountEndDay(2));
+        changeDiscountDate(2, "2023-03-02", "2025-02-02");
     }
 }
