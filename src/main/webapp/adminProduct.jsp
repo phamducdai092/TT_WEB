@@ -47,6 +47,7 @@
 
     <link rel="stylesheet" href="./assets/css/admin.css"/>
     <link rel="stylesheet" href="./assets/css/style.css"/>
+<link rel="stylesheet" href="./assets/css/custom-datatable.css">
 </head>
 <body>
 <c:import url="header.jsp"/>
@@ -82,17 +83,17 @@
                         </button>
                     </div>
                 </div>
-                <table>
+                <table id="manageProductTable">
                     <thead>
                     <tr>
-                        <th class="s-cl">Ẩn</th>
-                        <th class="s-cl">Chỉnh sửa</th>
-                        <th class="m-cl">Product ID</th>
-                        <th class="l-cl">Tên</th>
-                        <th class="m-cl">Giá</th>
-                        <th class="m-cl">Danh mục</th>
-                        <th class="m-cl">Thương hiệu</th>
-                        <th class="s-cl">Số lượng</th>
+                        <th class="s-cl" scope="col">Ẩn</th>
+                        <th class="s-cl" scope="col">Chỉnh sửa</th>
+                        <th class="m-cl" scope="col">Product ID</th>
+                        <th class="l-cl" scope="col">Tên</th>
+                        <th class="m-cl" scope="col">Giá</th>
+                        <th class="m-cl" scope="col">Danh mục</th>
+                        <th class="m-cl" scope="col">Thương hiệu</th>
+                        <th class="s-cl" scope="col">Số lượng</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -101,7 +102,7 @@
                         <c:set var="roundedPrice" value="${Math.round(price)}"/>
 
                         <tr>
-                            <td class="s-cl">
+                            <td class="s-cl" data-label="Ẩn">
                                 <a class="link hide-product-btn" href="hiddenProduct?productId=${o.getId()}">
                                     <c:choose>
                                         <c:when test="${o.getStatus() == 1}">
@@ -114,20 +115,20 @@
                                 </a>
                             </td>
 
-                            <td class="s-cl">
+                            <td class="s-cl" data-label="Chỉnh sửa">
                                 <a class="link" target="_blank" href="adminViewProduct?productId=${o.getId()}">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </td>
-                            <td class="m-cl">${o.getId()}</td>
-                            <td class="l-cl">${o.getName()}</td>
-                            <td class="m-cl">
+                            <td class="m-cl" data-label="Product ID">${o.getId()}</td>
+                            <td class="l-cl" data-label="Tên">${o.getName()}</td>
+                            <td class="m-cl" data-label="Giá">
                                 <fmt:formatNumber var="formattedPrice" value="${roundedPrice}" pattern="###,###,###"/>
                                     ${formattedPrice}&nbsp;₫
                             </td>
-                            <td class="m-cl">${o.getCategoryName(o.getCategoryId())}</td>
-                            <td class="m-cl">${o.getBrandName(o.getBrandId())}</td>
-                            <td class="s-cl">${o.getQuantity()}</td>
+                            <td class="m-cl" data-label="Danh mục">${o.getCategoryName(o.getCategoryId())}</td>
+                            <td class="m-cl" data-label="Thương hiệu">${o.getBrandName(o.getBrandId())}</td>
+                            <td class="s-cl" data-label="Số lượng">${o.getQuantity()}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -192,11 +193,6 @@
         </form>
     </div>
 </div>
-
-<script src="https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.js"></script>
-
-<script src="https://cdn.ckeditor.com/4.16.2/full-all/adapters/ckfinder/ckfinder.js"></script>
-
 <script>
     function decrementQuantity() {
         let quantityInput = document.getElementById('quantity');
@@ -227,21 +223,35 @@
         overlay.style.display = 'none';
     }
 </script>
-<%--<script>--%>
-<%--    document.addEventListener('DOMContentLoaded', function () {--%>
-<%--        let hideCategoryButtons = document.querySelectorAll('.hide-product-btn');--%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
-<%--        hideCategoryButtons.forEach(button => {--%>
-<%--            button.addEventListener('click', function (event) {--%>
-<%--                event.preventDefault();--%>
-<%--                // Thay đổi giao diện của nút ẩn/hiện --%>
-<%--                let icon = button.querySelector('i');--%>
-<%--                icon.classList.toggle('fa-eye-slash');--%>
-<%--                icon.classList.toggle('fa-eye');--%>
-<%--            });--%>
-<%--        });--%>
-<%--    });--%>
-<%--</script>--%>
-<script src="./js/adminJS/dialogForm.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#manageProductTable').DataTable({
+            "dom": '<"top"lf>rt<"bottom"ip><"clear">',
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(lọc từ _MAX_ bản ghi)",
+                "search": "Tìm kiếm:",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            },
+            "lengthMenu": [5, 10, 25, 50]
+        });
+    });
+</script>
 </body>
 </html>

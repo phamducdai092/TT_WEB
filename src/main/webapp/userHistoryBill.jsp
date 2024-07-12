@@ -64,7 +64,6 @@
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
-    <link rel="stylesheet" href="assets/css/custom-datatable.css"/> <!-- Custom CSS for DataTables -->
 </head>
 <body>
 
@@ -113,7 +112,7 @@
                     <table id="orderTable">
                         <thead>
                         <tr>
-                            <th scope="col">#Mã đơn hàng</th>
+                            <th scope="col">Mã đơn hàng</th>
                             <th scope="col">Ngày mua</th>
                             <th scope="col">Họ và tên</th>
                             <th scope="col">Số điện thoại</th>
@@ -125,7 +124,7 @@
                         <tbody>
                         <c:forEach items="${listOrder}" var="order">
                             <tr>
-                                <td data-label="#Mã đơn hàng">${order.id}</td>
+                                <td data-label="Mã đơn hàng">${order.id}</td>
                                 <td data-label="Ngày mua">${order.createDate}</td>
                                 <td data-label="Họ và tên">${order.fullName}</td>
                                 <td data-label="Số điện thoại">${order.phone}</td>
