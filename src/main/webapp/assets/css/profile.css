@@ -7,8 +7,6 @@
 
 .clear {
     clear: both;
-
-
 }
 
 body {
@@ -24,20 +22,6 @@ html {
     /* Nếu không khai báo font-size thì 1rem tự động là 16px */
 }
 
-button {
-    background-color: #ee6c4d;
-    border: 1px solid #293241;
-    border-radius: 7px;
-    color: black;
-    padding: 12px 25px;
-    font-weight: 600;
-    font-size: 1.2rem;
-    font-family: inherit;
-    cursor: pointer;
-    letter-spacing: 1px;
-    transition: all .5s;
-}
-
 h2 {
     margin-top: 50px;
     font-size: 3rem;
@@ -46,6 +30,11 @@ h2 {
     margin-bottom: 3rem;
     letter-spacing: 2px;
     text-align: center;
+}
+
+.is-active {
+    background-color: #ee6c4d;
+    color: #fff;
 }
 
 /* PROFILE */
@@ -689,7 +678,6 @@ h2 {
 
 }
 
-
 .submit-alert .fa-check {
     padding: 0 10px;
     font-size: 20px;
@@ -704,42 +692,4 @@ h2 {
     display: flex;
     align-items: center;
     height: 70px;
-}
-
-
-/* Customize search box */
-.dataTables_filter {
-    float: left;
-    margin-bottom: 10px;
-}
-
-.dataTables_filter label {
-    display: flex;
-    align-items: center;
-}
-
-.dataTables_filter input {
-    margin-left: 10px;
-    width: 300px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Customize length menu */
-.dataTables_length {
-    float: right;
-    margin-bottom: 10px;
-}
-
-.dataTables_length label {
-    display: flex;
-    align-items: center;
-}
-
-.dataTables_length select {
-    margin-left: 10px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
 }

@@ -46,6 +46,7 @@
 
     <link rel="stylesheet" href="./assets/css/admin.css"/>
     <link rel="stylesheet" href="./assets/css/style.css"/>
+    <link rel="stylesheet" href="./assets/css/custom-datatable.css">
 </head>
 <body>
 <c:import url="header.jsp"/>
@@ -99,19 +100,19 @@
                     </div>
                 </form>
 
-                <table>
+                <table id="manageCategoryTable">
                     <thead>
                     <tr>
-                        <th class="s-cl">Ẩn</th>
-                        <th class="s-cl">Chỉnh sửa</th>
-                        <th class="m-cl">Danh mục ID</th>
-                        <th class="l-cl">Tên</th>
+                        <th class="s-cl" scope="col">Ẩn</th>
+                        <th class="s-cl" scope="col">Chỉnh sửa</th>
+                        <th class="m-cl" scope="col">Danh mục ID</th>
+                        <th class="l-cl" scope="col">Tên</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${sessionScope.categoryList}" var="o">
                         <tr>
-                            <td class="s-cl">
+                            <td class="s-cl" data-label="Ẩn">
                                 <a class="link hide-category-btn" href="hiddenCategory?categoryId=${o.getId()}">
                                     <c:choose>
                                         <c:when test="${o.getStatus() == 1}">
@@ -123,13 +124,13 @@
                                     </c:choose>
                                 </a>
                             </td>
-                            <td class="s-cl">
+                            <td class="s-cl" data-label="Chỉnh sửa">
                                 <a class="link" target="_blank" href="#1">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </td>
-                            <td class="m-cl">${o.getId()}</td>
-                            <td class="l-cl">${o.getName()}</td>
+                            <td class="m-cl" data-label="Danh mục ID">${o.getId()}</td>
+                            <td class="l-cl" data-label="Tên">${o.getName()}</td>
                         </tr>
                     </c:forEach>
 
@@ -162,21 +163,35 @@
 
     }
 </script>
-<%--<script>--%>
-<%--    document.addEventListener('DOMContentLoaded', function () {--%>
-<%--        let hideCategoryButtons = document.querySelectorAll('.hide-category-btn');--%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
-<%--        hideCategoryButtons.forEach(button => {--%>
-<%--            button.addEventListener('click', function (event) {--%>
-<%--                event.preventDefault();--%>
-<%--                // Thay đổi giao diện của nút ẩn/hiện --%>
-<%--                let icon = button.querySelector('i');--%>
-<%--                icon.classList.toggle('fa-eye-slash');--%>
-<%--                icon.classList.toggle('fa-eye');--%>
-<%--            });--%>
-<%--        });--%>
-<%--    });--%>
-<%--</script>--%>
-<script src="./js/adminJS/dialogForm.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#manageCategoryTable').DataTable({
+            "dom": '<"top"lf>rt<"bottom"ip><"clear">',
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(lọc từ _MAX_ bản ghi)",
+                "search": "Tìm kiếm:",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            },
+            "lengthMenu": [5, 10, 25, 50]
+        });
+    });
+</script>
 </body>
 </html>

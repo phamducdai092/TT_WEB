@@ -1,0 +1,38 @@
+
+
+/* Customize search box */
+.dataTables_filter {
+    float: left;
+    margin-bottom: 10px;
+}
+
+.dataTables_filter label {
+    display: flex;
+    align-items: center;
+}
+
+.dataTables_filter input {
+    margin-left: 10px;
+    width: 300px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Customize length menu */
+.dataTables_length {
+    float: right;
+    margin-bottom: 10px;
+}
+
+.dataTables_length label {
+    display: flex;
+    align-items: center;
+}
+
+.dataTables_length select {
+    margin-left: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

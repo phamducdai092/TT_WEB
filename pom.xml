@@ -133,6 +133,17 @@
 <!--      <version>1.0</version>-->
 <!--      <systemPath>commons-logging-1.2</systemPath>-->
 <!--    </dependency>-->
+    <!-- https://mvnrepository.com/artifact/org.webjars/ckeditor -->
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>ckeditor</artifactId>
+      <version>4.19.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.5</version>
+    </dependency>
 
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
@@ -141,6 +152,7 @@
 
     </dependency>
   </dependencies>
+
 
 <!--  <servlet>-->
 <!--    <servlet-name>SearchServlet</servlet-name>-->

@@ -46,6 +46,7 @@
 
     <link rel="stylesheet" href="./assets/css/admin.css"/>
     <link rel="stylesheet" href="./assets/css/style.css"/>
+    <link rel="stylesheet" href="./assets/css/custom-datatable.css">
 </head>
 <body>
 <c:import url="header.jsp"/>
@@ -92,19 +93,19 @@
                         <button type="submit">Thêm</button>
                     </div>
                 </form>
-                <table>
+                <table id="manageBrandTable">
                     <thead>
                     <tr>
-                        <th class="s-cl">Ẩn</th>
-                        <th class="s-cl">Chỉnh sửa</th>
-                        <th class="m-cl">Mã Thương Hiệu</th>
-                        <th class="l-cl">Tên</th>
+                        <th class="s-cl" scope="col">Ẩn</th>
+                        <th class="s-cl" scope="col">Chỉnh sửa</th>
+                        <th class="m-cl" scope="col">Mã Thương Hiệu</th>
+                        <th class="l-cl" scope="col">Tên</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${sessionScope.brandList}" var="o">
                         <tr>
-                            <td class="s-cl">
+                            <td class="s-cl" data-label="Ẩn">
                                 <a class="link" href="hiddenBrand?brandId=${o.getId()}">
                                     <c:choose>
                                         <c:when test="${o.getStatus() == 1}">
@@ -116,13 +117,13 @@
                                     </c:choose>
                                 </a>
                             </td>
-                            <td class="s-cl">
+                            <td class="s-cl" data-label="Chỉnh sửa">
                                 <a class="link" target="_blank" href="adminViewProduct?productId=${o.getId()}">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </td>
-                            <td class="m-cl">${o.getId()}</td>
-                            <td class="l-cl">${o.getName()}</td>
+                            <td class="m-cl" data-label="Mã Thương Hiệu">${o.getId()}</td>
+                            <td class="l-cl" data-label="Tên">${o.getName()}</td>
 
                         </tr>
                     </c:forEach>
@@ -156,6 +157,35 @@
         }
     }
 </script>
-<script src="./js/adminJS/dialogForm.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#manageBrandTable').DataTable({
+            "dom": '<"top"lf>rt<"bottom"ip><"clear">',
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(lọc từ _MAX_ bản ghi)",
+                "search": "Tìm kiếm:",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            },
+            "lengthMenu": [5, 10, 25, 50]
+        });
+    });
+</script>
 </body>
 </html>
