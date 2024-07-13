@@ -91,7 +91,7 @@ public class ProductDAO {
 
     public static List<Product> getProductById(int id) {
         List<Product> productList = JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("SELECT product_details.id, product_details.name, description, totalPrice " +
+                handle.createQuery("SELECT product_details.id, product_details.name, discountId, description, totalPrice " +
                                 "From product_details Where product_details.id = ?")
                         .bind(0, id)
                         .mapToBean(Product.class)
@@ -138,10 +138,10 @@ public class ProductDAO {
         return true;
     }
 
-    public Product getProductId(int id) {
+    public static Product getProductId(int id) {
         Product product = JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("SELECT product_details.id, product_details.name, totalPrice, quantity FROM product_details WHERE id = :id")
-                        .bind("id", id)
+                handle.createQuery("SELECT * FROM product_details WHERE id = ?")
+                        .bind(0, id)
                         .mapTo(Product.class)
                         .findOne()
                         .orElse(null) // Giả sử trả về null nếu không tìm thấy sản phẩm
@@ -282,6 +282,7 @@ public class ProductDAO {
 //        int totalProductNumber = ProductDAO.getTotalProductNumber();
 //        Item item = ProductDAO.getItemById(1);
 //        addProduct(new Product(0, "test", 1, 1, 1, 1, 100, 101, "test"));
+//        System.out.println(getProductId(1).getName());;
         hiddenProduct(1);
     }
 

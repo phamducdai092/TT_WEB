@@ -184,6 +184,10 @@ body {
     padding: 12px 16px;
     border-radius: 8px;
 }
+.days-left {
+    padding-left: 10px;
+    margin-left: 20px;
+}
 
 .rate {
     text-align: center;
