@@ -3,35 +3,88 @@
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
+    <!-- reset CSS -->
+    <link rel="stylesheet" href="./assets/css/reset.css"/>
+    <link rel="stylesheet" href="./assets/css/index.css"/>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <link
+            href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- embed fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+    <link
+            href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/admin.css"/>
+    <link rel="stylesheet" href="./assets/css/style.css"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #example_wrapper{
+            width: 100%;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-<table id="example" class="display nowrap" style="width:100%">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Color</th>
-        <th>Quantity</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Color</th>
-        <th>Quantity</th>
-        <th>Date</th>
-    </tr>
-    </tfoot>
-</table>
+<c:import url="header.jsp"/>
+<div class="container">
+    <c:import url="adminSideBar.jsp"/>
+    <div class="main-content">
+        <div id="manage-product" class="content-wrapper">
+            <div class="header-admin">
+                <div class="header-title">Quản lý đơn nhập hàng</div>
+            </div>
+            <table id="example" class="display nowrap" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Color</th>
+                    <th>Quantity</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Color</th>
+                    <th>Quantity</th>
+                    <th>Date</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
