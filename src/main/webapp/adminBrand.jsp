@@ -2,6 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<%
+    String role = (String) session.getAttribute("role");
+    if ("admin".equals(role)) {
+%>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -189,3 +194,8 @@
 </script>
 </body>
 </html>
+<%
+    } else {
+    response.sendRedirect(request.getContextPath() + "/errorAdmin.jsp");
+    }
+%>
