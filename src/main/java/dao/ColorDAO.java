@@ -48,6 +48,15 @@ public class ColorDAO {
                         .orElse(null));
         return color;
     }
+    public static Product_Color getColorByName(String name) {
+        Product_Color color=  JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("select * from product_color where nameColor=?")
+                        .bind(0,name)
+                        .mapToBean(Product_Color.class)
+                        .findOne()
+                        .orElse(null));
+        return color;
+    }
     public static void main(String[] args) {
         System.out.println(getColorById(1).getNameColor());;
 //        List<Product_Color> colorList = ColorDAO.getListColorCodeByIdProduct(1);
