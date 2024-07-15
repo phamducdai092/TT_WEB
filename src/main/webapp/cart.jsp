@@ -170,10 +170,15 @@
                                 </p></div>
                             </div>
                         </div>
-                        <button class="button btn btn-large btn-block btn-danger btn-checkout evo-button"
-                                title="Thanh toán ngay" type="button" style="background-color: black">Thanh toán
-                            ngay
-                        </button>
+                        <form action="<%= request.getContextPath()%>/bill" method="get">
+                            <!-- Include hidden input fields for order details -->
+                            <input type="hidden" name="total" value="<%= sumPrice %>">
+                            <!-- Add other necessary hidden fields -->
+
+                            <button class="button btn btn-large btn-block btn-danger btn-checkout evo-button" type="submit" >
+                                Thanh toán
+                            </button>
+                        </form>
                         <button class="button btn-proceed-checkout btn btn-large btn-block btn-danger btn-checkouts"
                                 title="Tiếp tục mua hàng" type="button"><a href="index.jsp">Tiếp
                             tục mua hàng</a>
