@@ -466,6 +466,72 @@
         <% }%>
     }
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="./js/product.js"></script>
+
+<!-- OWL CAROUSEL JS -->
+<script src="./js/owl.carousel.min.js"></script>
+<script>
+    $(".owl-carousel").owlCarousel({
+        loop: true,
+        nav: false,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 1,
+            },
+        },
+    });
+    $(document).ready(function () {
+        $('.up').on('click', function () {
+            changeQuantity(1);
+        });
+
+        $('.down').on('click', function () {
+            changeQuantity(-1);
+        });
+
+        $('.add__cart').on('click', function () {
+            const quantity = parseInt($('.count').text());
+            let selectedCodeColor = $('input[name="selectedCodeColor"]:checked').val();
+
+            if (selectedCodeColor == null) {
+                alert('Nếu bạn không chọn màu sắc, mặc định sẽ là màu đầu tiên');
+                selectedCodeColor = $('.option_color').first().attr('title');
+            }
+
+            $.ajax({
+                url: '<%= request.getContextPath()%>/cart',
+                type: 'POST',
+                data: {
+                    selectedCodeColor: selectedCodeColor,
+                    quantity: quantity,
+                    id: <%=selectedProduct.getId()%>
+                },
+                success: function (response) {
+                    alert('Thêm vào giỏ hàng thành công');
+                    // direct to cart page
+                    window.location.href = '<%= request.getContextPath()%>/cart';
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+
+        })
+
+        function changeQuantity(amount) {
+            var currentCount = parseInt($('.count').text());
+            var newCount = currentCount + amount;
+            if (newCount < 1) {
+                newCount = 1;
+            }
+            $('.count').text(newCount);
+        }
+    });
+</script>
 </body>
 </html>
 <%
