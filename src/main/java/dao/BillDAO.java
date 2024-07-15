@@ -74,6 +74,7 @@ public class BillDAO {
                         .mapTo(Long.class)
                         .findOnly();
                 for (var item : cart) {
+                    System.out.println(item.getColorName());
                     handle.createUpdate("INSERT INTO bill_details (billId, productId, quantity, total_price, product_color) VALUES (:billId, :productId, :quantity, :price, :color)")
                             .bind("billId", billId)
                             .bind("productId", item.getProduct().getId())
