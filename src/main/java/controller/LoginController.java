@@ -86,8 +86,15 @@ public class LoginController extends HttpServlet {
                 return;
             }
             if (user.getStatus() != 0) {
-                session.setAttribute("auth", user);
-                resp.sendRedirect("./home");
+                if (user.getRole() == 1) {
+                    session.setAttribute("auth", user);
+                    session.setAttribute("role", "admin");
+                    resp.sendRedirect("./home");
+                } else {
+                    session.setAttribute("auth", user);
+                    session.setAttribute("role", "user");
+                    resp.sendRedirect("./home");
+                }
             }
         } else {
             failedAttempts++; // Tăng số lần nhập sai

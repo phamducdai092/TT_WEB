@@ -1,4 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String role = (String) session.getAttribute("role");
+    if ("admin".equals(role)) {
+%>
+
 <div class="side-bar-hidden"></div>
 <div class="side-bar">
     <div class="user-account">
@@ -61,3 +66,8 @@
         <li class="side-bar__item"></li>
     </ul>
 </div>
+<%
+    } else {
+        response.sendRedirect(request.getContextPath() + "/errorAdmin.jsp");
+    }
+%>

@@ -18,6 +18,20 @@
             <role-name>1</role-name>
         </auth-constraint>
     </security-constraint>
-
-
+    <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>security.AuthorizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/adminDiscountManagement</url-pattern>
+        <url-pattern>/adminBillIndex</url-pattern>
+        <url-pattern>/adminBrandManagement</url-pattern>
+        <url-pattern>/adminCategoryManagement</url-pattern>
+        <url-pattern>/adminProductIndex</url-pattern>
+        <url-pattern>/adminSearchUser</url-pattern>
+        <url-pattern>/adminSupplierManagement</url-pattern>
+        <url-pattern>/adminUserIndex</url-pattern>
+        <url-pattern>/adminSearchProduct</url-pattern>
+    </filter-mapping>
 </web-app>
