@@ -42,6 +42,7 @@
     />
     <link rel="stylesheet" href="./assets/css/admin.css"/>
     <link rel="stylesheet" href="./assets/css/style.css"/>
+    <link rel="stylesheet" href="./assets/css/custom-datatable.css">
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
@@ -88,6 +89,22 @@
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
+            "dom": '<"top"lf>rt<"bottom"ip><"clear">',
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "info": "Hiển thị trang _PAGE_ của _PAGES_",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(lọc từ _MAX_ bản ghi)",
+                "search": "Tìm kiếm:",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            },
+            "lengthMenu": [5, 10, 25, 50],
             ajax: {
                 url: 'http://localhost:8080/getImportData',
                 dataSrc: ''
