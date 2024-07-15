@@ -15,7 +15,6 @@ public class Item implements Serializable {
         this.colorName = colorName;
         this.price = product.getTotalPrice() * quantity;
     }
-
     public int getId() {
         return id;
     }

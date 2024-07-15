@@ -79,7 +79,7 @@ public class BillDAO {
                             .bind("productId", item.getProduct().getId())
                             .bind("quantity", item.getQuantity())
                             .bind("price", item.getPrice())
-                            .bind("color", item.getColorName())
+                            .bind("color", ColorDAO.getColorByName(item.getColorName()).getId())
                             .execute();
                 }
             });
