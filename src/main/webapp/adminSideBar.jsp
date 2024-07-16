@@ -63,7 +63,12 @@
                 <a href="adminEditImport.jsp">Quản lý đơn nhập hàng</a>
             </button>
         </li>
-        <li class="side-bar__item"></li>
+        <li class="side-bar__item">
+            <i class="icon fa-solid fa-square-poll-vertical"></i>
+            <button class="manage-bill item-cta">
+                <a href="adminStatistical.jsp">Thống kê</a>
+            </button>
+        </li>
     </ul>
 </div>
 <%

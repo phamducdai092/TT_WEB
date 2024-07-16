@@ -113,6 +113,9 @@
                         <thead>
                         <tr>
                             <th scope="col">Mã đơn hàng</th>
+                            <th scope="col">Tên sản phâm</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Màu sản phẩm</th>
                             <th scope="col">Ngày mua</th>
                             <th scope="col">Họ và tên</th>
                             <th scope="col">Số điện thoại</th>
@@ -122,9 +125,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${listOrder}" var="order">
+                        <c:forEach items="${requestScope.listOrder}" var="order">
                             <tr>
                                 <td data-label="Mã đơn hàng">${order.id}</td>
+                                <td data-label="Tên sản phâm">${order.productName}</td>
+                                <td data-label="Số lượng">${order.quantity}</td>
+                                <td data-label="Màu sản phẩm">${order.productColor}</td>
                                 <td data-label="Ngày mua">${order.createDate}</td>
                                 <td data-label="Họ và tên">${order.fullName}</td>
                                 <td data-label="Số điện thoại">${order.phone}</td>
