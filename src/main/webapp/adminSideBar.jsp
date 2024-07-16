@@ -60,7 +60,7 @@
         <li class="side-bar__item">
             <i class="icon fa-solid fa-receipt"></i>
             <button class="manage-bill item-cta">
-                <a href="adminEditImport.jsp">Quản lý đơn nhập hàng</a>
+                <a href="adminImportServlet">Quản lý đơn nhập hàng</a>
             </button>
         </li>
         <li class="side-bar__item">
