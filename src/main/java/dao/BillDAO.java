@@ -129,7 +129,6 @@ public class BillDAO {
     }
 
     public static void main(String[] args) {
-//        Bill bill = BillDAO.getInstance().getBillById(1);
     }
 
 }
