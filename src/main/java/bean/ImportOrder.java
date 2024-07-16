@@ -9,7 +9,7 @@ public class ImportOrder {
     String pr_id;
     String color_id;
     int quantity;
-    String time;
+    LocalDateTime timeSet;
 
     public ImportOrder() {
 
@@ -39,12 +39,12 @@ public class ImportOrder {
         this.color_id = color_id;
     }
 
-    public String getTime() {
-        return time;
+    public LocalDateTime getTimeSet() {
+        return timeSet;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimeSet(LocalDateTime timeSet) {
+        this.timeSet = timeSet;
     }
 
     public int getQuantity() {

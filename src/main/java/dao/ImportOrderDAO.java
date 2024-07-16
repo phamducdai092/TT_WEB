@@ -28,12 +28,12 @@ public class ImportOrderDAO {
     }
     public static void addImportOrder(String pr_id,String color_id, int quantity, String time){
         JDBIConnector.me().withHandle(handle ->
-                handle.createUpdate("insert into import_orders(pr_id, color_id, quantity, time) " +
+                handle.createUpdate("insert into import_orders(pr_id, color_id, quantity, timeSet) " +
                                 "values (:pr_id, :color_id, :quantity, :time)")
                         .bind("pr_id", pr_id)
                         .bind("color_id", color_id)
                         .bind("quantity", quantity)
-                        .bind("time", time)
+                        .bind("timeSet", time)
                         .execute() > 0);
     }
 
@@ -48,7 +48,7 @@ public class ImportOrderDAO {
             System.out.println(i.getPr_id());
             System.out.println(i.getColor_id());
             System.out.println(i.getQuantity());
-            System.out.println(i.getTime());
+            System.out.println(i.getTimeSet());
         }
     }
 }

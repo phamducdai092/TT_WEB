@@ -177,7 +177,7 @@
                 { data: 'color_id' },
                 { data: 'quantity' },
                 {
-                    data: 'time',
+                    data: 'timeSet',
                     render: function (data, type, row) {
                         return data ? data[0] + '-' +
                             String(data[1]).padStart(2, '0') + '-' +
