@@ -19,7 +19,7 @@ public class HistoryBillController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        var myBill = BillDAO.getInstance().getBillsByUser((bean.User) req.getSession().getAttribute("auth"));
         List<Bill> userBill = BillDAO.getInstance().getBillsByUser((bean.User) req.getSession().getAttribute("auth"));
-        req.setAttribute("listOrder", userBill);
-        req.getRequestDispatcher("userHistoryBill.jsp").forward(req, resp);
+        req.setAttribute("userBill", userBill);
+        req.getRequestDispatcher("/userHistoryBill.jsp").forward(req, resp);
     }
 }

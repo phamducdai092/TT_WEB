@@ -4,9 +4,11 @@ import bean.Bill;
 import bean.Item;
 import bean.User;
 import db.JDBIConnector;
+import mapper.BillMapper;
 import org.jdbi.v3.core.Handle;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,9 +25,12 @@ public class BillDAO {
 
     public List<Bill> getBillsByUser(User user) {
         try (Handle handle = JDBIConnector.me().open()) {
-            return handle.createQuery("SELECT bills.id, bills.createDate, bills.full_name, bills.phone, bills.address, bills.payment_method, bills.`status` FROM bills WHERE userId = :userId")
+            return handle.createQuery("SELECT b.*, pd.name, bd.quantity, bd.product_color \n" +
+                            "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
+                            "JOIN product_details AS pd ON bd.productId = pd.id\n" +
+                            "WHERE b.userId = :userId\n")
                     .bind("userId", user.getId())
-                    .mapToBean(Bill.class)
+                    .map(new BillMapper())
                     .list();
         }
     }
@@ -72,9 +77,9 @@ public class BillDAO {
                         .bind("payment", bill.getPaymentMethod())
                         .executeAndReturnGeneratedKeys()
                         .mapTo(Long.class)
-                        .findOnly();
+                        .one();
+
                 for (var item : cart) {
-                    System.out.println(item.getColorName());
                     handle.createUpdate("INSERT INTO bill_details (billId, productId, quantity, total_price, product_color) VALUES (:billId, :productId, :quantity, :price, :color)")
                             .bind("billId", billId)
                             .bind("productId", item.getProduct().getId())
@@ -129,6 +134,11 @@ public class BillDAO {
     }
 
     public static void main(String[] args) {
+    User user = new User(1, "0", "123", "123", "123", 0, "123", "123", "0", "0", 1, 1);
+    List<Bill> bill = BillDAO.getInstance().getBillsByUser(user);
+    System.out.println(Arrays.toString(bill.toArray()));
+
+
     }
 
 }

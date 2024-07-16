@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="assets/css/index.css"/>
     <link rel="stylesheet" href="assets/css/style.css"/>
 
-    <link rel="stylesheet" href="assets/css/list.css">
+
     <!-- FONT GOOGLE -->
     <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap"
@@ -57,6 +57,8 @@
     />
     <!-- styles -->
     <link rel="stylesheet" href="./assets/css/style.css"/>
+        <link rel="stylesheet" href="assets/css/list.css">
+    <link rel="stylesheet" href="./assets/css/custom-datatable.css"/>
 
     <!-- OWL CAROUSEL CSS -->
     <link rel="stylesheet" href="./assets/css/owl.carousel.min.css"/>
@@ -107,25 +109,26 @@
         </div>
         <div class="row">
             <jsp:include page="sidebar-profile.jsp"/>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="your__cart ms-2 p-2">
-                    <table id="orderTable">
+                    <table id="orderTable" >
                         <thead>
                         <tr>
-                            <th scope="col">Mã đơn hàng</th>
-                            <th scope="col">Tên sản phâm</th>
-                            <th scope="col">Số lượng</th>
-                            <th scope="col">Màu sản phẩm</th>
-                            <th scope="col">Ngày mua</th>
-                            <th scope="col">Họ và tên</th>
-                            <th scope="col">Số điện thoại</th>
-                            <th scope="col">Địa chỉ</th>
-                            <th scope="col">Phương thức thanh toán</th>
-                            <th scope="col">Trạng thái đơn hàng</th>
+                            <th >Mã đơn hàng</th>
+                            <th >Tên sản phâm</th>
+                            <th >Số lượng</th>
+                            <th >Màu sản phẩm</th>
+                            <th >Ngày mua</th>
+                            <th >Họ và tên</th>
+                            <th >Số điện thoại</th>
+                            <th >Địa chỉ</th>
+                            <th >Phương thức thanh toán</th>
+                            <th >Trạng thái đơn hàng</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${requestScope.listOrder}" var="order">
+                        <c:set var="userBill" value="${requestScope.userBill}"/>
+                        <c:forEach items="${userBill}" var="order">
                             <tr>
                                 <td data-label="Mã đơn hàng">${order.id}</td>
                                 <td data-label="Tên sản phâm">${order.productName}</td>
@@ -154,7 +157,6 @@
 
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
 <script>
     $(document).ready(function () {
         $('#orderTable').DataTable({
