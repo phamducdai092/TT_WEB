@@ -44,6 +44,7 @@ public class Product extends ProductDAO {
         this.description = description;
         this.image = image;
     }
+    
 
     public int getId() {
         return id;

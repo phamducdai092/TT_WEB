@@ -58,7 +58,9 @@ public class BillDAO {
         if (cart != null && user != null) {
             var total = 0.0;
             for (var item : cart) {//đkiện
-                total += item.getPrice();
+                if(item.getProduct().getQuantity()!=0) {
+                    total += item.getPrice();
+                }
             }
             var bill = new Bill((User) user, name, phone, address, total, payment);
 
@@ -75,13 +77,15 @@ public class BillDAO {
                         .findOnly();
                 for (var item : cart) {//đkiện
                     System.out.println(item.getColorName());
-                    handle.createUpdate("INSERT INTO bill_details (billId, productId, quantity, total_price, product_color) VALUES (:billId, :productId, :quantity, :price, :color)")
-                            .bind("billId", billId)
-                            .bind("productId", item.getProduct().getId())
-                            .bind("quantity", item.getQuantity())
-                            .bind("price", item.getPrice())
-                            .bind("color", ColorDAO.getColorByName(item.getColorName()).getId())
-                            .execute();
+                    if (item.getProduct().getQuantity() != 0) {
+                        handle.createUpdate("INSERT INTO bill_details (billId, productId, quantity, total_price, product_color) VALUES (:billId, :productId, :quantity, :price, :color)")
+                                .bind("billId", billId)
+                                .bind("productId", item.getProduct().getId())
+                                .bind("quantity", item.getQuantity())
+                                .bind("price", item.getPrice())
+                                .bind("color", ColorDAO.getColorByName(item.getColorName()).getId())
+                                .execute();
+                    }
                 }
             });
         }

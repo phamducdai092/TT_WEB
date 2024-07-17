@@ -141,7 +141,7 @@
             </div>
             <div class="product product-quantity">
                 <label for="product-quantity" class="product-title">Số lượng: </label>
-                <input id="product-quantity" name="product-quantity" class="product-sub"
+                <input id="product-quantity" name="product-quantity" class="product-sub" readonly
                        value="${product.getQuantity()}">
             </div>
             <div class="product product-price">
