@@ -1,8 +1,9 @@
 package controller;
 
 import bean.User;
+import bean.Log;
 import dao.UserDAO;
-import service.UserService;
+import service.LogService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,10 +26,31 @@ public class ProfileUserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String preData, afterData, table, role, actionDetail;
+        LogService usl= new LogService();
+        Log us=new Log();
 
         HttpSession session = req.getSession();
         User u = (User) session.getAttribute("auth");
         int userId = u.getId();
+        int userRole = u.getRole();
+
+        table = "users";
+        us.setTables(table);
+
+        if(userRole ==1){
+            role = "adminId = " + userId;
+            us.setRole(role);
+        }else {
+            role = "userId = " + userId;
+            us.setRole(role);
+        }
+
+        actionDetail = "change_Info";
+        us.setActionDetail(actionDetail);
+
+        preData= u.getEmail()+" "+u.getPhone()+" "+u.getFirstName()+" "+u.getLastName()+" "+u.getBirthDate()+" "+u.getGender()+" "+userId;
+        us.setBeforeData(preData);
 
         email = req.getParameter("email");
         phone = req.getParameter("phone");
@@ -48,12 +70,11 @@ public class ProfileUserController extends HttpServlet {
 
         String username = u.getUsername();
 
-        if (!phone.isEmpty()) {
+        if (!phone.isEmpty() || !email.isEmpty()) {
             UserDAO.changeSpecificInfo(userId, email, phoneValue, firstName, lastName, birthDate, gender);
-
-        }
-        if (!email.isEmpty()) {
-            UserDAO.changeSpecificInfo(userId, email, phoneValue, firstName, lastName, birthDate, gender);
+            afterData=email+" "+phoneValue+" "+firstName+" "+lastName+" "+birthDate+" "+gender;
+            us.setAfterData(afterData);
+            usl.update(us);
         }
 
         User user2 = UserDAO.getUserByUsername(username);
