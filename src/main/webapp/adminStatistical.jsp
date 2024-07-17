@@ -81,71 +81,100 @@
 <!-- Add the AJAX call -->
 <script>
     $(document).ready(function() {
-        $.ajax({
-            url: '/statistics',
-            method: 'GET',
-            success: function(data) {
-                console.log("Data received:", data); // Log received data
+        let myChart = null; // Biến lưu trữ biểu đồ
 
-                if (data && data.topSellingProducts) {
-                    let ctx = document.getElementById('myChart').getContext('2d');
-                    let productNames = data.topSellingProducts.map(product => product.name);
-                    let productQuantities = data.topSellingProducts.map(product => product.quantity);
+        // Function to fetch data based on dataType
+        function fetchData(dataType) {
+            $.ajax({
+                url: '/statistics',
+                method: 'GET',
+                data: {
+                    dataType: dataType // Pass the dataType parameter
+                },
+                success: function(data) {
+                    console.log("Data received:", data); // Log received data
 
-                    let maxQuantity = Math.max(...productQuantities);
-                    let maxYScale = maxQuantity + 20;
+                    // Destroy previous chart if exists
+                    if (myChart) {
+                        myChart.destroy();
+                    }
 
-                    console.log("Product Names:", productNames);
-                    console.log("Product Quantities:", productQuantities);
-                    console.log("Max Y Scale:", maxQuantity);
+                    // Process received data (example: update chart)
+                    if (data && Array.isArray(data)) {
+                        let ctx = document.getElementById('myChart').getContext('2d');
+                        let productNames = data.map(product => product.name);
+                        let productQuantities = data.map(product => product.quantity);
 
-                    let myChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: productNames,
-                            datasets: [{
-                                label: '# of Sales',
-                                data: productQuantities,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            plugins: {
-                                datalabels: {
-                                    anchor: 'end',
-                                    align: 'end',
-                                    color: 'black',
-                                    font: {
-                                        weight: 'bold'
-                                    },
-                                    formatter: function(value, context) {
-                                        return value;
+                        let maxQuantity = Math.max(...productQuantities);
+                        let maxYScale = maxQuantity + 20;
+
+                        console.log("Product Names:", productNames);
+                        console.log("Product Quantities:", productQuantities);
+                        console.log("Max Y Scale:", maxQuantity);
+
+                        myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: productNames,
+                                datasets: [{
+                                    label: '# of Sales',
+                                    data: productQuantities,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                plugins: {
+                                    datalabels: {
+                                        anchor: 'end',
+                                        align: 'end',
+                                        color: 'black',
+                                        font: {
+                                            weight: 'bold'
+                                        },
+                                        formatter: function(value, context) {
+                                            return value;
+                                        }
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        max: maxYScale
                                     }
                                 }
                             },
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    max: maxYScale
-                                }
-                            }
-                        },
-                        plugins: [ChartDataLabels]
-                    });
-                    console.log("Chart initialized successfully");
-                } else {
-                    console.error("Invalid data format received");
+                            plugins: [ChartDataLabels]
+                        });
+                        console.log("Chart initialized successfully");
+                    } else {
+                        console.error("Invalid data format received");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX error:", status, error);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error("AJAX error:", status, error);
-            }
+            });
+        }
+
+        // Event handlers for buttons
+        $('#btn-show-revenue').click(function() {
+            // Implement logic for revenue button (if needed)
         });
+
+        $('#btn-show-top-selling-products').click(function() {
+            fetchData('topSellingProducts'); // Call fetchData with dataType
+        });
+
+        $('#btn-show-out-of-stuck').click(function() {
+            fetchData('outOfStockProducts'); // Call fetchData with dataType
+        });
+
+        // Initially load default data (if needed)
+        fetchData('topSellingProducts'); // Load top selling products by default
     });
 </script>
-
 
 </body>
 </html>

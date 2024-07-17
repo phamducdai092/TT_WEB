@@ -36,7 +36,7 @@ public class StatisticsDAO {
     }
 
     public static int getProductsSoldLast7Days() {
-        String sql = "SELECT SUM(bill_details.quantity) FROM bill_details WHERE bill_details.date > DATE_SUB(NOW(), INTERVAL 7 DAY)";
+        String sql = "SELECT SUM(bill.quantity) FROM bill WHERE bill.createDate > DATE_SUB(NOW(), INTERVAL 7 DAY)";
         return JDBIConnector.me().withHandle(handle ->
                 handle.createQuery(sql)
                         .mapTo(Integer.class)
@@ -46,7 +46,7 @@ public class StatisticsDAO {
     }
 
     public static int getProductsSoldLast1Month() {
-        String sql = "SELECT SUM(bill_details.quantity) FROM bill_details WHERE bill_details.date > DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+        String sql = "SELECT SUM(bill.quantity) FROM bill WHERE bill.createDate > DATE_SUB(NOW(), INTERVAL 1 MONTH)";
         return JDBIConnector.me().withHandle(handle ->
                 handle.createQuery(sql)
                         .mapTo(Integer.class)
@@ -56,7 +56,7 @@ public class StatisticsDAO {
     }
 
     public static int getProductsSoldLast3Months() {
-        String sql = "SELECT SUM(bill_details.quantity) FROM bill_details WHERE bill_details.date > DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+        String sql = "SELECT SUM(bill.quantity) FROM bill WHERE bill.createDate > DATE_SUB(NOW(), INTERVAL 3 MONTH)";
         return JDBIConnector.me().withHandle(handle ->
                 handle.createQuery(sql)
                         .mapTo(Integer.class)

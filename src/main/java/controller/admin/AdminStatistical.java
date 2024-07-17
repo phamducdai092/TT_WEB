@@ -1,6 +1,5 @@
 package controller.admin;
 
-
 import bean.Product;
 import com.google.gson.Gson;
 import service.StatisticsService;
@@ -19,16 +18,22 @@ import java.util.Map;
 public class AdminStatistical extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String dataType = req.getParameter("dataType");
 
-        List<Product> topSellingProducts = StatisticsService.getInstance().getTopSellingProducts();
-        List<Product> outOfStockProducts = StatisticsService.getInstance().getOutOfStockProducts();
+        List<Product> products = null;
 
+        // Check dataType and fetch corresponding data
+        if ("topSellingProducts".equals(dataType)) {
+            products = StatisticsService.getInstance().getTopSellingProducts();
+        } else if ("outOfStockProducts".equals(dataType)) {
+            products = StatisticsService.getInstance().getOutOfStockProducts();
+        } else {
+            // If no dataType or unknown dataType, return default data
+            products = StatisticsService.getInstance().getTopSellingProducts(); // Default to top selling products
+        }
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("topSellingProducts", topSellingProducts);
-        data.put("outOfStockProducts", outOfStockProducts);
-
-        String json = new Gson().toJson(data);
+        // Prepare response data
+        String json = new Gson().toJson(products);
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
