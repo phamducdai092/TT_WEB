@@ -58,7 +58,7 @@ public class BillDAO {
         if (cart != null && user != null) {
             var total = 0.0;
             for (var item : cart) {//đkiện
-                if(item.getProduct().getQuantity()!=0) {
+                if(item.checkQuantity()) {
                     total += item.getPrice();
                 }
             }
@@ -77,7 +77,8 @@ public class BillDAO {
                         .findOnly();
                 for (var item : cart) {//đkiện
                     System.out.println(item.getColorName());
-                    if (item.getProduct().getQuantity() != 0) {
+                    System.out.println(item.checkQuantity());
+                    if (item.checkQuantity()) {
                         handle.createUpdate("INSERT INTO bill_details (billId, productId, quantity, total_price, product_color) VALUES (:billId, :productId, :quantity, :price, :color)")
                                 .bind("billId", billId)
                                 .bind("productId", item.getProduct().getId())

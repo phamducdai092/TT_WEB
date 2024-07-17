@@ -118,7 +118,7 @@
                             </div>
                             <div class="cart__item--detail">
                                 <c:choose>
-                                    <c:when test="${i.getProduct().getQuantity()!=0}">
+                                    <c:when test="${i.checkQuantity()}">
                                     <div class="item--info-product"><p class="name"><a href=""
                                                                                        title="${i.getProduct().getName()} - ${i.getProduct().getId()} / ${i.getColorName()}"
                                                                                        target="_blank">
@@ -126,9 +126,9 @@
                                         / ${fn:escapeXml(i.getColorName())}
                                     </a>
                                     </c:when>
-                                        <c:when test="${i.getProduct().getQuantity()==0}">
+                                        <c:when test="${!i.checkQuantity()}">
                                         <div class="item--info-product"><p class="name"><a href=""
-                                                                                           title="${i.getProduct().getName()} - ${i.getProduct().getId()} / ${i.getColorName()}- ĐÃ HẾT HÀNG"
+                                                                                           title="MẶT HÀNG NÀY ĐÃ HẾT HÀNG"
                                                                                            target="_blank">
                                                 ${i.getProduct().getName()} - ${i.getProduct().getId()}
                                             / ${fn:escapeXml(i.getColorName())}
