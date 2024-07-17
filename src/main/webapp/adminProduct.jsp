@@ -63,21 +63,6 @@
                 <div class="header-title">Quản lý sản phẩm</div>
             </div>
             <div class="content">
-                <div class="content-header">
-                    <c:set var="searchValue" value="${requestScope.searchValue}"/>
-                    <form method="post" action="adminSearchProduct" class="content-search" accept-charset="UTF-8">
-                        <input
-                                type="text"
-                                name="search-product"
-                                placeholder="Tìm kiếm theo tên, danh mục, thương hiệu"
-                                class="input-search"
-                                value="${searchValue}"
-                        />
-                        <i
-                                class="icon fa-solid fa-magnifying-glass"
-                        ></i>
-                    </form>
-                </div>
                 <div class="btn-grp">
                     <p>Sản phẩm</p>
                     <div class="btn-item">
@@ -136,7 +121,20 @@
                         </tr>
                     </c:forEach>
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <th class="s-cl" scope="col">Ẩn</th>
+                        <th class="s-cl" scope="col">Chỉnh sửa</th>
+                        <th class="m-cl" scope="col">Product ID</th>
+                        <th class="l-cl" scope="col">Tên</th>
+                        <th class="m-cl" scope="col">Giá</th>
+                        <th class="m-cl" scope="col">Danh mục</th>
+                        <th class="m-cl" scope="col">Thương hiệu</th>
+                        <th class="s-cl" scope="col">Số lượng</th>
+                    </tr>
+                    </tfoot>
                 </table>
+                <
             </div>
         </div>
         <div class="overlay" onclick="closeDialog()"></div>

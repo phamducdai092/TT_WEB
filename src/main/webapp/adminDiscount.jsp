@@ -63,21 +63,6 @@
                 <div class="header-title">Quản lý mã giảm giá</div>
             </div>
 
-            <div class="content-header">
-                <c:set var="searchValue" value="${requestScope.searchValue}"/>
-                <form method="post" action="adminSearchProduct" class="content-search" accept-charset="UTF-8">
-                    <input
-                            type="text"
-                            name="search-product"
-                            placeholder="Tìm kiếm theo tên, danh mục, thương hiệu"
-                            class="input-search"
-                            value="${searchValue}"
-                    />
-                    <i
-                            class="icon fa-solid fa-magnifying-glass"
-                    ></i>
-                </form>
-            </div>
             <div class="content">
                 <div class="btn-grp">
                     <p>Mã Giảm Giá</p>
@@ -142,6 +127,16 @@
                     </c:forEach>
 
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <th class="s-cl" scope="col">Ẩn</th>
+                        <th class="s-cl" scope="col">Chỉnh sửa</th>
+                        <th class="m-cl" scope="col">Mã Giảm Giá</th>
+                        <th class="l-cl" scope="col">Giảm giá (%)</th>
+                        <th class="m-cl" scope="col">Ngày bắt đầu</th>
+                        <th class="m-cl" scope="col">Ngày kết thúc</th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

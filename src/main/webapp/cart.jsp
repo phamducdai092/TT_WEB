@@ -340,7 +340,7 @@
             // Gửi yêu cầu Ajax để cập nhật số lượng
             $.ajax({
                 url: '<%= request.getContextPath()%>/cart?action=update',
-                type: 'POST',
+                type: 'GET',
 
                 data: {
                     productId: productId,
