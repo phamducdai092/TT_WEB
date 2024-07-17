@@ -91,7 +91,7 @@ public class ProductDAO {
 
     public static List<Product> getProductById(int id) {
         List<Product> productList = JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("SELECT product_details.id, product_details.name, discountId, description, totalPrice " +
+                handle.createQuery("SELECT product_details.id, product_details.name, discountId, description, totalPrice,quantity " +
                                 "From product_details Where product_details.id = ?")
                         .bind(0, id)
                         .mapToBean(Product.class)

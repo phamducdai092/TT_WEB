@@ -57,8 +57,10 @@ public class BillDAO {
         var user = req.getSession().getAttribute("auth");
         if (cart != null && user != null) {
             var total = 0.0;
-            for (var item : cart) {
-                total += item.getPrice();
+            for (var item : cart) {//đkiện
+                if(item.checkQuantity()) {
+                    total += item.getPrice();
+                }
             }
             var bill = new Bill((User) user, name, phone, address, total, payment);
 
@@ -73,15 +75,18 @@ public class BillDAO {
                         .executeAndReturnGeneratedKeys()
                         .mapTo(Long.class)
                         .findOnly();
-                for (var item : cart) {
+                for (var item : cart) {//đkiện
                     System.out.println(item.getColorName());
-                    handle.createUpdate("INSERT INTO bill_details (billId, productId, quantity, total_price, product_color) VALUES (:billId, :productId, :quantity, :price, :color)")
-                            .bind("billId", billId)
-                            .bind("productId", item.getProduct().getId())
-                            .bind("quantity", item.getQuantity())
-                            .bind("price", item.getPrice())
-                            .bind("color", ColorDAO.getColorByName(item.getColorName()).getId())
-                            .execute();
+                    System.out.println(item.checkQuantity());
+                    if (item.checkQuantity()) {
+                        handle.createUpdate("INSERT INTO bill_details (billId, productId, quantity, total_price, product_color) VALUES (:billId, :productId, :quantity, :price, :color)")
+                                .bind("billId", billId)
+                                .bind("productId", item.getProduct().getId())
+                                .bind("quantity", item.getQuantity())
+                                .bind("price", item.getPrice())
+                                .bind("color", ColorDAO.getColorByName(item.getColorName()).getId())
+                                .execute();
+                    }
                 }
             });
         }
@@ -129,7 +134,6 @@ public class BillDAO {
     }
 
     public static void main(String[] args) {
-//        Bill bill = BillDAO.getInstance().getBillById(1);
     }
 
 }

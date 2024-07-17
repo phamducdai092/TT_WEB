@@ -14,6 +14,7 @@
     int selectedProductId = Integer.parseInt(request.getParameter("selectedProductId"));
     Product selectedProduct = ProductDetailService.getInstance().getProductById(selectedProductId);
     String selectedBrandName = selectedProduct.getName();
+    int selectedQuantity=selectedProduct.getQuantity();
     double discount = (double) request.getAttribute("discount");
     String endDateString = DiscountDAO.getDiscountEndDay(selectedProduct.getDiscountId());
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //dinh dang ngay thang
@@ -184,6 +185,9 @@
                         <p class="title">Giới thiệu</p>
                         <p class="introduce">
                             <%= selectedProduct.getDescription()%>
+                        </p>
+                        <p class="inv_quantity">
+                            Số lượng hàng trong kho: <%=selectedQuantity%>
                         </p>
                     </div>
                 </div>

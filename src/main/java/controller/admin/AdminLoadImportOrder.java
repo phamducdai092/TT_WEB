@@ -35,9 +35,12 @@ public class AdminLoadImportOrder extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String json = mapper.writeValueAsString(importDataList);
+//        Gson gson = new Gson();
+//        resp.getWriter().write(gson.toJson(importDataList));
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
+
         resp.getWriter().write(json);
     }
 

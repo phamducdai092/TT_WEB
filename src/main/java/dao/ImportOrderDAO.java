@@ -26,6 +26,16 @@ public class ImportOrderDAO {
         }
         return importDataList;
     }
+    public static void addImportOrder(String pr_id,String color_id, int quantity, String timeSet){
+        JDBIConnector.me().withHandle(handle ->
+                handle.createUpdate("insert into import_orders(pr_id, color_id, quantity, timeSet) " +
+                                "values (:pr_id, :color_id, :quantity, :timeSet)")
+                        .bind("pr_id", pr_id)
+                        .bind("color_id", color_id)
+                        .bind("quantity", quantity)
+                        .bind("timeSet", timeSet)
+                        .execute() > 0);
+    }
 
     public static void main(String[] args) {
         List<ImportOrder> importDataList= JDBIConnector.me().withHandle(handle ->
@@ -38,7 +48,7 @@ public class ImportOrderDAO {
             System.out.println(i.getPr_id());
             System.out.println(i.getColor_id());
             System.out.println(i.getQuantity());
-            System.out.println(i.getTime());
+            System.out.println(i.getTimeSet());
         }
     }
 }

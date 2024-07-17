@@ -27,6 +27,15 @@ public class ColorDAO {
 //        );
 //        return colorList;
 //    }
+    public static List<Product_Color> getAllColor(){
+        List<Product_Color> listColor = JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT product_color.* " +
+                                "From product_color ")
+                        .mapToBean(Product_Color.class)
+                        .collect(Collectors.toList())
+        );
+        return listColor;
+    }
     public static List<Product_Color> getListColorCodeByIdProduct(int id) {
         List<Product_Color> listColor = JDBIConnector.me().withHandle(handle ->
                 handle.createQuery("SELECT product_color.* " +
@@ -58,8 +67,6 @@ public class ColorDAO {
         return color;
     }
     public static void main(String[] args) {
-        System.out.println(getColorByName("trắng").getId());;
-//        List<Product_Color> colorList = ColorDAO.getListColorCodeByIdProduct(1);
-//        System.out.println(colorList);
+        System.out.println(getColorByName("Trắng").getId());
     }
 }

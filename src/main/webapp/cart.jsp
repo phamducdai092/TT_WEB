@@ -117,26 +117,41 @@
                                 </p>
                             </div>
                             <div class="cart__item--detail">
-                                <div class="item--info-product"><p class="name"><a href=""
-                                                                                   title="${i.getProduct().getName()} - ${i.getProduct().getId()} / ${i.getColorName()}"
-                                                                                   target="_blank">
-                                        ${i.getProduct().getName()} - ${i.getProduct().getId()}
-                                    / ${fn:escapeXml(i.getColorName())}
-                                </a>
+                                <c:choose>
+                                    <c:when test="${i.checkQuantity()}">
+                                    <div class="item--info-product"><p class="name"><a href=""
+                                                                                       title="${i.getProduct().getName()} - ${i.getProduct().getId()} / ${i.getColorName()}"
+                                                                                       target="_blank">
+                                            ${i.getProduct().getName()} - ${i.getProduct().getId()}
+                                        / ${fn:escapeXml(i.getColorName())}
+                                    </a>
+                                    </c:when>
+                                        <c:when test="${!i.checkQuantity()}">
+                                        <div class="item--info-product"><p class="name"><a href=""
+                                                                                           title="MẶT HÀNG NÀY ĐÃ HẾT HÀNG"
+                                                                                           target="_blank">
+                                                ${i.getProduct().getName()} - ${i.getProduct().getId()}
+                                            / ${fn:escapeXml(i.getColorName())}
+                                        </a>
+                                        </c:when>
+                                </c:choose>
                                 </p>
-                                    <p class="action"><a
+                                    <p class="action">
+                                        <a
                                             href="<%= request.getContextPath() %>/cart?action=remove&id=${i.getProduct().getId()}"
                                             onclick="return confirm('Bạn có chắc muốn xóa sản phẩm?')">
                                         <button>Xóa</button>
-                                    </a></p>
+                                    </a>
+                                    </p>
                                 </div>
                                 <div class="box-price"><p class="price pricechange">
-                                    <fmt:formatNumber value="${i.getProduct().getTotalPrice()}" type="currency" currencySymbol="₫" groupingUsed="true"/> </p></div>
+                                    <fmt:formatNumber value="${i.getProduct().getTotalPrice()}" type="currency"
+                                                      currencySymbol="₫" groupingUsed="true"/></p></div>
                                 <div class="quantity-block">
                                     <div class="input-group bootstrap-touchspin">
                                         <div class="input-group-btn">
                                             <button class="increase_pop items-count btn-plus btn "
-                                                    data-pid="${i.getProduct().getId()}"
+                                                    data-pid="${i.getQuantity()}"
                                                     type="button">+
                                             </button>
                                             <input type="text" maxlength="12" min="1" disabled=""
@@ -154,19 +169,22 @@
                         </div>
                     </c:forEach>
                 </div>
-                <% double sumPrice=0;
-                for(int i=0;i<shoppingCart.size();i++) {
-                    sumPrice+=shoppingCart.get(i).getPrice()*shoppingCart.get(i).getQuantity();
-                }
+                <% double sumPrice = 0;
+                    for (int i = 0; i < shoppingCart.size(); i++) {
+                        if(shoppingCart.get(i).getQuantity()!=0)
+                        sumPrice += shoppingCart.get(i).getPrice() * shoppingCart.get(i).getQuantity();
+                    }
                 %>
                 <div class="cart__sidebar">
                     <div class="each-row">
                         <div class="box-style fee"><p class="list-info-price"><span>Tạm tính: </span><strong
-                                class="totals_price price _text-right text_color_right1"><%=formatCurrency(sumPrice)%></strong>
+                                class="totals_price price _text-right text_color_right1"><%=formatCurrency(sumPrice)%>
+                        </strong>
                         </p></div>
                         <div class="box-style fee">
                             <div class="total2 clearfix"><span class="text-label">Thành tiền: </span>
-                                <div class="amount"><p><strong class="totals_price"><%=formatCurrency(sumPrice)%></strong>
+                                <div class="amount"><p><strong class="totals_price"><%=formatCurrency(sumPrice)%>
+                                </strong>
                                 </p></div>
                             </div>
                         </div>
@@ -175,7 +193,8 @@
                             <input type="hidden" name="total" value="<%= sumPrice %>">
                             <!-- Add other necessary hidden fields -->
 
-                            <button class="button btn btn-large btn-block btn-danger btn-checkout evo-button" type="submit" >
+                            <button class="button btn btn-large btn-block btn-danger btn-checkout evo-button"
+                                    type="submit">
                                 Thanh toán
                             </button>
                         </form>
@@ -278,7 +297,8 @@
     </footer>
 </section>
 <!-- MAIN JS -->
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
 <script src="js/product.js"></script>
 <script src="js/paging.js"></script>
 
@@ -331,7 +351,7 @@
                     window.location.reload();
                 },
                 error: function (error) {
-                    console.log(productId,newQuantity);
+                    console.log(productId, newQuantity);
                     console.error('Lỗi khi cập nhật số lượng cho sản phẩm ID:', productId, 'Lỗi:', error);
                 }
             });
