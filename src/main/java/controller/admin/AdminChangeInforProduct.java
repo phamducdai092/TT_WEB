@@ -1,16 +1,15 @@
 package controller.admin;
 
-import bean.Brand;
-import bean.Category;
-import bean.Product;
-import bean.Supplier;
+import bean.*;
 import dao.*;
+import service.LogService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
 public class AdminChangeInforProduct extends HttpServlet {
 
     String nameProduct, startDate, endDate, category,
-            brand, supplier, desc;
+            brand, supplier, desc, priceString;
 
     int idProduct, quantity, discountId;
     double price;
@@ -31,8 +30,9 @@ public class AdminChangeInforProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-//        HttpSession session = req.getSession();
-//        idProduct = (int) session.getAttribute("productId");
+        HttpSession session = req.getSession();
+         User u = (User) session.getAttribute("auth");
+
         idProduct = Integer.parseInt(req.getParameter("productId"));
 
         nameProduct = req.getParameter("product-name");
@@ -48,7 +48,9 @@ public class AdminChangeInforProduct extends HttpServlet {
 
         quantity = Integer.parseInt(req.getParameter("product-quantity"));
 
-        price = Double.parseDouble(req.getParameter("product-price"));
+        priceString = req.getParameter("product-price");
+        priceString = priceString.replace(",", ""); // Loại bỏ dấu phẩy
+        price = Double.parseDouble(priceString);
 
         int brandId = 0;
         int categoryId = 0;
@@ -73,12 +75,35 @@ public class AdminChangeInforProduct extends HttpServlet {
                 brandId = br.getId();
             }
         }
+        // ghi loggggggggggggggggggggggggggg
+        String preData, afterData, table, role, actionDetail;
 
+        LogService usl = new LogService();
+        Log us = new Log();
+
+        int userId = u.getId();
+
+
+        table = "product_details";
+        us.setTables(table);
+
+        role = "adminId = " + userId;
+        us.setRole(role);
+
+        actionDetail = "edit Product";
+        us.setActionDetail(actionDetail);
+
+        Product p = ProductDAO.getProductId(idProduct);
+        afterData = p.getId() + ", " + p.getName() + ", " + p.getDiscountId() + ", " + p.getCategoryId() + ", " +
+                p.getBrandId() + ", " + p.getSupplierId() + ", " + p.getQuantity() + ", " + p.getTotalPrice() + ", " + p.getDescription();
+        us.setAfterData(afterData);
         DiscountDAO.changeDiscountDate(discountId, startDate, endDate);
-
         Product product = new Product(idProduct, nameProduct, discountId, categoryId, brandId, supplierId, quantity, price, desc);
         ProductDAO.changeInforProduct(product);
-        System.out.println(category);
+        preData = idProduct + ", " +  nameProduct+ ", " + discountId+ ", " + categoryId+ ", " + brandId+ ", " + supplierId+
+                ", " + quantity+ ", " + price+ ", " + desc;
+        us.setBeforeData(preData);
+        usl.update(us);
         req.getRequestDispatcher("./adminEditProduct.jsp").forward(req, resp);
     }
 }
