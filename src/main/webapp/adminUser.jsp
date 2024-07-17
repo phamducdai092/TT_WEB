@@ -62,21 +62,6 @@
             </div>
 
             <div class="content">
-                <div class="content-header">
-                    <c:set var="searchValue" value="${requestScope.searchValue}"/>
-                    <form method="post" action="adminSearchUser" class="content-search">
-                        <input
-                                type="text"
-                                name="search-user"
-                                placeholder="Tìm kiếm theo tên, tài khoản hoặc email ..."
-                                class="input-search"
-                                value="${searchValue}"
-                        />
-                        <i
-                                class="icon fa-solid fa-magnifying-glass"
-                        ></i>
-                    </form>
-                </div>
                 <table id="manageUserTable">
                     <thead>
                     <tr>

@@ -212,8 +212,7 @@ button {
 
 .content {
     overflow: scroll;
-    padding: 0 42px;
-    margin-bottom: 120px;
+    margin: 30px 10px;
 }
 
 .header-title {
