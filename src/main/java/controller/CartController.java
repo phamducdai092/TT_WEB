@@ -34,10 +34,12 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
+        System.out.println(action);
         if (action == null) {
             doGet_DisplayCart(request, response);
         } else {
             if (action.equalsIgnoreCase("update")) {
+                System.out.println("da nhan aj");
                 String quantity = request.getParameter("quantity");
                 String id = request.getParameter("productId");
                 System.out.println("Product ID: " + request.getParameter("quantity") + ", Quantity: " + request.getParameter("productId"));
@@ -58,6 +60,7 @@ public class CartController extends HttpServlet {
             }
         }
     }
+
 
     protected void doGet_DisplayCart(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -96,23 +99,6 @@ public class CartController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-//        if (request.getParameter("action").equals("update")) {
-//            String quantity = request.getParameter("quantity");
-//            String id = request.getParameter("productId");
-//            System.out.println("Product ID: " + request.getParameter("quantity") + ", Quantity: " + request.getParameter("productId"));
-//            List<Item> cart = (List<Item>) session.getAttribute("cart");
-//            cart.forEach(item -> {
-//                if (item.getProduct().getId() == Integer.parseInt(id)) {
-//                    if (Integer.parseInt(quantity) == 0) {
-//                        cart.remove(item);
-//                    } else {
-//                        item.setQuantity(Integer.parseInt(quantity));
-//                        item.setPrice(item.getProduct().getTotalPrice() * Integer.parseInt(quantity));
-//                    }
-//                }
-//            });
-//            session.setAttribute("cart", cart);
-//        }
         String selectedCodeColor = request.getParameter("selectedCodeColor");
         String quantity = request.getParameter("quantity");
         String id = request.getParameter("id");
@@ -125,12 +111,35 @@ public class CartController extends HttpServlet {
         } else {
             List<Item> cart = (List<Item>) session.getAttribute("cart");
             boolean isExist = checkIsExist(Integer.parseInt(id), cart);
+//            if (isExist) {
+//                cart.forEach(item -> {
+//                            if (item.getProduct().getId() == Integer.parseInt(id)) {
+//                                if(item.getColorName().equalsIgnoreCase(selectedCodeColor)) {
+//                                    item.setQuantity(item.getQuantity() + Integer.parseInt(quantity));
+//                                }else{
+//                                    Item itemNew = new Item(productDetailService.getProductById(Integer.parseInt(id)), Integer.parseInt(quantity), selectedCodeColor);
+//                                    cart.add(itemNew);
+//                                    break;
+//                                }
+//                            }
+//                        }
+//                );
+//            }
             if (isExist) {
-                cart.forEach(item -> {
+                boolean itemAdded = false;
+                for (Item item : cart) {
                     if (item.getProduct().getId() == Integer.parseInt(id)) {
-                        item.setQuantity(item.getQuantity() + Integer.parseInt(quantity));
+                        if (item.getColorName().equalsIgnoreCase(selectedCodeColor)) {
+                            item.setQuantity(item.getQuantity() + Integer.parseInt(quantity));
+                            itemAdded = true;
+                            break;
+                        }
                     }
-                });
+                }
+                if (!itemAdded) {
+                    Item itemNew = new Item(productDetailService.getProductById(Integer.parseInt(id)), Integer.parseInt(quantity), selectedCodeColor);
+                    cart.add(itemNew);
+                }
             } else {
                 Item item = new Item(productDetailService.getProductById(Integer.parseInt(id)), Integer.parseInt(quantity), selectedCodeColor);
                 cart.add(item);
