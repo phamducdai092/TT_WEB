@@ -30,8 +30,8 @@ public class AdminHiddenBrand extends HttpServlet {
         int brandId = Integer.parseInt(req.getParameter("brandId"));
         Brand brand = BrandDAO.getBrandById(brandId);
 
-        LogService usl= new LogService();
-        Log us=new Log();
+        LogService usl = new LogService();
+        Log us = new Log();
 
         int userId = u.getId();
 
@@ -41,14 +41,17 @@ public class AdminHiddenBrand extends HttpServlet {
 
         role = "adminId = " + userId;
         us.setRole(role);
-
-        actionDetail = "disable";
-        us.setActionDetail(actionDetail);
-
+        if (brand.getStatus() == 1) {
+            actionDetail = "disable";
+            us.setActionDetail(actionDetail);
+        } else {
+            actionDetail = "display";
+            us.setActionDetail(actionDetail);
+        }
         if (brandId != 0) {
             BrandDAO.hiddenBrand(brandId);
             req.getRequestDispatcher("./adminBrandManagement").forward(req, resp);
-            preData= "disatble brandId = " + brandId;
+            preData = "disatble brandId = " + brandId;
             us.setBeforeData(preData);
             usl.update(us);
         }

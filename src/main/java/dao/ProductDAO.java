@@ -142,7 +142,7 @@ public class ProductDAO {
         Product product = JDBIConnector.me().withHandle(handle ->
                 handle.createQuery("SELECT * FROM product_details WHERE id = ?")
                         .bind(0, id)
-                        .mapTo(Product.class)
+                        .mapToBean(Product.class)
                         .findOne()
                         .orElse(null) // Giả sử trả về null nếu không tìm thấy sản phẩm
         );
