@@ -111,20 +111,6 @@ public class CartController extends HttpServlet {
         } else {
             List<Item> cart = (List<Item>) session.getAttribute("cart");
             boolean isExist = checkIsExist(Integer.parseInt(id), cart);
-//            if (isExist) {
-//                cart.forEach(item -> {
-//                            if (item.getProduct().getId() == Integer.parseInt(id)) {
-//                                if(item.getColorName().equalsIgnoreCase(selectedCodeColor)) {
-//                                    item.setQuantity(item.getQuantity() + Integer.parseInt(quantity));
-//                                }else{
-//                                    Item itemNew = new Item(productDetailService.getProductById(Integer.parseInt(id)), Integer.parseInt(quantity), selectedCodeColor);
-//                                    cart.add(itemNew);
-//                                    break;
-//                                }
-//                            }
-//                        }
-//                );
-//            }
             if (isExist) {
                 boolean itemAdded = false;
                 for (Item item : cart) {
