@@ -32,7 +32,21 @@ public class ItemDAO {
         );
         return item;
     }
+    public static boolean checkQuantity(Item item){
+        int pr_id= item.getProduct().getId();
+        int color_id=ColorDAO.getColorByName(item.getColorName()).getId();
+        Integer quantity= JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("select quantity from inv_quantity where pr_id =:pr_id and color_id=:color_id")
+                        .bind("pr_id",pr_id)
+                        .bind("color_id",color_id)
+                        .mapTo(Integer.class)
+                        .findOne()
+                        .orElse(0)
+        );
+        return quantity!=0;
+    }
 
     public static void main(String[] args) {
+//        System.out.println(checkQuantity(getItemById(1)));;
     }
 }

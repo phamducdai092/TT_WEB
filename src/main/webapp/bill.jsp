@@ -240,6 +240,7 @@
                         window.location.href = '<%= request.getContextPath()%>/thank-you';
                     },
                     error: function (error) {
+                        alert('error');
                     }
                 });
 

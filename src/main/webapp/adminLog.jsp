@@ -1,5 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String role = (String) session.getAttribute("role");
+    if ("admin".equals(role)) {
+%>
 
 <html lang="en">
 <head>
@@ -42,8 +46,9 @@
     />
     <link rel="stylesheet" href="./assets/css/admin.css"/>
     <link rel="stylesheet" href="./assets/css/style.css"/>
+    <link rel="stylesheet" href="./assets/css/custom-datatable.css">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Quản lý Logs</title>
     <style>
         #example_wrapper{
             width: 100%;
@@ -58,23 +63,31 @@
     <div class="main-content">
         <div id="manage-product" class="content-wrapper">
             <div class="header-admin">
-                <div class="header-title">Quản lý đơn nhập hàng</div>
+                <div class="header-title">Quản lý Logs</div>
             </div>
             <table id="example" class="display nowrap" style="width:100%">
                 <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Name</th>
-                    <th>Color</th>
-                    <th>Quantity</th>
+                    <th>Role</th>
+                    <th>Table</th>
+                    <th>Action</th>
+                    <th>Action Detail</th>
+                    <th>AfterData</th>
+                    <th>BeforeData</th>
+                    <th>CreateDate</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
                     <th>Id</th>
-                    <th>Name</th>
-                    <th>Color</th>
-                    <th>Quantity</th>
+                    <th>Role</th>
+                    <th>Table</th>
+                    <th>Action</th>
+                    <th>Action Detail</th>
+                    <th>AfterData</th>
+                    <th>BeforeData</th>
+                    <th>CreateDate</th>
                 </tr>
                 </tfoot>
             </table>
@@ -103,17 +116,26 @@
             },
             "lengthMenu": [5, 10, 25, 50],
             ajax: {
-                url: 'http://localhost:8080/getInventoryQuantity',
+                url: 'http://localhost:8080/adminLoadLog',
                 dataSrc: ''
             },
             columns: [
                 { data: 'id' },
-                { data: 'pr_id' },
-                { data: 'color_id' },
-                { data: 'quantity' },
+                { data: 'role' },
+                { data: 'table' },
+                { data: 'action' },
+                { data: 'actionDetail' },
+                { data: 'afterData' },
+                { data: 'beforeData' },
+                {data: 'createDate'}
             ]
         });
     });
 </script>
 </body>
 </html>
+<%
+    } else {
+        response.sendRedirect(request.getContextPath() + "/errorAdmin.jsp");
+    }
+%>

@@ -27,6 +27,29 @@ public class BrandDAO {
         );
         return brand;
     }
+    public static Brand getBrandById(int brandId) {
+        Brand brand = JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT * FROM brands " +
+                                "WHERE id = :id")
+                        .bind("id", brandId)
+                        .mapToBean(Brand.class)
+                        .findOne()
+                        .orElse(null) // Giả sử trả về null nếu không tìm thấy sản phẩm
+        );
+        return brand;
+    }
+    public static Brand getBrandByName(String brandName) {
+        Brand brand = JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT * FROM brands " +
+                                "WHERE name = ?")
+                        .bind(0, brandName)
+                        .mapToBean(Brand.class)
+                        .findOne()
+                        .orElse(null) // Giả sử trả về null nếu không tìm thấy sản phẩm
+        );
+        return brand;
+    }
+
 
     public static int getBiggestBrandId() {
         return JDBIConnector.me().withHandle(handle ->

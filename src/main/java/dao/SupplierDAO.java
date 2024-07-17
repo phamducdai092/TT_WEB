@@ -1,5 +1,6 @@
 package dao;
 
+import bean.Category;
 import bean.Supplier;
 import db.JDBIConnector;
 
@@ -27,16 +28,15 @@ public class SupplierDAO {
                 );
     }
 
-    public static boolean removeSupplier(int id) {
-        try {
-            return JDBIConnector.me().withHandle(handle ->
-                    handle.createUpdate("delete from suppliers where id = :id")
+    public static Supplier getSupplierById(int id) {
+      Supplier supplier = JDBIConnector.me().withHandle(handle ->
+                    handle.createQuery("select * from suppliers where id = :id")
                             .bind("id", id)
-                            .execute() > 0
+                            .mapTo(Supplier.class)
+                            .findOne()
+                            .orElse(null)
             );
-        }catch (Exception e) {
-            return false;
-        }
+     return supplier;
     }
     public static void hiddenSupplier(int id) {
         JDBIConnector.me().withHandle(handle -> {

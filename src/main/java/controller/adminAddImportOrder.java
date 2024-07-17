@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @WebServlet(value = "/addImportOrder")
 public class adminAddImportOrder extends HttpServlet {
-    String productName,colorName,time;
+    String productName,colorName,timeSet;
     int quantity;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,8 +25,8 @@ public class adminAddImportOrder extends HttpServlet {
         productName=req.getParameter("productName");
         colorName=req.getParameter("colorName");
         quantity= Integer.parseInt(req.getParameter("quantity"));
-        time=req.getParameter("import-date");
-        ImportOrderDAO.addImportOrder(productName, colorName, quantity, time);
+        timeSet=req.getParameter("import-date");
+        ImportOrderDAO.addImportOrder(productName, colorName, quantity, timeSet);
         req.getRequestDispatcher("./adminEditImport.jsp").forward(req, resp);
     }
 }

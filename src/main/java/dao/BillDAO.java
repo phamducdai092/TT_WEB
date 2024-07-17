@@ -64,10 +64,13 @@ public class BillDAO {
         var user = req.getSession().getAttribute("auth");
         if (cart != null && user != null) {
             var total = 0.0;
-            for (var item : cart) {
-                total += item.getPrice();
+            for (var item : cart) {//đkiện
+                if(item.checkQuantity()) {
+                    total += item.getPrice();
+                }
             }
             var bill = new Bill((User) user, name, phone, address, total, payment);
+
             JDBIConnector.me().useHandle(handle -> {
                 long billId = handle.createUpdate("INSERT INTO bills (userId, full_name, phone, address, totalPrice, payment_method) VALUES (:userId, :name, :phone, :address, :total, :payment)")
                         .bind("userId", bill.getUser().getId())
@@ -78,17 +81,19 @@ public class BillDAO {
                         .bind("payment", bill.getPaymentMethod())
                         .executeAndReturnGeneratedKeys()
                         .mapTo(Long.class)
-                        .one();
-
-                for (var item : cart) {
-                    System.out.println();
-                    handle.createUpdate("INSERT INTO bill_details (billId, productId, quantity, total_price, product_color) VALUES (:billId, :productId, :quantity, :price, :color)")
-                            .bind("billId", billId)
-                            .bind("productId", item.getProduct().getId())
-                            .bind("quantity", item.getQuantity())
-                            .bind("price", item.getPrice())
-                            .bind("color", item.getColorName())
-                            .execute();
+                        .findOnly();
+                for (var item : cart) {//đkiện
+                    System.out.println(item.getColorName());
+                    System.out.println(item.checkQuantity());
+                    if (item.checkQuantity()) {
+                        handle.createUpdate("INSERT INTO bill_details (billId, productId, quantity, total_price, product_color) VALUES (:billId, :productId, :quantity, :price, :color)")
+                                .bind("billId", billId)
+                                .bind("productId", item.getProduct().getId())
+                                .bind("quantity", item.getQuantity())
+                                .bind("price", item.getPrice())
+                                .bind("color", ColorDAO.getColorByName(item.getColorName()).getId())
+                                .execute();
+                    }
                 }
             });
         }

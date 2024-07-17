@@ -116,6 +116,18 @@
 
                     </c:forEach>
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <th scope="col" >Chỉnh sửa</th>
+                        <th scope="col" >ID</th>
+                        <th scope="col" >ID người dùng</th>
+                        <th scope="col" >Phương thức thanh toán</th>
+                        <th scope="col" >Ngày tạo hóa đơn</th>
+                        <th scope="col">Tổng tiền đơn hàng</th>
+                        <th scope="col" >Địa chỉ nhận hàng</th>
+                        <th scope="col" >Trạng thái đơn hàng</th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

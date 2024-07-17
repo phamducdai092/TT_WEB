@@ -1,11 +1,13 @@
 package controller.admin;
 
 import bean.ImportOrder;
+import bean.Log;
 import bean.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.Gson;
 import dao.ImportOrderDAO;
+import dao.LogDAO;
 import dao.ProductDAO;
 import db.JDBIConnector;
 
@@ -18,29 +20,26 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebServlet("/getImportData")
-public class AdminLoadImportOrder extends HttpServlet {
-    private ImportOrder importOrder;
-    ImportOrderDAO importOrderDAO;
+@WebServlet("/adminLoadLog")
+public class AdminLoadLog extends HttpServlet {
+    private Log log;
+    LogDAO logDAO;
 
     @Override
     public void init() throws ServletException {
-        importOrder=new ImportOrder();
+        log = new Log();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        importOrderDAO=new ImportOrderDAO();
-        List<ImportOrder> importDataList = importOrderDAO.selectAllImportData();
+        logDAO = new LogDAO();
+        List<Log> logList = logDAO.getAllLogs();
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        String json = mapper.writeValueAsString(importDataList);
-//        Gson gson = new Gson();
-//        resp.getWriter().write(gson.toJson(importDataList));
+        String json = mapper.writeValueAsString(logList);
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-
         resp.getWriter().write(json);
     }
 
