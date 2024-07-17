@@ -26,6 +26,25 @@ public class CategoryDAO {
                         .orElse(null)
         );
     }
+    public static Category getCategoryById(int id) {
+        Category category = JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT * FROM categories WHERE id = :id")
+                        .bind("id", id)
+                        .mapTo(Category.class)
+                        .findOne()
+                        .orElse(null)
+        );
+        return category;
+    }
+    public static int getCategoryByName(String name) {
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT id FROM categories WHERE name = :name")
+                        .bind("name", name)
+                        .mapTo(Integer .class)
+                        .findOne()
+                        .orElse(null)
+        );
+    }
 
 
     public static String getSupplierName(int id) {
