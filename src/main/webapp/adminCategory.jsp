@@ -124,6 +124,14 @@
                     </c:forEach>
 
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <th class="s-cl" scope="col">Ẩn</th>
+                        <th class="s-cl" scope="col">Chỉnh sửa</th>
+                        <th class="m-cl" scope="col">Danh mục ID</th>
+                        <th class="l-cl" scope="col">Tên</th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

@@ -127,6 +127,16 @@
                     </c:forEach>
 
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <th class="s-cl" scope="col">Ẩn</th>
+                        <th class="s-cl" scope="col">Chỉnh sửa</th>
+                        <th class="m-cl" scope="col">Mã Giảm Giá</th>
+                        <th class="l-cl" scope="col">Giảm giá (%)</th>
+                        <th class="m-cl" scope="col">Ngày bắt đầu</th>
+                        <th class="m-cl" scope="col">Ngày kết thúc</th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
