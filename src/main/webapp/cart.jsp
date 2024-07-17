@@ -180,7 +180,7 @@
                             </button>
                         </form>
                         <button class="button btn-proceed-checkout btn btn-large btn-block btn-danger btn-checkouts"
-                                title="Tiếp tục mua hàng" type="button"><a href="index.jsp">Tiếp
+                                title="Tiếp tục mua hàng" type="button"><a href="home">Tiếp
                             tục mua hàng</a>
                         </button>
                     </div>

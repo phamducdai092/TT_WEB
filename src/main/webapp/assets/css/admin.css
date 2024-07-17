@@ -49,6 +49,11 @@ th {
     color: var(--sub-main-color);
 }
 
+.collapse {
+    display: none;
+    width: 0;
+}
+
 button {
     color: #fff;
 }
@@ -243,6 +248,7 @@ button {
     grid-column: span 2;
     display: flex;
     justify-content: space-between;
+    margin: 0 6px;
 }
 
 .btn-item button {

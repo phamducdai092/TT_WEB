@@ -79,6 +79,9 @@
                         <th scope="col" >Chỉnh sửa</th>
                         <th scope="col" >ID</th>
                         <th scope="col" >ID người dùng</th>
+                        <th >Tên sản phâm</th>
+                        <th >Số lượng</th>
+                        <th >Màu sản phẩm</th>
                         <th scope="col" >Phương thức thanh toán</th>
                         <th scope="col" >Ngày tạo hóa đơn</th>
                         <th scope="col">Tổng tiền đơn hàng</th>
@@ -98,6 +101,9 @@
                             </td>
                             <td data-label="ID">${o.getId()}</td>
                             <td data-label="ID người dùng">${o.getUserId()}</td>
+                            <td >${o.getProductName()}</td>
+                            <td >${o.getQuantity()}</td>
+                            <td >${o.getProductColor()}</td>
                             <td data-label="Phương thức thanh toán">${o.getPaymentMethod()}</td>
                             <td data-label="Ngày tạo hóa đơn">${o.getCreateDate()}</td>
                             <td data-label="Tổng tiền đơn hàng">

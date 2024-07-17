@@ -1,6 +1,7 @@
 package controller.admin;
 
 import bean.Product;
+import bean.Revenue;
 import com.google.gson.Gson;
 import service.StatisticsService;
 
@@ -10,9 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @WebServlet(name = "StatisticsController", value = "/statistics")
 public class AdminStatistical extends HttpServlet {
@@ -21,22 +20,44 @@ public class AdminStatistical extends HttpServlet {
         String dataType = req.getParameter("dataType");
 
         List<Product> products = null;
-
+        List<Revenue> revenues = null;
+        int revenue = 0;
         // Check dataType and fetch corresponding data
         if ("topSellingProducts".equals(dataType)) {
             products = StatisticsService.getInstance().getTopSellingProducts();
         } else if ("outOfStockProducts".equals(dataType)) {
             products = StatisticsService.getInstance().getOutOfStockProducts();
-        } else {
+        } else if ("revenueToday".equals(dataType)){
+            revenues = StatisticsService.getInstance().getCurrentProductRevenue();
+            for (Revenue r: revenues) {
+                r.setRevenue(r.getTotalPrice() * r.getSaleQuantity());
+            }
+        } else if ("revenue7Days".equals(dataType)) {
+            revenues = StatisticsService.getInstance().get7DaysRevenue();
+            for (Revenue r: revenues) {
+                r.setRevenue(r.getTotalPrice() * r.getSaleQuantity());
+            }
+        } else if ("revenue30Days".equals(dataType)) {
+            revenues = StatisticsService.getInstance().get30DaysRevenue();
+            for (Revenue r: revenues) {
+                r.setRevenue(r.getTotalPrice() * r.getSaleQuantity());
+            }
+        }
+        else {
             // If no dataType or unknown dataType, return default data
             products = StatisticsService.getInstance().getTopSellingProducts(); // Default to top selling products
         }
 
         // Prepare response data
-        String json = new Gson().toJson(products);
-
+        String jsonProducts = new Gson().toJson(products);
+        String jsonRevenues = new Gson().toJson(revenues);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(json);
+        if(revenues != null) {
+            resp.getWriter().write(jsonRevenues);
+        } else {
+            resp.getWriter().write(jsonProducts);
+        }
     }
 }
+

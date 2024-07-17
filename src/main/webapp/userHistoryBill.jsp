@@ -57,7 +57,7 @@
     />
     <!-- styles -->
     <link rel="stylesheet" href="./assets/css/style.css"/>
-        <link rel="stylesheet" href="assets/css/list.css">
+    <link rel="stylesheet" href="assets/css/list.css">
     <link rel="stylesheet" href="./assets/css/custom-datatable.css"/>
 
     <!-- OWL CAROUSEL CSS -->
@@ -111,19 +111,19 @@
             <jsp:include page="sidebar-profile.jsp"/>
             <div class="col-md-10">
                 <div class="your__cart ms-2 p-2">
-                    <table id="orderTable" >
+                    <table id="orderTable">
                         <thead>
                         <tr>
-                            <th >Mã đơn hàng</th>
-                            <th >Tên sản phâm</th>
-                            <th >Số lượng</th>
-                            <th >Màu sản phẩm</th>
-                            <th >Ngày mua</th>
-                            <th >Họ và tên</th>
-                            <th >Số điện thoại</th>
-                            <th >Địa chỉ</th>
-                            <th >Phương thức thanh toán</th>
-                            <th >Trạng thái đơn hàng</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Tên sản phâm</th>
+                            <th>Số lượng</th>
+                            <th>Màu sản phẩm</th>
+                            <th>Ngày mua</th>
+                            <th>Họ và tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Trạng thái đơn hàng</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -143,6 +143,20 @@
                             </tr>
                         </c:forEach>
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Tên sản phâm</th>
+                            <th>Số lượng</th>
+                            <th>Màu sản phẩm</th>
+                            <th>Ngày mua</th>
+                            <th>Họ và tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Trạng thái đơn hàng</th>
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

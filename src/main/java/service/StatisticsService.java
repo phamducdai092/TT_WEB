@@ -1,6 +1,7 @@
 package service;
 
 import bean.Product;
+import bean.Revenue;
 import dao.StatisticsDAO;
 
 import java.util.List;
@@ -19,6 +20,18 @@ public class StatisticsService {
 
     public List<Product> getOutOfStockProducts() {
         return StatisticsDAO.getOutOfStockProducts();
+    }
+
+    public List<Revenue> getCurrentProductRevenue() {
+        return StatisticsDAO.getCurrentProductRevenue();
+    }
+
+    public List<Revenue> get7DaysRevenue() {
+        return StatisticsDAO.get7DaysRevenue();
+    }
+
+    public List<Revenue> get30DaysRevenue() {
+        return StatisticsDAO.get30DaysRevenue();
     }
 
 }

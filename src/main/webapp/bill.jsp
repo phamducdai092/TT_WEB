@@ -235,7 +235,7 @@
                     type: 'POST',
                     data: data,
                     success: function (response) {
-                        alert('Thêm vào giỏ hàng thành công');
+                        alert('Thanh toán thành công');
                         // direct to cart page
                         window.location.href = '<%= request.getContextPath()%>/thank-you';
                     },

@@ -38,8 +38,10 @@ public class BillDAO {
 
     public List<Bill> getBillList() {
         return JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("select * from bills")
-                        .mapToBean(Bill.class)
+                handle.createQuery("SELECT b.*, pd.name, bd.quantity, bd.product_color \n" +
+                                "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
+                                "JOIN product_details AS pd ON bd.productId = pd.id")
+                        .map(new BillMapper())
                         .collect(Collectors.toList())
         );
     }
@@ -66,7 +68,6 @@ public class BillDAO {
                 total += item.getPrice();
             }
             var bill = new Bill((User) user, name, phone, address, total, payment);
-
             JDBIConnector.me().useHandle(handle -> {
                 long billId = handle.createUpdate("INSERT INTO bills (userId, full_name, phone, address, totalPrice, payment_method) VALUES (:userId, :name, :phone, :address, :total, :payment)")
                         .bind("userId", bill.getUser().getId())
@@ -80,12 +81,13 @@ public class BillDAO {
                         .one();
 
                 for (var item : cart) {
+                    System.out.println();
                     handle.createUpdate("INSERT INTO bill_details (billId, productId, quantity, total_price, product_color) VALUES (:billId, :productId, :quantity, :price, :color)")
                             .bind("billId", billId)
                             .bind("productId", item.getProduct().getId())
                             .bind("quantity", item.getQuantity())
                             .bind("price", item.getPrice())
-                            .bind("color", ColorDAO.getColorByName(item.getColorName()).getId())
+                            .bind("color", item.getColorName())
                             .execute();
                 }
             });
