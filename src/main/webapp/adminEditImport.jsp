@@ -183,8 +183,7 @@
                             String(data[1]).padStart(2, '0') + '-' +
                             String(data[2]).padStart(2, '0') + ' ' +
                             String(data[3]).padStart(2, '0') + ':' +
-                            String(data[4]).padStart(2, '0') + ':' +
-                            String(data[5]).padStart(2, '0') : '';
+                            String(data[4]).padStart(2, '0') :'';
                     }
                 }
             ]

@@ -29,7 +29,7 @@ public class InventoryQuantityDAO {
 
     public static void main(String[] args) {
         List<InventoryQuantity> importDataList= JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("select * from import_orders")
+                handle.createQuery("select * from inv_quantity")
                         .mapToBean(InventoryQuantity.class)
                         .collect(Collectors.toList()));
         for (InventoryQuantity i:

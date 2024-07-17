@@ -63,6 +63,12 @@
                 <a href="adminImportServlet">Quản lý đơn nhập hàng</a>
             </button>
         </li>
+        <li class="side-bar__item">
+            <i class="fa-solid fa-warehouse icon"></i>
+            <button class="manage-bill item-cta">
+                <a href="./adminDisplayInventoryQuantity.jsp">Quản lý tồn kho</a>
+            </button>
+        </li>
         <li class="side-bar__item"></li>
     </ul>
 </div>
