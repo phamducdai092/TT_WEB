@@ -62,21 +62,6 @@
                 <div class="header-title">Quản lý danh mục</div>
             </div>
 
-            <div class="content-header">
-                <c:set var="searchValue" value="${requestScope.searchValue}"/>
-                <form method="post" action="adminSearchProduct" class="content-search" accept-charset="UTF-8">
-                    <input
-                            type="text"
-                            name="search-product"
-                            placeholder="Tìm kiếm theo tên, danh mục, thương hiệu"
-                            class="input-search"
-                            value="${searchValue}"
-                    />
-                    <i
-                            class="icon fa-solid fa-magnifying-glass"
-                    ></i>
-                </form>
-            </div>
             <c:set var="success" value="${requestScope.success}"/>
             <c:set var="fail" value="${requestScope.fail}"/>
             <c:choose>
