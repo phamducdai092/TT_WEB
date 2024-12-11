@@ -178,10 +178,10 @@
                                  src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg">
                         </a>
 
-                        <a href="" class="login-fb">
-                            <img width="129px" height="37px" alt="facebook-login-button"
-                                 src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg">
-                        </a>
+<%--                        <a href="" class="login-fb">--%>
+<%--                            <img width="129px" height="37px" alt="facebook-login-button"--%>
+<%--                                 src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg">--%>
+<%--                        </a>--%>
                     </div>
 
                     <div class="footer">

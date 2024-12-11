@@ -65,7 +65,7 @@
             </div>
 
             <div class="content">
-                <table id="manageUserTable">
+                <table id="manageUserTable" class="display" style="width: 100%;">
                     <thead>
                     <tr>
                         <th class="s-cl" scope="col">Chỉnh sửa</th>

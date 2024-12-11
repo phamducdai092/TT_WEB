@@ -61,6 +61,7 @@ public class LoginGoogleHandler extends HttpServlet {
         String response = Request.Get(link).execute().returnContent().asString();
         return new Gson().fromJson(response, UserGoogleDto.class);
     }
+
 //   lưu người dùng vào databaser
     private void handleUserLogin(UserGoogleDto userGoogleDto, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         User user = UserDAO.getUserByIdGoogle(userGoogleDto.getId());
