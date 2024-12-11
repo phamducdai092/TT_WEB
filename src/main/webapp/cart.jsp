@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="bean.ShoppingCart" %>
 <%@ page import="bean.Item" %>
@@ -104,88 +105,135 @@
             <span>)</span>
         </h3>
         <c:if test="${shoppingCart==null}">
-            <img class="cart__content-empty" src="other_img/empty-cart.webp" alt="empty cart">
+            <img class="cart__content-empty" src="https://bizweb.dktcdn.net/100/292/624/themes/758446/assets/empty-cart.png?1720012142124" alt="empty cart">
         </c:if>
         <c:if test="${shoppingCart!=null}">
             <div class="left__content">
                 <div class="cart__tbody">
                     <c:forEach var="i" items="${shoppingCart}">
-                        <div class="cart__item">
-                            <div class="cart__item--img">
-                                <p class="img">
-                                    <img src="${ImageService.getInstance().getImageByProductId((i.getProduct()).getId()).get(0).getLink()}">
-                                </p>
-                            </div>
-                            <div class="cart__item--detail">
-                                <c:choose>
-                                    <c:when test="${i.checkQuantity()}">
-                                    <div class="item--info-product"><p class="name"><a href=""
-                                                                                       title="${i.getProduct().getName()} - ${i.getProduct().getId()} / ${i.getColorName()}"
-                                                                                       target="_blank">
-                                            ${i.getProduct().getName()} - ${i.getProduct().getId()}
-                                        / ${fn:escapeXml(i.getColorName())}
-                                    </a>
-                                    </c:when>
-                                        <c:when test="${!i.checkQuantity()}">
+                        <c:choose>
+                            <c:when test="${i.checkQuantity()}">
+                                <div class="cart__item">
+                                    <div class="cart__item--img">
+                                        <p class="img">
+                                            <img src="${ImageService.getInstance().getImageByProductId((i.getProduct()).getId()).get(0).getLink()}">
+                                        </p>
+                                    </div>
+                                    <div class="cart__item--detail">
                                         <div class="item--info-product"><p class="name"><a href=""
-                                                                                           title="MẶT HÀNG NÀY ĐÃ HẾT HÀNG"
+                                                                                           title="${i.getProduct().getName()} - ${i.getProduct().getId()} / ${i.getColorName()}"
                                                                                            target="_blank">
                                                 ${i.getProduct().getName()} - ${i.getProduct().getId()}
                                             / ${fn:escapeXml(i.getColorName())}
                                         </a>
-                                        </c:when>
-                                </c:choose>
-                                </p>
-                                    <p class="action">
-                                        <a
-                                            href="<%= request.getContextPath() %>/cart?action=remove&id=${i.getProduct().getId()}"
-                                            onclick="return confirm('Bạn có chắc muốn xóa sản phẩm?')">
-                                        <button>Xóa</button>
-                                    </a>
-                                    </p>
-                                </div>
-                                <div class="box-price"><p class="price pricechange">
-                                    <fmt:formatNumber value="${i.getProduct().getTotalPrice()}" type="currency"
-                                                      currencySymbol="₫" groupingUsed="true"/></p></div>
-                                <div class="quantity-block">
-                                    <div class="input-group bootstrap-touchspin">
-                                        <div class="input-group-btn">
-                                            <button class="increase_pop items-count btn-plus btn "
-                                                    data-pid="${i.getQuantity()}"
-                                                    type="button">+
-                                            </button>
-                                            <input type="text" maxlength="12" min="1" disabled=""
-                                                   class="form-control quantity-r2 quantity js-quantity-product input-text number-sidebar input_pop input_pop qtyItem102678026 product-qty${i.getProduct().getId()}"
-                                                   id="qtyItem102678026" name="Lines" size="4"
-                                                   value="${i.getQuantity()}">
-                                            <button class="reduced_pop items-count btn-minus btn "
-                                                    data-pid="${i.getProduct().getId()}"
-                                                    type="button">–
-                                            </button>
+                                        </p>
+                                            <p class="action">
+                                                <a
+                                                        href="<%= request.getContextPath() %>/cart?action=remove&id=${i.getProduct().getId()}"
+                                                        onclick="return confirm('Bạn có chắc muốn xóa sản phẩm?')">
+                                                    <button>Xóa</button>
+                                                </a>
+                                            </p>
+                                        </div>
+                                        <div class="box-price"><p class="price pricechange">
+                                            <fmt:formatNumber value="${i.getProduct().getTotalPrice()}" type="currency"
+                                                              currencySymbol="₫" groupingUsed="true"/></p></div>
+                                        <div class="quantity-block">
+                                            <div class="input-group bootstrap-touchspin">
+                                                <div class="input-group-btn">
+                                                    <button class="increase_pop items-count btn-plus btn "
+                                                            data-pid="${i.getProduct().getId()}"
+                                                            type="button">+
+                                                    </button>
+                                                    <input type="text" maxlength="12" min="1" disabled=""
+                                                           class="form-control quantity-r2 quantity js-quantity-product input-text number-sidebar input_pop input_pop qtyItem102678026 product-qty${i.getProduct().getId()}"
+                                                           id="qtyItem102678026" name="Lines" size="4"
+                                                           value="${i.getQuantity()}">
+                                                    <button class="reduced_pop items-count btn-minus btn "
+                                                            data-pid="${i.getProduct().getId()}"
+                                                            type="button">–
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="cart__item out__of__stock">
+                                    <p class="hethang">Sản Phẩm Đã Hết Hàng </p>
+                                    <div class="cart__item--img">
+                                        <p class="img">
+                                            <img src="${ImageService.getInstance().getImageByProductId((i.getProduct()).getId()).get(0).getLink()}">
+                                        </p>
+                                    </div>
+                                    <div class="cart__item--detail">
+                                        <div class="item--info-product"><p class="name"><a href=""
+                                                                                           title="${i.getProduct().getName()} - ${i.getProduct().getId()} / ${i.getColorName()}"
+                                                                                           target="_blank">
+                                                ${i.getProduct().getName()} - ${i.getProduct().getId()}
+                                            / ${fn:escapeXml(i.getColorName())}
+                                        </a>
+                                        </p>
+                                            <p class="action">
+                                                <a
+                                                        href="<%= request.getContextPath() %>/cart?action=remove&id=${i.getProduct().getId()}"
+                                                        onclick="return confirm('Bạn có chắc muốn xóa sản phẩm?')">
+                                                    <button>Xóa</button>
+                                                </a>
+                                            </p>
+                                        </div>
+                                        <div class="box-price"><p class="price pricechange">
+                                            <fmt:formatNumber value="${i.getProduct().getTotalPrice()}" type="currency"
+                                                              currencySymbol="₫" groupingUsed="true"/></p></div>
+                                        <div class="quantity-block">
+                                            <div class="input-group bootstrap-touchspin">
+                                                <div class="input-group-btn">
+                                                    <button class="increase_pop items-count btn-plus btn "
+                                                            data-pid="${i.getProduct().getId()}"
+                                                            type="button" disabled>+
+                                                    </button>
+                                                    <input type="text" maxlength="12" min="1" disabled=""
+                                                           class="form-control quantity-r2 quantity js-quantity-product input-text number-sidebar input_pop input_pop qtyItem102678026 product-qty${i.getProduct().getId()}"
+                                                           id="qtyItem1026780267" name="Lines" size="4"
+                                                           value="${i.getQuantity()}">
+                                                    <button class="reduced_pop items-count btn-minus btn "
+                                                            data-pid="${i.getProduct().getId()}"
+                                                            type="button" disabled>–
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                     </c:forEach>
                 </div>
                 <% double sumPrice = 0;
                     for (int i = 0; i < shoppingCart.size(); i++) {
-                        if(shoppingCart.get(i).getQuantity()!=0)
-                        sumPrice += shoppingCart.get(i).getPrice() * shoppingCart.get(i).getQuantity();
+                        if (shoppingCart.get(i).checkQuantity()) {
+                            System.out.println("tong tien :" + sumPrice);
+                            sumPrice += shoppingCart.get(i).getPrice() * shoppingCart.get(i).getQuantity();
+                            System.out.println("get price" + shoppingCart.get(i).getPrice());
+                            System.out.println("sum: " + shoppingCart.get(i).getPrice() * shoppingCart.get(i).getQuantity());
+                            System.out.println("tong tien :" + sumPrice);
+                            System.out.println("sl" + shoppingCart.get(i).getQuantity());
+                        }
                     }
                 %>
                 <div class="cart__sidebar">
                     <div class="each-row">
-                        <div class="box-style fee"><p class="list-info-price"><span>Tạm tính: </span><strong
-                                class="totals_price price _text-right text_color_right1"><%=formatCurrency(sumPrice)%>
-                        </strong>
-                        </p></div>
                         <div class="box-style fee">
-                            <div class="total2 clearfix"><span class="text-label">Thành tiền: </span>
-                                <div class="amount"><p><strong class="totals_price"><%=formatCurrency(sumPrice)%>
-                                </strong>
-                                </p></div>
+                            <p class="list-info-price"><span>Tạm tính: </span>
+                                <strong class="totals_price price _text-right text_color_right1"><%=formatCurrency(sumPrice)%></strong>
+                            </p>
+                        </div>
+                        <div class="box-style fee">
+                            <div class="total2 clearfix">
+                                <span class="text-label">Thành tiền: </span>
+                                <div class="amount">
+                                    <p><strong class="totals_price"><%=formatCurrency(sumPrice)%></strong></div>
                             </div>
                         </div>
                         <form action="<%= request.getContextPath()%>/bill" method="get">

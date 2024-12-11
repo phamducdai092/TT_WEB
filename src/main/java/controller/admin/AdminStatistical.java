@@ -1,8 +1,10 @@
 package controller.admin;
 
+import bean.InventoryQuantity;
 import bean.Product;
 import bean.Revenue;
 import com.google.gson.Gson;
+import dto.ProductDTO;
 import service.StatisticsService;
 
 import javax.servlet.ServletException;
@@ -19,44 +21,54 @@ public class AdminStatistical extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String dataType = req.getParameter("dataType");
 
-        List<Product> products = null;
+        List<ProductDTO> productDTOs = null;
         List<Revenue> revenues = null;
-        int revenue = 0;
+        List<InventoryQuantity> inventoryQuantities = null;
         // Check dataType and fetch corresponding data
         if ("topSellingProducts".equals(dataType)) {
-            products = StatisticsService.getInstance().getTopSellingProducts();
+
+            productDTOs = StatisticsService.getInstance().getTopSellingProducts();
         } else if ("outOfStockProducts".equals(dataType)) {
-            products = StatisticsService.getInstance().getOutOfStockProducts();
-        } else if ("revenueToday".equals(dataType)){
+            inventoryQuantities = StatisticsService.getInstance().getOutOfStockProducts();
+
+        } else if ("revenueToday".equals(dataType)) {
             revenues = StatisticsService.getInstance().getCurrentProductRevenue();
-            for (Revenue r: revenues) {
+
+            for (Revenue r : revenues) {
                 r.setRevenue(r.getTotalPrice() * r.getSaleQuantity());
             }
         } else if ("revenue7Days".equals(dataType)) {
             revenues = StatisticsService.getInstance().get7DaysRevenue();
-            for (Revenue r: revenues) {
+
+            for (Revenue r : revenues) {
                 r.setRevenue(r.getTotalPrice() * r.getSaleQuantity());
             }
         } else if ("revenue30Days".equals(dataType)) {
             revenues = StatisticsService.getInstance().get30DaysRevenue();
-            for (Revenue r: revenues) {
+
+            for (Revenue r : revenues) {
                 r.setRevenue(r.getTotalPrice() * r.getSaleQuantity());
             }
-        }
-        else {
+        } else {
             // If no dataType or unknown dataType, return default data
-            products = StatisticsService.getInstance().getTopSellingProducts(); // Default to top selling products
+            productDTOs = StatisticsService.getInstance().getTopSellingProducts(); // Default to top selling products
         }
 
         // Prepare response data
-        String jsonProducts = new Gson().toJson(products);
+        String jsonInventoryQuantities = new Gson().toJson(inventoryQuantities);
+
         String jsonRevenues = new Gson().toJson(revenues);
+
+        String jsonProductDTOs = new Gson().toJson(productDTOs);
+
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-        if(revenues != null) {
+        if (revenues != null) {
             resp.getWriter().write(jsonRevenues);
+        } else if (productDTOs != null) {
+            resp.getWriter().write(jsonProductDTOs);
         } else {
-            resp.getWriter().write(jsonProducts);
+            resp.getWriter().write(jsonInventoryQuantities);
         }
     }
 }

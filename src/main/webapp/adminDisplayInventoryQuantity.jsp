@@ -58,7 +58,7 @@
     <div class="main-content">
         <div id="manage-product" class="content-wrapper">
             <div class="header-admin">
-                <div class="header-title">Quản lý đơn nhập hàng</div>
+                <div class="header-title">Quản lý tồn kho </div>
             </div>
             <table id="example" class="display nowrap" style="width:100%">
                 <thead>

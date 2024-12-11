@@ -128,9 +128,10 @@ button {
     flex-shrink: 0;
     background: var(--sub-main-color);
     position: fixed;
-    height: 100vh;
+    height: 100%;
     z-index: 1;
     border-right: 1px solid #fff;
+    overflow: scroll;
 }
 
 .side-bar a {

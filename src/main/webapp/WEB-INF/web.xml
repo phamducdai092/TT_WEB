@@ -33,5 +33,11 @@
         <url-pattern>/adminSupplierManagement</url-pattern>
         <url-pattern>/adminUserIndex</url-pattern>
         <url-pattern>/adminSearchProduct</url-pattern>
+        <url-pattern>/getImportData</url-pattern>
+        <url-pattern>/adminLoadLog</url-pattern>
+        <url-pattern>/statistics</url-pattern>
+        <url-pattern>/adminImportServlet</url-pattern>
+        <url-pattern>/getInventoryQuantity</url-pattern>
+
     </filter-mapping>
 </web-app>

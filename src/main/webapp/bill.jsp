@@ -170,7 +170,9 @@
                     <div class="single-widget get-button">
                         <div class="content">
                             <div class="button">
-                                <button type="submit" id="continue-checkout"><a href="<%= request.getContextPath()%>/bill?action=buy">Tiếp tục</a></button>
+                                <button type="submit" id="continue-checkout">
+                                    <a id="conti">Tiếp tục</a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -235,7 +237,7 @@
                     type: 'POST',
                     data: data,
                     success: function (response) {
-                        alert('Thanh toán thành công');
+                        // alert('Thanh toán thành công');
                         // direct to cart page
                         window.location.href = '<%= request.getContextPath()%>/thank-you';
                     },

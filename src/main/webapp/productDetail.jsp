@@ -425,6 +425,27 @@
         document.getElementById("mainImage").src = images[currentIndex];
     }
 </script>
+<script>
+    $(document).ready(function() {
+        $(".option_color").click(function() {
+            let selectedCodeColor = $('input[name="selectedCodeColor"]:checked').val();
+            let quantity=document.querySelector('.inv_quantity')
+            $.ajax({
+                url: '<%= request.getContextPath()%>/colorChange',
+                method: 'POST',
+                data: { selectedCodeColor: selectedCodeColor,
+                    id: <%=selectedProduct.getId()%>},
+                success: function(response) {
+                    quantity.innerHTML = 'Số lượng hàng trong kho: '+response;
+                },
+                error: function(xhr, status, error) {
+                    // Xử lý lỗi
+                    console.error('AJAX Error: ' + status + error);
+                }
+            });
+        });
+    });
+</script>
 <script type="text/javascript">
     function addReview(productId) {
         <%if(u == null) {%>
@@ -499,8 +520,8 @@
 
         $('.add__cart').on('click', function () {
             const quantity = parseInt($('.count').text());
+            console.log(quantity)
             let selectedCodeColor = $('input[name="selectedCodeColor"]:checked').val();
-
             if (selectedCodeColor == null) {
                 alert('Nếu bạn không chọn màu sắc, mặc định sẽ là màu đầu tiên');
                 selectedCodeColor = $('.option_color').first().attr('title');
@@ -515,9 +536,12 @@
                     id: <%=selectedProduct.getId()%>
                 },
                 success: function (response) {
-                    alert('Thêm vào giỏ hàng thành công');
-                    // direct to cart page
-                    window.location.href = '<%= request.getContextPath()%>/cart';
+                    if(response!==''){
+                        alert(response)
+                    }else {
+                        alert('Thêm vào giỏ hàng thành công');
+                        window.location.href = '<%= request.getContextPath()%>/cart';
+                    }
                 },
                 error: function (error) {
                     console.error('Error:', error);

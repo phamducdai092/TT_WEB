@@ -9,6 +9,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Lịch sử mua hàng</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <!-- embed fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -133,7 +134,7 @@
                                 <td data-label="Mã đơn hàng">${order.id}</td>
                                 <td data-label="Tên sản phâm">${order.productName}</td>
                                 <td data-label="Số lượng">${order.quantity}</td>
-                                <td data-label="Màu sản phẩm">${order.productColor}</td>
+                                <td data-label="Màu sản phẩm">${order.productColor == '1' ? 'Trắng' : 'Đen'}</td>
                                 <td data-label="Ngày mua">${order.createDate}</td>
                                 <td data-label="Họ và tên">${order.fullName}</td>
                                 <td data-label="Số điện thoại">${order.phone}</td>

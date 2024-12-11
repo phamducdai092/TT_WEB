@@ -12,7 +12,10 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Admin</title>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <!-- reset CSS -->
     <link rel="stylesheet" href="./assets/css/reset.css"/>
     <link rel="stylesheet" href="./assets/css/index.css"/>
@@ -62,31 +65,21 @@
             <div class="header-admin">
                 <div class="header-title">Quản lý hóa đơn</div>
             </div>
-            <div class="content-header">
-                <div class="content-search">
-                    <input
-                            type="text"
-                            placeholder="Tìm kiếm ..."
-                            class="input-search"
-                    />
-                    <i class="icon fa-solid fa-magnifying-glass"></i>
-                </div>
-            </div>
             <div class="content">
                 <table id="manageOrderTable">
                     <thead>
                     <tr>
-                        <th scope="col" >Chỉnh sửa</th>
-                        <th scope="col" >ID</th>
-                        <th scope="col" >ID người dùng</th>
-                        <th >Tên sản phâm</th>
-                        <th >Số lượng</th>
-                        <th >Màu sản phẩm</th>
-                        <th scope="col" >Phương thức thanh toán</th>
-                        <th scope="col" >Ngày tạo hóa đơn</th>
+                        <th scope="col">Chỉnh sửa</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">ID người dùng</th>
+                        <th>Tên sản phâm</th>
+                        <th>Số lượng</th>
+                        <th>Màu sản phẩm</th>
+                        <th scope="col">Phương thức thanh toán</th>
+                        <th scope="col">Ngày tạo hóa đơn</th>
                         <th scope="col">Tổng tiền đơn hàng</th>
-                        <th scope="col" >Địa chỉ nhận hàng</th>
-                        <th scope="col" >Trạng thái đơn hàng</th>
+                        <th scope="col">Địa chỉ nhận hàng</th>
+                        <th scope="col">Trạng thái đơn hàng</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -101,9 +94,11 @@
                             </td>
                             <td data-label="ID">${o.getId()}</td>
                             <td data-label="ID người dùng">${o.getUserId()}</td>
-                            <td >${o.getProductName()}</td>
-                            <td >${o.getQuantity()}</td>
-                            <td >${o.getProductColor()}</td>
+                            <td>${o.getProductName()}</td>
+                            <td>${o.getQuantity()}</td>
+                            <td>
+                                    ${o.productColor == '1' ? 'Trắng' : 'Đen'}
+                            </td>
                             <td data-label="Phương thức thanh toán">${o.getPaymentMethod()}</td>
                             <td data-label="Ngày tạo hóa đơn">${o.getCreateDate()}</td>
                             <td data-label="Tổng tiền đơn hàng">
@@ -118,14 +113,17 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th scope="col" >Chỉnh sửa</th>
-                        <th scope="col" >ID</th>
-                        <th scope="col" >ID người dùng</th>
-                        <th scope="col" >Phương thức thanh toán</th>
-                        <th scope="col" >Ngày tạo hóa đơn</th>
+                        <th scope="col">Chỉnh sửa</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">ID người dùng</th>
+                        <th>Tên sản phâm</th>
+                        <th>Số lượng</th>
+                        <th>Màu sản phẩm</th>
+                        <th scope="col">Phương thức thanh toán</th>
+                        <th scope="col">Ngày tạo hóa đơn</th>
                         <th scope="col">Tổng tiền đơn hàng</th>
-                        <th scope="col" >Địa chỉ nhận hàng</th>
-                        <th scope="col" >Trạng thái đơn hàng</th>
+                        <th scope="col">Địa chỉ nhận hàng</th>
+                        <th scope="col">Trạng thái đơn hàng</th>
                     </tr>
                     </tfoot>
                 </table>

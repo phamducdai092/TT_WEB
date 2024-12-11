@@ -1,8 +1,10 @@
 package service;
 
+import bean.InventoryQuantity;
 import bean.Product;
 import bean.Revenue;
 import dao.StatisticsDAO;
+import dto.ProductDTO;
 
 import java.util.List;
 
@@ -14,11 +16,11 @@ public class StatisticsService {
         return instance;
     }
 
-    public List<Product> getTopSellingProducts() {
+    public List<ProductDTO> getTopSellingProducts() {
         return StatisticsDAO.getTopSellingProducts();
     }
 
-    public List<Product> getOutOfStockProducts() {
+    public List<InventoryQuantity> getOutOfStockProducts() {
         return StatisticsDAO.getOutOfStockProducts();
     }
 
@@ -34,4 +36,7 @@ public class StatisticsService {
         return StatisticsDAO.get30DaysRevenue();
     }
 
+    public static void main(String[] args) {
+//        System.out.println(getOutOfStockProducts());
+    }
 }

@@ -1,8 +1,11 @@
 package dao;
 
+import bean.InventoryQuantity;
 import bean.Product;
 import bean.Revenue;
 import db.JDBIConnector;
+import dto.ProductDTO;
+import mapper.ProductMapper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,24 +18,24 @@ public class StatisticsDAO {
         return 0;
     }
 
-    public static List<Product> getTopSellingProducts() {
-        String sql = "SELECT product_details.*, SUM(bill_details.quantity) AS Total_quantity \n" +
-                "FROM  product_details JOIN bill_details ON product_details.id = bill_details.productId \n" +
-                "GROUP BY product_details.id ORDER BY Total_quantity DESC LIMIT 10\n";
+    public static List<ProductDTO> getTopSellingProducts() {
+        String sql = "SELECT product_details.id, product_details.name, SUM(bill_details.quantity) AS saleQuantity " +
+                "FROM product_details JOIN bill_details ON product_details.id = bill_details.productId " +
+                "GROUP BY product_details.id ORDER BY saleQuantity DESC LIMIT 10";
 
-        List<Product> productList = JDBIConnector.me().withHandle(handle ->
+        return JDBIConnector.me().withHandle(handle ->
                 handle.createQuery(sql)
-                        .mapToBean(Product.class)
+                        .map(new ProductMapper())
                         .list()
         );
-        return productList;
     }
 
-    public static List<Product> getOutOfStockProducts() {
-        String sql = "SELECT * FROM product_details WHERE quantity < 10";
-        List<Product> productList = JDBIConnector.me().withHandle(handle ->
+
+    public static List<InventoryQuantity> getOutOfStockProducts() {
+        String sql = "SELECT * FROM inv_quantity WHERE quantity < 10";
+        List<InventoryQuantity> productList = JDBIConnector.me().withHandle(handle ->
                 handle.createQuery(sql)
-                        .mapToBean(Product.class)
+                        .mapToBean(InventoryQuantity.class)
                         .list()
         );
         return productList;
@@ -85,13 +88,14 @@ public class StatisticsDAO {
     }
 
     public static void main(String[] args) {
-//        System.out.println(getTopSellingProducts());
-//        System.out.println(getOutOfStockProducts());
-        for (Revenue revenue : getCurrentProductRevenue()) {
+//        for (ProductDTO product : getTopSellingProducts()) {
+//            System.out.println(product.toString());
+//        }
+        System.out.println(getOutOfStockProducts());
+//        for (Revenue revenue : getCurrentProductRevenue()) {
 //            revenue.setRevenue(revenue.getTotalPrice() * revenue.getSaleQuantity());
-            System.out.println(revenue.toString());
-        }
-//        System.out.println(getTodayRevenue());
+//            System.out.println(revenue.toString());
+//        }
     }
 
 }

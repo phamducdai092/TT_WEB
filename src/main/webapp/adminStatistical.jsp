@@ -58,28 +58,32 @@
             </div>
 
             <div class="content-header">
-                    <button class="btn btn-item" id="btn-show-revenue">Doanh thu hôm nay</button>
-                    <button class="btn btn-item" id="btn-show-revenue-7">Doanh thu 7 ngày qua</button>
-                    <button class="btn btn-item" id="btn-show-revenue-30">Doanh thu 30 ngày qua</button>
-                    <button class="btn btn-item" id="btn-show-top-selling-products">Top sản phẩm bán chạy</button>
-                    <button class="btn btn-item" id="btn-show-out-of-stuck">Sản phẩm sắp hết hàng</button>
+                <button class="btn btn-item" id="btn-show-revenue">Doanh thu hôm nay</button>
+                <button class="btn btn-item" id="btn-show-revenue-7">Doanh thu 7 ngày qua</button>
+                <button class="btn btn-item" id="btn-show-revenue-30">Doanh thu 30 ngày qua</button>
+                <button class="btn btn-item" id="btn-show-top-selling-products">Top sản phẩm bán chạy</button>
+                <button class="btn btn-item" id="btn-show-out-of-stuck">Sản phẩm sắp hết hàng</button>
             </div>
             <div class="content">
                 <canvas id="myChart"></canvas>
-                <table id="outStock" class="out-of-stock-table collapse">
-                    <thead>
-                    <tr>
-                        <th>Tên sản phẩm</th>
-                        <th>Số lượng</th>
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <th>Tên sản phẩm</th>
-                        <th>Số lượng</th>
-                    </tr>
-                    </tfoot>
-                </table>
+                <div id="outStockWrapper">
+                    <table id="outStock" class="out-of-stock-table collapse">
+                        <thead>
+                        <tr>
+                            <th>ID sản phẩm</th>
+                            <th>Màu</th>
+                            <th>Số lượng</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Màu</th>
+                            <th>Số lượng</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -142,13 +146,13 @@
                 if (dataType === 'revenueToday') {
                     chartLabel = 'Doanh thu hôm nay ' + totalRevenue + ' VND';
                 } else if (dataType === 'revenue7Days') {
-                    chartLabel = 'Doanh thu 7 ngày qua';
+                    chartLabel = 'Doanh thu 7 ngày qua ' + totalRevenue + ' VND';
                 } else if (dataType === 'revenue30Days') {
-                    chartLabel = 'Doanh thu 30 ngày qua';
+                    chartLabel = 'Doanh thu 30 ngày qua ' + totalRevenue + ' VND';
                 }
 
                 myChart = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
                         labels: productId, // Assuming you have an array of product IDs or names
                         datasets: [{
@@ -201,6 +205,18 @@
                                 }
                             },
                             y: {
+                                title: {
+                                    display: true,
+                                    text: 'Doanh thu',
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    },
+                                    padding: {
+                                        top: 10,
+                                        bottom: 10
+                                    }
+                                },
                                 beginAtZero: true,
                                 max: maxYScale
                             }
@@ -219,13 +235,13 @@
             if (data && Array.isArray(data)) {
                 let ctx = document.getElementById('myChart').getContext('2d');
                 let productId = data.map(product => product.id);
-                let productQuantities = data.map(product => product.quantity);
+                let productQuantities = data.map(product => product.saleQuantity);
 
                 let maxQuantity = Math.max(...productQuantities);
                 let maxYScale = maxQuantity + 20;
 
                 myChart = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
                         labels: productId, // Assuming you have an array of product IDs or names
                         datasets: [{
@@ -278,6 +294,18 @@
                                 }
                             },
                             y: {
+                                title: {
+                                    display: true,
+                                    text: 'Số lượng bán được',
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    },
+                                    padding: {
+                                        top: 10,
+                                        bottom: 10
+                                    }
+                                },
                                 beginAtZero: true,
                                 max: maxYScale
                             }
@@ -299,12 +327,8 @@
                     $('#outStock').DataTable().destroy();
                 }
 
-                $('#outStock').DataTable({
-                    data: data,
-                    columns: [
-                        {data: "name"},
-                        {data: "quantity"}
-                    ],
+                const hasCollapseClass = $('#outStock').hasClass('collapse');
+                const languageConfig = hasCollapseClass ? {} : {
                     "language": {
                         "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
                         "zeroRecords": "Không tìm thấy bản ghi nào",
@@ -319,7 +343,30 @@
                             "previous": "Trước"
                         }
                     }
+                };
+
+                $('#outStock').DataTable({
+                    data: data,
+                    columns: [
+                        {data: "pr_id"},
+                        {
+                            data: "color_id",
+                            render: function (data, type, row) {
+                                // Chuyển đổi color_id thành tên màu
+                                if (data === '1') {
+                                    return 'Trắng';
+                                } else if (data === '2') {
+                                    return 'Đen';
+                                } else {
+                                    return data; // Giữ nguyên nếu không phải 1 hoặc 2
+                                }
+                            }
+                        },
+                        {data: "quantity"}
+                    ],
+                    ...languageConfig
                 });
+
                 console.log("DataTable initialized successfully");
             } else {
                 console.error("Invalid data format received");
@@ -329,40 +376,41 @@
         // Event handler for 'Sản phẩm bán chạy' button click
         $('#btn-show-top-selling-products').click(function () {
             $('#myChart').removeClass('collapse');
-            $('#outStock').addClass('collapse');
+            $('#outStockWrapper').addClass('collapse');
             fetchData('topSellingProducts'); // Call fetchData with dataType
         });
 
         // Event handler for 'Sản phẩm sắp hết hàng' button click
         $('#btn-show-out-of-stuck').click(function () {
             $('#myChart').addClass('collapse');
-            $('.out-of-stock-table').removeClass('collapse');
+            $('#outStockWrapper').removeClass('collapse');
+            $('#outStock').removeClass('collapse');
             fetchData('outOfStockProducts'); // Call fetchData with dataType
         });
 
         // Event handler for 'Doanh thu hôm nay' button click
         $('#btn-show-revenue').click(function () {
             $('#myChart').removeClass('collapse');
-            $('.out-of-stock-table').addClass('collapse');
+            $('#outStockWrapper').addClass('collapse');
             fetchData('revenueToday'); // Call fetchData with dataType
         });
 
         // Event handler for 'Doanh thu 7 ngày qua' button click
         $('#btn-show-revenue-7').click(function () {
             $('#myChart').removeClass('collapse');
-            $('.out-of-stock-table').addClass('collapse');
+            $('#outStockWrapper').addClass('collapse');
             fetchData('revenue7Days'); // Call fetchData with dataType
         });
 
         // Event handler for 'Doanh thu 30 ngày qua' button click
         $('#btn-show-revenue-30').click(function () {
             $('#myChart').removeClass('collapse');
-            $('.out-of-stock-table').addClass('collapse');
+            $('#outStockWrapper').addClass('collapse');
             fetchData('revenue30Days'); // Call fetchData with dataType
         });
 
         // Initially load default data (today revenue products)
-        fetchData('todayRevenue'); // Load today revenue products by default
+        fetchData('revenueToday'); // Load today revenue products by default
     });
 </script>
 

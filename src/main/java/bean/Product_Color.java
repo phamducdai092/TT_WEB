@@ -3,8 +3,10 @@ package bean;
 public class Product_Color {
     private int id;
     private String nameColor;
-    private Product product;
     private String codeColor;
+
+    public Product_Color() {
+    }
 
     public String getCodeColor() {
         return codeColor;
@@ -30,20 +32,11 @@ public class Product_Color {
         this.nameColor = nameColor;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
     @Override
     public String toString() {
         return "Product_Color{" +
                 "id=" + id +
                 ", nameColor='" + nameColor + '\'' +
-                ", product='" + product + '\'' +
                 ", codeColor='" + codeColor + '\'' +
                 '}';
     }

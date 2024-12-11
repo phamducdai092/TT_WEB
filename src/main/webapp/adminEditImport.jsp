@@ -66,7 +66,7 @@
                 <div class="header-title">Quản lý đơn nhập hàng</div>
             </div>
             <div class="btn-grp">
-                <p>Mã Giảm Giá</p>
+                <p></p>
                 <div class="btn-item">
                     <button class="add open-dialog-btn" onclick="openDialogImportOrder()">
                         <i class="fa-solid fa-plus"></i>
@@ -102,7 +102,7 @@
                     <button type="submit">Thêm</button>
                 </div>
             </form>
-            <table id="example" class="display nowrap" style="width:100%">
+            <table id="editImport" class="display nowrap" style="width:100%">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -150,7 +150,7 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable({
+        $('#editImport').DataTable({
             "dom": '<"top"lf>rt<"bottom"ip><"clear">',
             "language": {
                 "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
