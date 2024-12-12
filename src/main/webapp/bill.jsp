@@ -120,7 +120,7 @@
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="form-group">
                                     <label>Số điện thoại<span>*</span></label>
-                                    <input type="number" value="${sessionScope.auth.phone}"  name="phone" placeholder=""
+                                    <input type="number" value="${sessionScope.auth.phone}" name="phone" placeholder=""
                                            required="required"/>
                                 </div>
                             </div>
@@ -135,6 +135,16 @@
                         </div>
                     </form>
                     <!--/ End Form -->
+                    <div class="d-flex align-items-center mb-3">
+                        <!-- Button -->
+                        <button id="verify-signature" class="btn btn-primary"
+                                style="background-color: #ee6c4d; border: 1px solid #293241; border-radius: 7px; color: #1c1c1c">
+                            Xác minh chữ ký
+                        </button>
+                        <!-- Square -->
+                        <div id="verify-status" class="ms-2"
+                             style="width: 30px; height: 30px; border: 1px solid grey; border-radius:5px"></div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 col-12">
@@ -158,7 +168,8 @@
                         <h2>Hình thức thanh toán</h2>
                         <div class="content">
                             <div class="checkbox">
-                                <label for="COD" class="check-out-cod checked"><input name="news" id="COD" type="checkbox" checked>
+                                <label for="COD" class="check-out-cod checked"><input name="news" id="COD"
+                                                                                      type="checkbox" checked>
                                     Thanh toán khi nhận hàng</label>
                                 <label for="BANK" class="check-out-bank"><input name="news" id="BANK" type="checkbox">
                                     Chuyển khoản</label>
@@ -212,6 +223,35 @@
             $('.check-out-cod').removeClass("checked");
         });
 
+        let isVerified = false; // Biến lưu trạng thái xác minh
+
+        $('#verify-signature').click(function () {
+            const verificationWindow = window.open('<%= request.getContextPath() %>/DigitalSign', 'Xác minh chữ ký', 'width=500,height=500');
+            const interval = setInterval(function () {
+                if (verificationWindow.closed) {
+                    // Khi cửa sổ xác minh đóng lại, kiểm tra trạng thái xác minh
+                    $.ajax({
+                        url: '<%= request.getContextPath()%>/verifyStatus', // API kiểm tra trạng thái xác minh
+                        type: 'GET',
+                        success: function (response) {
+                            if (response.verified) {
+                                $('#verify-status').css({
+                                    'background-color': '#5CB85C', // Màu xanh lá
+                                    'border': 'none'
+                                });
+                                isVerified = true;
+                            } else {
+                                alert('Xác minh thất bại, vui lòng thử lại.');
+                            }
+                        },
+                        error: function () {
+                            alert('Lỗi khi kiểm tra trạng thái xác minh.');
+                        }
+                    });
+                    clearInterval(interval);
+                }
+            }, 1000);
+        });
 
         $('#continue-checkout').click(function () {
             if ($('#COD').is(':checked') || $('#BANK').is(':checked')) {
@@ -220,11 +260,14 @@
                 const address = $('input[name="address"]').val();
                 const payment = $('#COD').is(':checked') ? 'COD' : 'BANK';
 
-                if(name == '' || phone == '' || address == ''){
+                if (name == '' || phone == '' || address == '') {
                     alert('Vui lòng điền đầy đủ thông tin');
                     return;
                 }
-
+                if (!isVerified) {
+                    alert('Vui lòng xác minh chữ ký trước khi tiếp tục.');
+                    return;
+                }
                 const data = {
                     name: name,
                     phone: phone,
