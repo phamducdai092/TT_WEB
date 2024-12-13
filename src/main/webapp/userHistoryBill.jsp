@@ -115,14 +115,17 @@
                     <table id="orderTable">
                         <thead>
                         <tr>
-                            <th scope="col">Chỉnh sửa</th>
-                            <th scope="col">Mã đơn hàng</th>
-                            <th scope="col">Ngày mua</th>
-                            <th scope="col">Họ và tên</th>
-                            <th scope="col">Số điện thoại</th>
-                            <th scope="col">Địa chỉ</th>
-                            <th scope="col">Phương thức thanh toán</th>
-                            <th scope="col">Trạng thái đơn hàng</th>
+                            <th>Chỉnh sửa</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Tên sản phâm</th>
+                            <th>Số lượng</th>
+                            <th>Màu sản phẩm</th>
+                            <th>Ngày mua</th>
+                            <th>Họ và tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Phương thức thanh toán</th>
+                            <th>Trạng thái đơn hàng</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -149,6 +152,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
+                            <th>Chỉnh sửa</th>
                             <th>Mã đơn hàng</th>
                             <th>Tên sản phâm</th>
                             <th>Số lượng</th>
