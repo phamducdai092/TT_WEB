@@ -1,6 +1,7 @@
 package bean;
 
 import dao.*;
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,10 +19,17 @@ public class Product extends ProductDAO {
     private int statusCategory;
     private int statusBrand;
     private int statusSupplier;
-
+    @ColumnName("saleQuantity")
+    private int saleQuantity;
     private Image_Product image;
 
     public Product() {
+    }
+
+    public Product(int id, String name, int saleQuantity) {
+        this.id = id;
+        this.name = name;
+        this.saleQuantity = saleQuantity;
     }
 
     public Product(int id, String name, int discountId, int categoryId, int brandId, int supplierId, int quantity, double totalPrice, String description) {
@@ -43,6 +51,14 @@ public class Product extends ProductDAO {
         this.totalPrice = totalPrice;
         this.description = description;
         this.image = image;
+    }
+
+    public int getSaleQuantity() {
+        return saleQuantity;
+    }
+
+    public void setSaleQuantity(int saleQuantity) {
+        this.saleQuantity = saleQuantity;
     }
 
     public int getId() {

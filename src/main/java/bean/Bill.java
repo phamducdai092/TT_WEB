@@ -12,6 +12,9 @@ public class Bill {
     String paymentMethod;
     String status;
 
+    String productName;
+    int quantity;
+    String productColor;
 
     public Bill(int id, String createDate, double totalPrice) {
         this.id = id;
@@ -32,8 +35,23 @@ public class Bill {
         this.status = status;
     }
 
-    public Bill() {
+    public Bill(int id, User user, int userId, String fullName, String phone, String address, String createDate, double totalPrice, String paymentMethod, String status, String productName, int quantity, String productColor) {
+        this.id = id;
+        this.user = user;
+        this.userId = userId;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.address = address;
+        this.createDate = createDate;
+        this.totalPrice = totalPrice;
+        this.paymentMethod = paymentMethod;
+        this.status = status;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.productColor = productColor;
+    }
 
+    public Bill() {
     }
 
     public Bill(int id, String status) {
@@ -131,11 +149,34 @@ public class Bill {
         this.paymentMethod = paymentMethod;
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getProductColor() {
+        return productColor;
+    }
+
+    public void setProductColor(String productColor) {
+        this.productColor = productColor;
+    }
+
     @Override
     public String toString() {
         return "Bill{" +
                 "id=" + id +
-                ", user=" + user +
                 ", userId=" + userId +
                 ", fullName='" + fullName + '\'' +
                 ", phone='" + phone + '\'' +
@@ -144,6 +185,9 @@ public class Bill {
                 ", totalPrice=" + totalPrice +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", status='" + status + '\'' +
+                ", productName ='" + productName + '\'' +
+                ", quantity='" + quantity + '\'' +
+                ", productColor='" + productColor + '\'' +
                 '}';
     }
 }

@@ -12,7 +12,9 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Admin</title>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <!-- reset CSS -->
     <link rel="stylesheet" href="./assets/css/reset.css"/>
     <link rel="stylesheet" href="./assets/css/index.css"/>
@@ -63,21 +65,6 @@
                 <div class="header-title">Quản lý mã giảm giá</div>
             </div>
 
-            <div class="content-header">
-                <c:set var="searchValue" value="${requestScope.searchValue}"/>
-                <form method="post" action="adminSearchProduct" class="content-search" accept-charset="UTF-8">
-                    <input
-                            type="text"
-                            name="search-product"
-                            placeholder="Tìm kiếm theo tên, danh mục, thương hiệu"
-                            class="input-search"
-                            value="${searchValue}"
-                    />
-                    <i
-                            class="icon fa-solid fa-magnifying-glass"
-                    ></i>
-                </form>
-            </div>
             <div class="content">
                 <div class="btn-grp">
                     <p>Mã Giảm Giá</p>
@@ -142,6 +129,16 @@
                     </c:forEach>
 
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <th class="s-cl" scope="col">Ẩn</th>
+                        <th class="s-cl" scope="col">Chỉnh sửa</th>
+                        <th class="m-cl" scope="col">Mã Giảm Giá</th>
+                        <th class="l-cl" scope="col">Giảm giá (%)</th>
+                        <th class="m-cl" scope="col">Ngày bắt đầu</th>
+                        <th class="m-cl" scope="col">Ngày kết thúc</th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

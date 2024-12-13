@@ -5,7 +5,11 @@
     <title>Chốt đơn thành công</title>
     <style>
         .information {
-            padding-top: 100px;
+            padding-top: 200px;
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            margin: auto;
         }
     </style>
 

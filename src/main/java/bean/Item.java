@@ -1,5 +1,10 @@
 package bean;
 
+import dao.ColorDAO;
+import dao.ProductDAO;
+import dao.ReviewDAO;
+import db.JDBIConnector;
+
 import java.io.Serializable;
 
 public class Item implements Serializable {
@@ -13,9 +18,8 @@ public class Item implements Serializable {
         this.product = product;
         this.quantity = quantity;
         this.colorName = colorName;
-        this.price = product.getTotalPrice() * quantity;
+        this.price = product.getTotalPrice();
     }
-
     public int getId() {
         return id;
     }
@@ -64,5 +68,26 @@ public class Item implements Serializable {
                 ", quantity=" + quantity +
                 ", price=" + price +
                 '}';
+    }
+    public boolean checkQuantity(){
+        int pr_id= this.getProduct().getId();
+        String colorName=this.getColorName();
+        System.out.println(colorName);
+        int color_id=ColorDAO.getColorByName(colorName).getId();
+        Integer quantity= JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("select quantity from inv_quantity where pr_id =:pr_id and color_id=:color_id")
+                        .bind("pr_id",pr_id)
+                        .bind("color_id",color_id)
+                        .mapTo(Integer.class)
+                        .findOne()
+                        .orElse(0)
+        );
+        System.out.println(quantity);
+        return quantity!=0;
+    }
+
+    public static void main(String[] args) {
+        Item i= new Item(ReviewDAO.getProductById(64), 2, "trắng");
+        System.out.println(i.checkQuantity());;
     }
 }

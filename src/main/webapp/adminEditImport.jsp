@@ -65,7 +65,44 @@
             <div class="header-admin">
                 <div class="header-title">Quản lý đơn nhập hàng</div>
             </div>
-            <table id="example" class="display nowrap" style="width:100%">
+            <div class="btn-grp">
+                <p></p>
+                <div class="btn-item">
+                    <button class="add open-dialog-btn" onclick="openDialogImportOrder()">
+                        <i class="fa-solid fa-plus"></i>
+                        Thêm đơn nhập hàng
+                    </button>
+                </div>
+            </div>
+            <form method="post" action="addImportOrder" class="dialog">
+                <div class="dialog-wrapper">
+                    <div class="dialog-title">Thêm đơn nhập hàng</div>
+                    <span class="close-btn">X</span>
+                    <label for="productName">Tên Sản Phẩm:</label>
+                    <select id="productName" name="productName">
+                        <c:forEach var="product" items="${sessionScope.productList}">
+                            <option value="${product.getId()}">${product.getName()}</option>
+                        </c:forEach>
+                    </select>
+                    <label for="colorName">Màu sắc </label>
+                    <select id="colorName" name="colorName">
+                        <c:forEach var="color" items="${sessionScope.colorList}">
+                            <option value="${color.getId()}">${color.getNameColor()}</option>
+                        </c:forEach>
+                    </select>
+                    <label for="quantity">Số Lượng:</label>
+                    <div class="quantity-input">
+                        <button type="button" class="change-quantity" onclick="decrementQuantity()">-</button>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1">
+                        <button type="button" class="change-quantity" onclick="incrementQuantity()">+</button>
+                    </div>
+                    <label>Ngày nhập hàng</label>
+                    <input type="datetime-local" name="import-date" required>
+                    <br>
+                    <button type="submit">Thêm</button>
+                </div>
+            </form>
+            <table id="editImport" class="display nowrap" style="width:100%">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -89,10 +126,31 @@
 
     </div>
 </div>
+<script>
+    let addDiscountButton = document.querySelector('.add');
+    let dialogDiscount = document.querySelector('.dialog');
+    let closeBtnDiscount = dialogDiscount.querySelector('.close-btn');
 
+    addDiscountButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        toggleDialogVisibility(dialogDiscount);
+    });
+
+    closeBtnDiscount.addEventListener('click', function () {
+        toggleDialogVisibility(dialogDiscount);
+    });
+
+    function toggleDialogVisibility(dialog) {
+        if (dialog.style.display === 'none' || dialog.style.display === '') {
+            dialog.style.display = 'block';
+        } else {
+            dialog.style.display = 'none';
+        }
+    }
+</script>
 <script>
     $(document).ready(function () {
-        $('#example').DataTable({
+        $('#editImport').DataTable({
             "dom": '<"top"lf>rt<"bottom"ip><"clear">',
             "language": {
                 "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
@@ -119,19 +177,31 @@
                 { data: 'color_id' },
                 { data: 'quantity' },
                 {
-                    data: 'time',
+                    data: 'timeSet',
                     render: function (data, type, row) {
                         return data ? data[0] + '-' +
                             String(data[1]).padStart(2, '0') + '-' +
                             String(data[2]).padStart(2, '0') + ' ' +
                             String(data[3]).padStart(2, '0') + ':' +
-                            String(data[4]).padStart(2, '0') + ':' +
-                            String(data[5]).padStart(2, '0') : '';
+                            String(data[4]).padStart(2, '0') :'';
                     }
                 }
             ]
         });
     });
+</script>
+<script>
+    function decrementQuantity() {
+        let quantityInput = document.getElementById('quantity');
+        if (quantityInput.value > 1) {
+            quantityInput.value = parseInt(quantityInput.value) - 1;
+        }
+    }
+
+    function incrementQuantity() {
+        let quantityInput = document.getElementById('quantity');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+    }
 </script>
 </body>
 </html>

@@ -49,6 +49,11 @@ th {
     color: var(--sub-main-color);
 }
 
+.collapse {
+    display: none;
+    width: 0;
+}
+
 button {
     color: #fff;
 }
@@ -123,9 +128,10 @@ button {
     flex-shrink: 0;
     background: var(--sub-main-color);
     position: fixed;
-    height: 100vh;
+    height: 100%;
     z-index: 1;
     border-right: 1px solid #fff;
+    overflow: scroll;
 }
 
 .side-bar a {
@@ -212,8 +218,7 @@ button {
 
 .content {
     overflow: scroll;
-    padding: 0 42px;
-    margin-bottom: 120px;
+    margin: 30px 10px;
 }
 
 .header-title {
@@ -238,10 +243,12 @@ button {
     margin-bottom: 12px;
 }
 
+
 .btn-item {
     grid-column: span 2;
     display: flex;
     justify-content: space-between;
+    margin: 0 6px;
 }
 
 .btn-item button {

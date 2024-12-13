@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="col-md-3">
+<div class="col-md-2">
     <div class="profile-function">
         <div class="profile-function-list-container">
             <ul class="profile-function-list">
@@ -10,7 +10,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="nav-link" href="<%= request.getContextPath()%>/history-bill">
+                    <a class="nav-link" href="history-bill">
                         <i class="fa fa-list-alt"></i>
                         <span>Quản lý đơn hàng</span>
                     </a>

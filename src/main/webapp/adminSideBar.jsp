@@ -60,17 +60,27 @@
         <li class="side-bar__item">
             <i class="icon fa-solid fa-receipt"></i>
             <button class="manage-bill item-cta">
-                <a href="adminEditImport.jsp">Quản lý đơn nhập hàng</a>
+                <a href="adminImportServlet">Quản lý đơn nhập hàng</a>
             </button>
         </li>
-        <li class="side-bar__item"></li>
+        <li class="side-bar__item">
+            <i class="fa-solid fa-warehouse icon"></i>
+            <button class="manage-bill item-cta">
+                <a href="./adminDisplayInventoryQuantity.jsp">Quản lý tồn kho</a>
+            </button>
+        </li>
         <li class="side-bar__item">
             <i class="icon fa-solid fa-receipt"></i>
             <button class="manage-bill item-cta">
                 <a href="adminLog.jsp">Quản lý Logs</a>
             </button>
         </li>
-        <li class="side-bar__item"></li>
+        <li class="side-bar__item">
+            <i class="icon fa-solid fa-square-poll-vertical"></i>
+            <button class="manage-bill item-cta">
+                <a href="adminStatistical.jsp">Thống kê</a>
+            </button>
+        </li>
     </ul>
 </div>
 <%

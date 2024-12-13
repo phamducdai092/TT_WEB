@@ -27,6 +27,15 @@ public class ColorDAO {
 //        );
 //        return colorList;
 //    }
+    public static List<Product_Color> getAllColor(){
+        List<Product_Color> listColor = JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT product_color.* " +
+                                "From product_color ")
+                        .mapToBean(Product_Color.class)
+                        .collect(Collectors.toList())
+        );
+        return listColor;
+    }
     public static List<Product_Color> getListColorCodeByIdProduct(int id) {
         List<Product_Color> listColor = JDBIConnector.me().withHandle(handle ->
                 handle.createQuery("SELECT product_color.* " +
@@ -48,9 +57,20 @@ public class ColorDAO {
                         .orElse(null));
         return color;
     }
+    public static Product_Color getColorByName(String name) {
+        Product_Color color=  JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("select * from product_color where nameColor=?")
+                        .bind(0,name)
+                        .mapToBean(Product_Color.class)
+                        .findOne()
+                        .orElse(null));
+        return color;
+    }
     public static void main(String[] args) {
-        System.out.println(getColorById(1).getNameColor());;
-//        List<Product_Color> colorList = ColorDAO.getListColorCodeByIdProduct(1);
-//        System.out.println(colorList);
+
+//        for (Product_Color color : ColorDAO.getAllColor()) {
+//            System.out.println(color.toString());
+//        }
+        System.out.println(getColorByName("Đen"));
     }
 }

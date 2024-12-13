@@ -65,7 +65,7 @@
             <div class="header-admin">
                 <div class="header-title">Quản lý Logs</div>
             </div>
-            <table id="example" class="display nowrap" style="width:100%">
+            <table id="logTable" class="display " style="width:100% ">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -98,7 +98,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#example').DataTable({
+        $('#logTable').DataTable({
             "dom": '<"top"lf>rt<"bottom"ip><"clear">',
             "language": {
                 "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
@@ -122,7 +122,7 @@
             columns: [
                 { data: 'id' },
                 { data: 'role' },
-                { data: 'table' },
+                { data: 'tables' },
                 { data: 'action' },
                 { data: 'actionDetail' },
                 { data: 'afterData' },
