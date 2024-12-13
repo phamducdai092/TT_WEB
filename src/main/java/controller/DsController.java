@@ -11,9 +11,10 @@ import java.io.IOException;
 public class DsController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // get total from param total in url
-        String total = req.getParameter("total");
+        String total  = req.getParameter("total");
         req.setAttribute("total", total);
         req.getRequestDispatcher("verifyUser.jsp").forward(req, resp);
+        System.out.println(total);
     }
 
     @Override

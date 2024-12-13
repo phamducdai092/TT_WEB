@@ -229,13 +229,23 @@
             const name = $('input[name="name"]').val();
             const phone = $('input[name="phone"]').val();
             const address = $('input[name="address"]').val();
-            const payment = $('#COD').is(':checked') ? 'COD' : 'BANK';
 
             if (name == '' || phone == '' || address == '') {
                 alert('Vui lòng điền đầy đủ thông tin');
                 return;
             }
-            const verificationWindow = window.open('<%= request.getContextPath() %>/DigitalSign', 'Xác minh chữ ký', 'width=500,height=500');
+            // Lấy giá trị total từ input ẩn hoặc từ đâu đó trên trang
+            const total = $('input[name="total"]').val();
+
+            const url = '<%= request.getContextPath() %>/DigitalSign?total=${total}'; // URL trang xác minh
+            const windowFeatures = 'width=1920,height=1080,resizable=yes,scrollbars=yes';
+
+            // Mở cửa sổ mới với kích thước tùy chỉnh
+            const newWindow = window.open(url, '_blank', windowFeatures);
+
+            if (!newWindow) {
+                alert('Cửa sổ không được mở do trình duyệt chặn popup.');
+            }
             const interval = setInterval(function () {
                 if (verificationWindow.closed) {
                     // Khi cửa sổ xác minh đóng lại, kiểm tra trạng thái xác minh
