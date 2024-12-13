@@ -27,11 +27,11 @@ public class ReportLeakedPrivateKey extends HttpServlet {
             e.printStackTrace();
             String message = "Đã xảy ra lỗi khi báo cáo khóa riêng tư bị rò rỉ.";
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/signBill.jsp").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/sign-bill");
             return;
         }
         String message = "Đã báo cáo khóa riêng tư bị rò rỉ thành công.";
         req.setAttribute("message", message);
-        req.getRequestDispatcher("/signBill.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/sign-bill");
     }
 }

@@ -2,7 +2,6 @@ package controller;
 
 import bean.Key;
 import bean.User;
-import dao.KeyDAO;
 import service.KeyService;
 
 import javax.servlet.ServletException;
@@ -22,30 +21,35 @@ public class SignBillController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // Lấy thông tin người dùng từ session
         User user = (User) req.getSession().getAttribute("auth");
         if (user == null) {
             resp.sendRedirect("/login");
             return;
         }
-        int id = user.getId();
-        Key key = KeyService.getInstance().getKeyByUserId(id);
-        if(key == null) {
+
+        int userId = user.getId();
+        KeyService keyService = KeyService.getInstance();
+
+        // Lấy danh sách khóa và khóa chính
+        List<Key> keys = keyService.getKeyListByUserId(userId);
+        Key mainKey = keyService.getKeyByUserId(userId);
+
+        // Kiểm tra nếu không có bất kỳ khóa nào
+        if (keys == null || keys.isEmpty()) {
             req.setAttribute("message", "Bạn chưa có khóa. Vui lòng tạo khóa trước khi ký hóa đơn.");
         } else {
-            String publicKey = key.getPublicKey();
-            List<Key> keys = KeyService.getInstance().getKeyListByUserId(id);
-            if(publicKey == null || publicKey.isEmpty()) {
-                req.setAttribute("message", "Bạn chưa có khóa công khai. Vui lòng tạo khóa trước khi ký hóa đơn.");
-            } else {
-                req.setAttribute("publicKey", publicKey);
-            }
-            if (keys.isEmpty()) {
-                req.setAttribute("message", "Bạn chưa có khóa. Vui lòng tạo khóa trước khi ký hóa đơn.");
-            } else {
-                req.setAttribute("keys", keys);
-            }
+            req.setAttribute("keys", keys);
+        }
+        if (mainKey == null || mainKey.getPublicKey() == null || mainKey.getPublicKey().isEmpty()) {
+            // Kiểm tra nếu khóa chính không hợp lệ
+            req.setAttribute("message", "Bạn chưa có khóa công khai. Vui lòng tạo khóa trước khi ký hóa đơn.");
+        } else {
+            // Gán dữ liệu vào request để hiển thị
+            req.setAttribute("publicKey", mainKey.getPublicKey());
         }
 
+        // Chuyển hướng đến trang JSP
         req.getRequestDispatcher("/signBill.jsp").forward(req, resp);
     }
 }

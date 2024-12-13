@@ -363,7 +363,14 @@
                     "previous": "Trước"
                 }
             },
-            "lengthMenu": [5, 10, 25, 50]
+            "lengthMenu": [5, 10, 25, 50],
+            order: [[2, 'desc']], // Sắp xếp theo cột Public Key giảm dần
+            columnDefs: [
+                {
+                    targets: 2, // Chỉ định cột datetime
+                    type: 'datetime' // Đảm bảo DataTable nhận diện kiểu datetime
+                }
+            ]
         });
 
         // Xử lý sự kiện 'Xem chi tiết'
