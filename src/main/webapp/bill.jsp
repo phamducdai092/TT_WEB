@@ -226,6 +226,15 @@
         let isVerified = false; // Biến lưu trạng thái xác minh
 
         $('#verify-signature').click(function () {
+            const name = $('input[name="name"]').val();
+            const phone = $('input[name="phone"]').val();
+            const address = $('input[name="address"]').val();
+            const payment = $('#COD').is(':checked') ? 'COD' : 'BANK';
+
+            if (name == '' || phone == '' || address == '') {
+                alert('Vui lòng điền đầy đủ thông tin');
+                return;
+            }
             const verificationWindow = window.open('<%= request.getContextPath() %>/DigitalSign', 'Xác minh chữ ký', 'width=500,height=500');
             const interval = setInterval(function () {
                 if (verificationWindow.closed) {
