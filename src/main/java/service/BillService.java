@@ -7,8 +7,6 @@ public class BillService {
     public static BillService instance;
     private BillDAO billDAO;
 
-
-
     public static BillService getInstance() {
         if (instance == null) instance = new BillService();
         return instance;
