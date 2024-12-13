@@ -112,6 +112,7 @@
                     <table id="orderTable">
                         <thead>
                         <tr>
+                            <th scope="col">Chỉnh sửa</th>
                             <th scope="col">Mã đơn hàng</th>
                             <th scope="col">Ngày mua</th>
                             <th scope="col">Họ và tên</th>
@@ -124,6 +125,11 @@
                         <tbody>
                         <c:forEach items="${listOrder}" var="order">
                             <tr>
+                                <td data-label="Chỉnh sửa">
+<%--                                    <a class="link" target="_blank" href="adminViewProduct?productId=${o.getId()}">--%>
+                                        <i class="fa-solid fa-pen-to-square"></i>
+<%--                                    </a>--%>
+                                </td>
                                 <td data-label="Mã đơn hàng">${order.id}</td>
                                 <td data-label="Ngày mua">${order.createDate}</td>
                                 <td data-label="Họ và tên">${order.fullName}</td>
