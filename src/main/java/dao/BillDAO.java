@@ -38,12 +38,25 @@ public class BillDAO {
 
     public List<Bill> getBillList() {
         return JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("SELECT b.*, pd.name, bd.quantity, bd.product_color \n" +
+                handle.createQuery("SELECT b.*, pd.name, bd.id, bd.quantity, bd.product_color \n" +
                                 "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
                                 "JOIN product_details AS pd ON bd.productId = pd.id")
                         .map(new BillMapper())
                         .collect(Collectors.toList())
         );
+    }
+    public static Bill getBillByIdBillDetail(int IdBillDetail) {
+        Bill bill = JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT b.*, pd.name, bd.id, bd.quantity, bd.product_color \n" +
+                                "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
+                                "JOIN product_details AS pd ON bd.productId = pd.id\n"  +
+                                "WHERE bd.id = :IdBillDetail\n")
+                        .bind("IdBillDetail", IdBillDetail)
+                        .map(new BillMapper())
+                        .findOne()
+                        .orElse(null)
+        );
+        return bill;
     }
 
 
@@ -142,8 +155,8 @@ public class BillDAO {
 
     public static void main(String[] args) {
     User user = new User(1, "0", "123", "123", "123", 0, "123", "123", "0", "0", 1, 1);
-    List<Bill> bill = BillDAO.getInstance().getBillsByUser(user);
-    System.out.println(Arrays.toString(bill.toArray()));
+    Bill bill = BillDAO.getInstance().getBillByIdBillDetail(8);
+        System.out.println(bill);
 
 
     }
