@@ -19,7 +19,8 @@ td, th{
 
 th {
     color: #fff;
-    background: var(--sub-main-color);
+    font-size: 1rem;
+    background: var(--main-color);
 }
 
 .s-cl {
