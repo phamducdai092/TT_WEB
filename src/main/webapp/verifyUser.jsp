@@ -76,19 +76,33 @@
         <div class="container-rightSide">
             <div class="container-leftSide__stepOne">
                 <h4>Bước 3: Upload file chữ ký</h4>
-                <form action="uploadSignature" method="post">
-                    <button class="btn" style="margin-top: 18px;">
+                <form action="uploadSignature" method="post" enctype="multipart/form-data" id="uploadForm">
+                    <!-- Input file ẩn -->
+                    <input type="file" name="signatureFile" id="signatureFile" style="display: none;" />
+
+                    <!-- Nút bấm để mở cửa sổ chọn file -->
+                    <button type="button" class="btn" style="margin-top: 18px;" onclick="document.getElementById('signatureFile').click();">
                         <i class="fa-solid fa-upload"></i>
-                        Upload file
+                        Chọn file
                     </button>
+
+                    <!-- Nút bấm để upload -->
+                    <button type="button" class="btn" style="margin-top: 18px;" id="uploadButton">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        Upload
+                    </button>
+                    <p id="fileNameDisplay" style="margin-top: 10px; font-weight: bold;"></p>
                 </form>
             </div>
+
             <div class="container-leftSide__stepTwo">
-                <h4>Bước 4: Xác minh chữ ký</h4>
-                <button class="btn" style="margin-top: 18px;">
-                    <i class="fa-solid fa-certificate"></i>
-                    Xác minh
-                </button>
+                <form id="verifyForm">
+                    <h4>Bước 4: Xác minh chữ ký</h4>
+                    <button class="btn" style="margin-top: 18px;" id="submit">
+                        <i class="fa-solid fa-certificate"></i>
+                        Xác minh
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -109,5 +123,69 @@
 </div>
 </body>
 <script>
+    document.getElementById("uploadButton").addEventListener("click", function (event) {
+        const fileInput = document.getElementById("signatureFile");
+        const fileNameDisplay = document.getElementById("fileNameDisplay");
+
+        // Kiểm tra nếu chưa chọn file
+        if (!fileInput.files[0]) {
+            alert("Vui lòng chọn file trước khi upload!");
+            return;
+        }
+
+        // Ngăn hành vi submit mặc định của form
+        event.preventDefault();
+
+        // Tạo FormData để gửi qua AJAX
+        const formData = new FormData();
+        formData.append("signatureFile", fileInput.files[0]);
+
+        // Gửi AJAX
+        fetch("uploadSignature", {
+            method: "POST",
+            body: formData,
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Hiển thị tên file nếu upload thành công
+                    fileNameDisplay.textContent = "Đã upload file: " + fileInput.files[0].name;
+                    alert("File đã upload thành công!");
+                } else {
+                    alert("Upload thất bại! Vui lòng thử lại.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Đã xảy ra lỗi trong quá trình upload!");
+            });
+    });
+    document.getElementById("submit").addEventListener("click", function (event) {
+        event.preventDefault();
+        const fileNameDisplay = document.getElementById("fileNameDisplay");
+
+        // Kiểm tra tên file đã upload thành công chưa
+        if (!fileNameDisplay.textContent || !fileNameDisplay.textContent.startsWith("Đã upload file")) {
+            alert("Vui lòng hoàn thành bước 3 (upload file chữ ký) trước khi xác minh.");
+            return;
+        }
+
+        // Thực hiện gửi request xác minh
+        fetch("verifySignature", {
+            method: "POST",
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Xác minh chữ ký thành công!");
+                } else {
+                    response.text().then(message => alert(`Xác minh thất bại: ${message}`));
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Đã xảy ra lỗi trong quá trình xác minh!");
+            });
+    });
+
+
 </script>
 </html>
