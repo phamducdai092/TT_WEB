@@ -56,6 +56,10 @@ public class KeyService {
         KeyDAO.reportPrivateKeyLeak(userId);
     }
 
+    public Key getKeyByUserIdAndExpiredDateNull(int userId) {
+        return KeyDAO.getKeyByUserIdAndExpiredDateNull(userId);
+    }
+
     public static void main(String[] args) {
 //        KeyService keyService = KeyService.getInstance();
 //
@@ -68,5 +72,9 @@ public class KeyService {
 //        keyService.createKey(1, 2048);
 //        System.out.println("New Public Key: " + keyService.getKey().getPublicKey());
 //        System.out.println("New Private Key: " + keyService.getPrivateKey().getEncoded());
+    }
+
+    public boolean checkAvailableKey(int userId) {
+        return KeyDAO.checkAvailableKey(userId);
     }
 }

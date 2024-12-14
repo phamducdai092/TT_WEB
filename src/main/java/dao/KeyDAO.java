@@ -60,6 +60,26 @@ public class KeyDAO {
         );
     }
 
+    public static Key getKeyByUserIdAndExpiredDateNull(int userId) {
+        try (Handle handle = JDBIConnector.me().open()) {
+            return handle.createQuery("SELECT * FROM public_key WHERE userId = :userId AND expireDate IS NULL")
+                    .bind("userId", userId)
+                    .mapToBean(Key.class)
+                    .findFirst()
+                    .orElse(null);
+        }
+    }
+
+    public static boolean checkAvailableKey(int userId) {
+        try (Handle handle = JDBIConnector.me().open()) {
+            return handle.createQuery("SELECT COUNT(*) FROM public_key WHERE userId = :userId AND expireDate IS NULL")
+                    .bind("userId", userId)
+                    .mapTo(Integer.class)
+                    .findFirst()
+                    .orElse(0) > 0;
+        }
+    }
+
     public void createKey(int userId, int keyLength) {
         keyGenerator.setKeySize(keyLength);
         keyGenerator.generateKeyPair(); // Tạo cặp khóa mới
