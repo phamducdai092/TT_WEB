@@ -267,17 +267,12 @@
                     // Khi cửa sổ xác minh đóng lại, kiểm tra trạng thái xác minh
                     $.ajax({
                         url: '<%= request.getContextPath()%>/verifyStatus',
-                        type: 'GET',
+                        type: 'POST',
                         success: function (response) {
-                            if (response.verified) {
                                 $('#verify-status').css({
                                     'background-color': '#5CB85C', // Màu xanh lá
                                     'border': 'none'
-                                });
-                                isVerified = true;
-                            } else {
-                                alert('Xác minh thất bại, vui lòng thử lại.');
-                            }
+                                })
                         },
                         error: function () {
                             alert('Lỗi khi kiểm tra trạng thái xác minh.');
