@@ -145,7 +145,7 @@
                                 <select id="keyLength" class="form-select">
                                     <option value="1024">1024 bit</option>
                                     <option value="2048">2048 bit</option>
-                                    <option value="4096" selected>4096 bit</option>
+                                    <option value="3072" selected>3072 bit</option>
                                 </select>
                             </div>
                             <div class="btn-grp">

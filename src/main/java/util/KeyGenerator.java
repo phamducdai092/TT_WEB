@@ -14,7 +14,7 @@ public class KeyGenerator {
 
     public void generateKeyPair() {
         try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("DSA");
             keyPairGenerator.initialize(keySize);
             this.keyPair = keyPairGenerator.generateKeyPair();
             this.privateKey = keyPair.getPrivate();
