@@ -95,6 +95,7 @@
             href="assets/css/owl.theme.default.min.css"
     />
     <link rel="stylesheet" href="assets/css/checkout.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <%--HEADER--%>
@@ -156,6 +157,7 @@
                             <ul>
                                 <li>Tổng hóa đơn<span><fmt:formatNumber value="${total}" type="currency"
                                                                         currencyCode="VND"/></span></li>
+                                <input type="hidden" name="total" value="${total}" />
                                 <li>(+) Shipping<span>Free</span></li>
                                 <li class="last">Thành tiền<span><fmt:formatNumber value="${total}" type="currency"
                                                                                    currencyCode="VND"/></span></li>
@@ -226,31 +228,45 @@
         let isVerified = false; // Biến lưu trạng thái xác minh
 
         $('#verify-signature').click(function () {
+            console.log("Click event triggered!");
             const name = $('input[name="name"]').val();
             const phone = $('input[name="phone"]').val();
             const address = $('input[name="address"]').val();
+            const payment = $('#COD').is(':checked') ? 'COD' : 'BANK';
+            const total = $('input[name="total"]').val();
 
-            if (name == '' || phone == '' || address == '') {
+            const encodeName= encodeURIComponent(name);
+            const encodePhone= encodeURIComponent(phone);
+            const encodeAddress= encodeURIComponent(address);
+            const encodePayment=encodeURIComponent(payment)
+
+            console.log("encodeName: ", encodeName);
+            console.log("encodePhone: ", encodePhone);
+            console.log("encodeAddress: ", encodeAddress);
+            console.log("encodePayment: ", encodePayment);
+            console.log("Total: ", total);
+            if (name === '' || phone === '' || address === '') {
                 alert('Vui lòng điền đầy đủ thông tin');
                 return;
             }
-            // Lấy giá trị total từ input ẩn hoặc từ đâu đó trên trang
-            const total = $('input[name="total"]').val();
 
-            const url = '<%= request.getContextPath() %>/DigitalSign?total=${total}'; // URL trang xác minh
+            const url = '<%= request.getContextPath() %>/DigitalSign?name='+encodeName+'&phone='+encodePhone+'&address='+encodeAddress+'&payment='+encodePayment+'&total='+total;
+            console.log(url);
             const windowFeatures = 'width=1920,height=1080,resizable=yes,scrollbars=yes';
 
-            // Mở cửa sổ mới với kích thước tùy chỉnh
+            // Mở cửa sổ mới
             const newWindow = window.open(url, '_blank', windowFeatures);
 
             if (!newWindow) {
                 alert('Cửa sổ không được mở do trình duyệt chặn popup.');
+                return;
             }
+
             const interval = setInterval(function () {
-                if (verificationWindow.closed) {
+                if (newWindow.closed) {
                     // Khi cửa sổ xác minh đóng lại, kiểm tra trạng thái xác minh
                     $.ajax({
-                        url: '<%= request.getContextPath()%>/verifyStatus', // API kiểm tra trạng thái xác minh
+                        url: '<%= request.getContextPath()%>/verifyStatus',
                         type: 'GET',
                         success: function (response) {
                             if (response.verified) {
@@ -271,6 +287,7 @@
                 }
             }, 1000);
         });
+
 
         $('#continue-checkout').click(function () {
             if ($('#COD').is(':checked') || $('#BANK').is(':checked')) {

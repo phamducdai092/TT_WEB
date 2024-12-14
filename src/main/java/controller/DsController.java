@@ -10,15 +10,25 @@ import java.io.IOException;
 @WebServlet(value = "/DigitalSign")
 public class DsController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // get total from param total in url
-        String total  = req.getParameter("total");
-        req.setAttribute("total", total);
-        req.getRequestDispatcher("verifyUser.jsp").forward(req, resp);
-        System.out.println(total);
+        doPost(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req,resp);
+        String name = req.getParameter("name");
+        String phone = req.getParameter("phone");
+        String address = req.getParameter("address");
+        String payment = req.getParameter("payment");
+        String total = req.getParameter("total");
+        System.out.println("name: " + name+" phone: " + phone+" address: " + address+" payment: " + payment+" total: " + total);
+        // Gửi dữ liệu sang verifyUser.jsp
+        req.setAttribute("name", name);
+        req.setAttribute("phone", phone);
+        req.setAttribute("address", address);
+        req.setAttribute("payment", payment);
+        req.setAttribute("total", total);
+
+        // Chuyển tiếp đến verifyUser.jsp
+        req.getRequestDispatcher("verifyUser.jsp").forward(req, resp);
     }
 }
