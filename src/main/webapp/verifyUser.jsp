@@ -76,10 +76,12 @@
         <div class="container-rightSide">
             <div class="container-leftSide__stepOne">
                 <h4>Bước 3: Upload file chữ ký</h4>
-                <button class="btn" style="margin-top: 18px;">
-                    <i class="fa-solid fa-upload"></i>
-                    Upload file
-                </button>
+                <form action="uploadSignature" method="post">
+                    <button class="btn" style="margin-top: 18px;">
+                        <i class="fa-solid fa-upload"></i>
+                        Upload file
+                    </button>
+                </form>
             </div>
             <div class="container-leftSide__stepTwo">
                 <h4>Bước 4: Xác minh chữ ký</h4>
