@@ -21,12 +21,20 @@ public class GenerateKeyController extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         KeyService keyService = KeyService.getInstance();
-
         int userId = Integer.parseInt(req.getParameter("userId"));
         int keyLength = Integer.parseInt(req.getParameter("keyLength"));
 
         try {
-            // Tạo key
+            // Kiểm tra nếu user đã có key chưa hết hạn
+            Key existingKey = keyService.getKeyByUserIdAndExpiredDateNull(userId);
+            if (existingKey != null) {
+                // Key hiện tại vẫn còn khả dụng, không tạo key mới
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write("{\"error\":\"Bạn đã có một key chưa hết hạn. Vui lòng báo cáo lộ key trước khi tạo key mới.\"}");
+                return;
+            }
+
+            // Tạo key mới
             keyService.createKey(userId, keyLength);
             Key key = keyService.getKey();
             String privateKey = keyService.getPrivateKey();
@@ -45,21 +53,17 @@ public class GenerateKeyController extends HttpServlet {
             File privateKeyFile = new File(uploadDir, privateKeyFileName);
             File publicKeyFile = new File(uploadDir, publicKeyFileName);
 
-            // Ghi file
             try (FileWriter privateKeyWriter = new FileWriter(privateKeyFile);
                  FileWriter publicKeyWriter = new FileWriter(publicKeyFile)) {
                 privateKeyWriter.write(privateKey);
                 publicKeyWriter.write(publicKey);
             }
 
-            req.setAttribute("message", "");
-
-            // Trả về đường dẫn tải file
+            // Trả về JSON chứa public key và đường dẫn tải private key
             String responseJson = String.format(
                     "{\"publicKey\":\"%s\", \"privateKeyFile\":\"%s\"}",
                     publicKey, privateKeyFileName
             );
-
             resp.getWriter().write(responseJson);
 
         } catch (Exception e) {
@@ -69,3 +73,4 @@ public class GenerateKeyController extends HttpServlet {
         }
     }
 }
+

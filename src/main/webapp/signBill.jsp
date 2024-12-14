@@ -125,8 +125,12 @@
                                 <label for="publicKey">Public Key</label>
                                 <div class="key-input">
                                     <i class="ic fa-solid fa-lock-open"></i>
-                                    <input type="text" id="publicKey" placeholder="Public Key"
-                                           value="${publicKey != null ? publicKey : 'Chưa có Public Key'}" readonly/>
+                                    <div class="key-input">
+                                        <i class="ic fa-solid fa-lock-open"></i>
+                                        <textarea id="publicKey" placeholder="Public Key" readonly>
+                                            ${publicKey != null ? publicKey : 'Chưa có Public Key'}
+                                        </textarea>
+                                    </div>
                                 </div>
                             </div>
                             <c:if test="${not empty message}">
@@ -255,7 +259,6 @@
     function generateKey() {
         const keyLength = document.getElementById('keyLength').value;
 
-        // Gọi AJAX đến controller
         $.ajax({
             url: '/generate-key',
             method: 'POST',
@@ -264,23 +267,12 @@
                 userId: userId
             },
             success: function (response) {
-                // Kiểm tra xem public key có tồn tại không
-                if (response && response.publicKey) {
-                    // Hiển thị public key lên giao diện
-                    $('#publicKey').val(response.publicKey); // Gắn public key vào input
-
-                    // Gắn URL tải file vào nút tải private key
-                    const privateKeyBtn = document.getElementById('downloadPrivateKeyBtn');
-                    privateKeyBtn.style.display = 'block';
-                    privateKeyBtn.onclick = () => downloadFile(response.privateKeyFile, 'private_key.txt');
-
-                    alert('Tạo key thành công!');
-                } else {
-                    alert('Public key không có sẵn trong phản hồi!');
-                }
+                $('#publicKey').val(response.publicKey);
+                alert('Tạo key thành công!');
             },
-            error: function (xhr, status, error) {
-                alert('Có lỗi xảy ra khi tạo key: ' + error);
+            error: function (xhr) {
+                const response = JSON.parse(xhr.responseText);
+                alert(response.error || 'Có lỗi xảy ra.');
             }
         });
     }
@@ -288,10 +280,22 @@
     function reportKey() {
         const confirmed = confirm("Bạn có chắc chắn muốn báo cáo lộ Private Key không?");
         if (confirmed) {
-            // Gửi yêu cầu đến servlet báo cáo
-            window.location.href = "/report-leaked-private-key";
+            // Gửi yêu cầu AJAX đến kiểm tra key khả dụng
+            $.ajax({
+                url: '/report-leaked-private-key',
+                method: 'GET',
+                success: function (response) {
+                    alert(response.message || "Báo cáo thành công!");
+                    window.location.href = "/sign-bill";  // Redirect nếu thành công
+                },
+                error: function (xhr) {
+                    const response = JSON.parse(xhr.responseText);
+                    alert(response.error || "Có lỗi xảy ra.");
+                }
+            });
         }
     }
+
 
     function downloadPrivateKey() {
         const privateKeyContent = window.privateKeyFileContent || "Your private key content here"; // Nội dung private key
@@ -374,14 +378,14 @@
         });
 
         // Xử lý sự kiện 'Xem chi tiết'
-        $('.view-details').on('click', function() {
+        $('.view-details').on('click', function () {
             var keyId = $(this).data('id');
             // Lấy thông tin chi tiết khóa từ server (có thể thông qua Ajax)
             $.ajax({
                 url: '/get-key-details',  // Địa chỉ API để lấy chi tiết khóa
                 method: 'GET',
-                data: { id: keyId },
-                success: function(data) {
+                data: {id: keyId},
+                success: function (data) {
                     // Hiển thị chi tiết khóa trong modal
                     $('#keyId').text(data.id);
                     $('#publicKeyDetail').text(data.publicKey);
@@ -390,7 +394,7 @@
                     // Mở modal
                     $('#keyDetailsModal').modal('show');
                 },
-                error: function() {
+                error: function () {
                     alert('Không thể lấy chi tiết khóa');
                 }
             });
