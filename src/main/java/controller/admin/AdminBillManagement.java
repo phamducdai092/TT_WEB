@@ -1,7 +1,9 @@
 package controller.admin;
 
 import bean.Bill;
+import bean.Product;
 import dao.BillDAO;
+import dao.ProductDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,9 +24,9 @@ public class AdminBillManagement extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Bill> billList = BillDAO.getInstance().getBillList();
-
+        List<Product> productList = ProductDAO.getProductList();
         req.setAttribute("billList", billList);
-
+        req.setAttribute("productList", productList);
         req.getRequestDispatcher("./adminBill.jsp").forward(req, resp);
     }
 }
