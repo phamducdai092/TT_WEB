@@ -38,7 +38,7 @@ public class BillDAO {
 
     public List<Bill> getBillList() {
         return JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("SELECT b.*, pd.name, bd.id, bd.quantity, bd.product_color \n" +
+                handle.createQuery("SELECT b.*,pd.id, pd.name, bd.id, bd.quantity, bd.total_price, bd.product_color \n" +
                                 "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
                                 "JOIN product_details AS pd ON bd.productId = pd.id")
                         .map(new BillMapper())
@@ -47,7 +47,7 @@ public class BillDAO {
     }
     public static Bill getBillByIdBillDetail(int IdBillDetail) {
         Bill bill = JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("SELECT b.*, pd.name, bd.id, bd.quantity, bd.product_color \n" +
+                handle.createQuery("SELECT b.*,pd.id, pd.name, bd.id, bd.quantity, bd.total_price, bd.product_color \n" +
                                 "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
                                 "JOIN product_details AS pd ON bd.productId = pd.id\n"  +
                                 "WHERE bd.id = :IdBillDetail\n")
@@ -135,6 +135,43 @@ public class BillDAO {
         );
         System.out.println("DOne");
     }
+    public static boolean adminUpdateBill(int billId, String address, int idBillDetail, int productId, int color, int quantity, double totalPrice) {
+        return JDBIConnector.me().withHandle(handle -> {
+            try {
+                // Bắt đầu giao dịch
+                handle.begin();
+
+                // Câu query cập nhật địa chỉ
+                int updatedBill = handle.createUpdate("UPDATE bills SET address = :address WHERE id = :billId")
+                        .bind("address", address)
+                        .bind("billId", billId)
+                        .execute();
+
+                // Câu query cập nhật chi tiết hóa đơn
+                int updatedBillDetails = handle.createUpdate("UPDATE bill_details SET productId = :productId, product_color = :color, quantity = :quantity, total_price = :totalPrice WHERE id = :idBillDetail")
+                        .bind("productId", productId)
+                        .bind("color", color)
+                        .bind("quantity", quantity)
+                        .bind("totalPrice", totalPrice)
+                        .bind("idBillDetail", idBillDetail)
+                        .execute();
+
+                // Nếu cả hai câu update đều thành công, commit giao dịch
+                if (updatedBill > 0 && updatedBillDetails > 0) {
+                    handle.commit(); // Cam kết giao dịch
+                    return true;
+                } else {
+                    handle.rollback(); // Hoàn tác nếu có lỗi
+                    return false;
+                }
+            } catch (Exception e) {
+                handle.rollback(); // Hoàn tác nếu có ngoại lệ
+                e.printStackTrace();
+                return false;
+            }
+        });
+    }
+
     public static void updateQuantityInStock(int id, int quantity) {
         String update = "UPDATE product_details SET quantity = :newQuantity WHERE product_id = :id";
         JDBIConnector.me().withHandle(handle ->
