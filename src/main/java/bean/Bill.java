@@ -3,6 +3,7 @@ package bean;
 public class Bill {
     int id;
     int idBillDetail;
+    int productId;
     User user;
     int userId;
     String fullName;
@@ -36,9 +37,10 @@ public class Bill {
         this.status = status;
     }
 
-    public Bill(int id,int idBillDetail, User user, int userId, String fullName, String phone, String address, String createDate, double totalPrice, String paymentMethod, String status, String productName, int quantity, String productColor) {
+    public Bill(int id,int idBillDetail, int productId, User user, int userId, String fullName, String phone, String address, String createDate, double totalPrice, String paymentMethod, String status, String productName, int quantity, String productColor) {
         this.id = id;
         this.idBillDetail = idBillDetail;
+        this.productId = productId;
         this.user = user;
         this.userId = userId;
         this.fullName = fullName;
@@ -86,7 +88,13 @@ public class Bill {
     public void setIdBillDetail(int idBillDetail) {
         this.idBillDetail = idBillDetail;
     }
+    public int getProductId() {
+        return productId;
+    }
 
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
     public User getUser() {
         return user;
     }
@@ -189,6 +197,7 @@ public class Bill {
                 "id=" + id +
                 ", idBillDetail=" + idBillDetail +
                 ", userId=" + userId +
+                ", productId=" + productId +
                 ", fullName='" + fullName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +

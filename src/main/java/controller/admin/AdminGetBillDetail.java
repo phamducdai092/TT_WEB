@@ -27,4 +27,5 @@ public class AdminGetBillDetail extends HttpServlet {
         resp.setContentType("application/json");
         resp.getWriter().write(new Gson().toJson(bill));
     }
+
 }
