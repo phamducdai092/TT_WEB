@@ -67,6 +67,10 @@ public class ColorDAO {
         return color;
     }
     public static void main(String[] args) {
-        System.out.println(getColorByName("Trắng").getId());
+
+//        for (Product_Color color : ColorDAO.getAllColor()) {
+//            System.out.println(color.toString());
+//        }
+        System.out.println(getColorByName("Đen"));
     }
 }

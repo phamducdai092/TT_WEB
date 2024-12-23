@@ -156,18 +156,12 @@
                             <img src="<%= ImageDAO.getImageByProductId(p.getId()).get(0).getLink() %>"
                                  alt="Roland VAD 706"/>
                         </div>
-
                         <div class="item_content">
                             <div class="title"><%= p.getName() %>
                             </div>
                             <div class="desc"><%= p.getDescription() %>
                             </div>
                             <div class="icon-review">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
                             </div>
                             <% String basePrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(p.getTotalPrice()); %>
                             <div class="price"><%= basePrice %>

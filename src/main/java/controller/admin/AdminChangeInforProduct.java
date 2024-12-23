@@ -38,8 +38,8 @@ public class AdminChangeInforProduct extends HttpServlet {
         nameProduct = req.getParameter("product-name");
 
         discountId = Integer.parseInt(req.getParameter("product-discount"));
-        startDate = req.getParameter("product-discount-start");
-        endDate = req.getParameter("product-discount-end");
+//        startDate = req.getParameter("product-discount-start");
+//        endDate = req.getParameter("product-discount-end");
 
         category = req.getParameter("product-category");
         brand = req.getParameter("product-brand");
@@ -49,7 +49,7 @@ public class AdminChangeInforProduct extends HttpServlet {
         quantity = Integer.parseInt(req.getParameter("product-quantity"));
 
         priceString = req.getParameter("product-price");
-        priceString = priceString.replace(",", ""); // Loại bỏ dấu phẩy
+        priceString = priceString.replace(".", ""); // Loại bỏ dấu phẩy
         price = Double.parseDouble(priceString);
 
         int brandId = 0;
@@ -97,13 +97,13 @@ public class AdminChangeInforProduct extends HttpServlet {
         afterData = p.getId() + ", " + p.getName() + ", " + p.getDiscountId() + ", " + p.getCategoryId() + ", " +
                 p.getBrandId() + ", " + p.getSupplierId() + ", " + p.getQuantity() + ", " + p.getTotalPrice() + ", " + p.getDescription();
         us.setAfterData(afterData);
-        DiscountDAO.changeDiscountDate(discountId, startDate, endDate);
+//        DiscountDAO.changeDiscountDate(discountId, startDate, endDate);
         Product product = new Product(idProduct, nameProduct, discountId, categoryId, brandId, supplierId, quantity, price, desc);
         ProductDAO.changeInforProduct(product);
         preData = idProduct + ", " +  nameProduct+ ", " + discountId+ ", " + categoryId+ ", " + brandId+ ", " + supplierId+
                 ", " + quantity+ ", " + price+ ", " + desc;
         us.setBeforeData(preData);
         usl.update(us);
-        req.getRequestDispatcher("./adminEditProduct.jsp").forward(req, resp);
+        req.getRequestDispatcher("/adminViewProduct?productId=" + idProduct).forward(req, resp);
     }
 }

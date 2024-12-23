@@ -1,0 +1,159 @@
+:root {
+    --main-color: #ee6c4d;
+    --sub-main-color: #293241;
+}
+
+input {
+    outline: none;
+}
+
+.profile-content-body {
+    display: flex;
+}
+
+.profile-content-left {
+    flex: 1;
+    padding: 2.4rem;
+}
+
+.profile-content-right {
+    flex: 1;
+    padding: 2.4rem;
+}
+
+.form-grp {
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.key-input {
+    position: relative;
+}
+
+.ic {
+    opacity: 0.6;
+    font-size: 1.8rem;
+    position: absolute;
+    top: 50%;
+    left: 4px;
+}
+
+.key-input textarea {
+    display: inline-block;
+    width: 100%;
+    height: 200px;
+    resize: none;
+    line-height: 1.5;
+    font-size: 1.4rem;
+    padding: 0 0 12px 35px;
+    margin: 12px 0;
+    background: transparent;
+    border: none;
+    overflow-y: auto;
+    outline: none;
+}
+
+.btn-grp {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 1.6rem;
+}
+
+.form-select {
+    margin: 1.6rem 0;
+    font-size: 1.6rem;
+}
+
+.report {
+    background: red;
+}
+
+.expired-row {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+.expired-date {
+    color: red;
+    font-weight: bold;
+}
+
+.view-details {;
+    width: 100%;
+    color: white;
+    font-size: 1.6rem;
+}
+
+/* Tăng chiều rộng của modal */
+.modal-dialog {
+    max-width: 800px; /* Đặt chiều rộng lớn hơn */
+    margin: 30px auto; /* Căn giữa modal và tạo khoảng cách với trên */
+    fons-size: 2rem;
+}
+
+.modal-content {
+    border-radius: 10px; /* Bo tròn góc modal */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Tạo bóng mờ cho modal */
+}
+
+.modal-header {
+    background-color: #007bff; /* Màu nền header */
+    color: white; /* Màu chữ trong header */
+    border-top-left-radius: 10px; /* Bo góc trên bên trái */
+    border-top-right-radius: 10px; /* Bo góc trên bên phải */
+    padding: 20px 30px; /* Padding cho header */
+}
+
+.modal-title {
+    font-size: 2.2rem; /* Kích thước chữ tiêu đề lớn hơn */
+    font-weight: bold; /* Đậm tiêu đề */
+}
+
+.btn-close {
+    color: white; /* Màu nút đóng */
+    background-color: transparent; /* Nền trong suốt cho nút đóng */
+    border: none; /* Không có viền */
+    font-size: 2rem; /* Kích thước nút đóng lớn hơn */
+}
+
+.modal-body {
+    padding: 30px; /* Tăng padding cho nội dung */
+    font-size: 2rem; /* Kích thước chữ */
+    color: #333; /* Màu chữ nội dung */
+    line-height: 1.6; /* Khoảng cách dòng để dễ đọc hơn */
+}
+
+.modal-body div {
+    margin-bottom: 20px; /* Khoảng cách giữa các mục thông tin */
+}
+
+.modal-body strong {
+    color: #007bff; /* Màu chữ cho các tiêu đề nhỏ */
+    font-size: 2rem;
+}
+
+.model-body span {
+    font-size: 2rem;
+}
+
+.modal-footer {
+    background-color: #f8f9fa; /* Màu nền footer */
+    border-bottom-left-radius: 10px; /* Bo góc dưới bên trái */
+    border-bottom-right-radius: 10px; /* Bo góc dưới bên phải */
+    padding: 15px 30px; /* Padding cho footer */
+}
+
+/* Hiển thị rõ ràng các trường dài */
+#keyId, #publicKeyDetail, #expireDate, #createDate {
+    word-wrap: break-word; /* Đảm bảo text dài sẽ không bị tràn */
+    white-space: pre-wrap; /* Giữ nguyên khoảng trắng */
+    font-family: monospace; /* Dùng phông chữ monospace cho các mã khóa */
+    font-size: 1.6rem; /* Kích thước chữ nhỏ hơn cho các dữ liệu dài */
+    padding: 15px; /* Padding cho các trường */
+    overflow-x: auto; /* Cho phép cuộn ngang nếu cần */
+}
+
+.modal-backdrop {
+    opacity: 0.6; /* Làm mờ lớp phủ */
+    background-color: #000; /* Màu nền lớp phủ */
+}
+

@@ -18,7 +18,7 @@ public class Item implements Serializable {
         this.product = product;
         this.quantity = quantity;
         this.colorName = colorName;
-        this.price = product.getTotalPrice() * quantity;
+        this.price = product.getTotalPrice();
     }
     public int getId() {
         return id;
@@ -82,11 +82,12 @@ public class Item implements Serializable {
                         .findOne()
                         .orElse(0)
         );
+        System.out.println(quantity);
         return quantity!=0;
     }
 
     public static void main(String[] args) {
-        Item i= new Item(ReviewDAO.getProductById(1), 2, "trắng");
+        Item i= new Item(ReviewDAO.getProductById(64), 2, "trắng");
         System.out.println(i.checkQuantity());;
     }
 }

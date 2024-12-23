@@ -95,6 +95,7 @@
             href="assets/css/owl.theme.default.min.css"
     />
     <link rel="stylesheet" href="assets/css/checkout.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <%--HEADER--%>
@@ -120,7 +121,7 @@
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="form-group">
                                     <label>Số điện thoại<span>*</span></label>
-                                    <input type="number" value="${sessionScope.auth.phone}"  name="phone" placeholder=""
+                                    <input type="number" value="${sessionScope.auth.phone}" name="phone" placeholder=""
                                            required="required"/>
                                 </div>
                             </div>
@@ -135,6 +136,16 @@
                         </div>
                     </form>
                     <!--/ End Form -->
+                    <div class="d-flex align-items-center mb-3">
+                        <!-- Button -->
+                        <button id="verify-signature" class="btn btn-primary"
+                                style="background-color: #ee6c4d; border: 1px solid #293241; border-radius: 7px; color: #1c1c1c">
+                            Xác minh chữ ký
+                        </button>
+                        <!-- Square -->
+                        <div id="verify-status" class="ms-2"
+                             style="width: 30px; height: 30px; border: 1px solid grey; border-radius:5px"></div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 col-12">
@@ -146,6 +157,7 @@
                             <ul>
                                 <li>Tổng hóa đơn<span><fmt:formatNumber value="${total}" type="currency"
                                                                         currencyCode="VND"/></span></li>
+                                <input type="hidden" name="total" value="${total}" />
                                 <li>(+) Shipping<span>Free</span></li>
                                 <li class="last">Thành tiền<span><fmt:formatNumber value="${total}" type="currency"
                                                                                    currencyCode="VND"/></span></li>
@@ -158,7 +170,8 @@
                         <h2>Hình thức thanh toán</h2>
                         <div class="content">
                             <div class="checkbox">
-                                <label for="COD" class="check-out-cod checked"><input name="news" id="COD" type="checkbox" checked>
+                                <label for="COD" class="check-out-cod checked"><input name="news" id="COD"
+                                                                                      type="checkbox" checked>
                                     Thanh toán khi nhận hàng</label>
                                 <label for="BANK" class="check-out-bank"><input name="news" id="BANK" type="checkbox">
                                     Chuyển khoản</label>
@@ -170,7 +183,9 @@
                     <div class="single-widget get-button">
                         <div class="content">
                             <div class="button">
-                                <button type="submit" id="continue-checkout"><a href="<%= request.getContextPath()%>/bill?action=buy">Tiếp tục</a></button>
+                                <button type="submit" id="continue-checkout">
+                                    <a id="conti">Tiếp tục</a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -210,6 +225,64 @@
             $('.check-out-cod').removeClass("checked");
         });
 
+        let isVerified = false; // Biến lưu trạng thái xác minh
+
+        $('#verify-signature').click(function () {
+            console.log("Click event triggered!");
+            const name = $('input[name="name"]').val();
+            const phone = $('input[name="phone"]').val();
+            const address = $('input[name="address"]').val();
+            const payment = $('#COD').is(':checked') ? 'COD' : 'BANK';
+            const total = $('input[name="total"]').val();
+
+            const encodeName= encodeURIComponent(name);
+            const encodePhone= encodeURIComponent(phone);
+            const encodeAddress= encodeURIComponent(address);
+            const encodePayment=encodeURIComponent(payment)
+
+            console.log("encodeName: ", encodeName);
+            console.log("encodePhone: ", encodePhone);
+            console.log("encodeAddress: ", encodeAddress);
+            console.log("encodePayment: ", encodePayment);
+            console.log("Total: ", total);
+            if (name === '' || phone === '' || address === '') {
+                alert('Vui lòng điền đầy đủ thông tin');
+                return;
+            }
+
+            const url = '<%= request.getContextPath() %>/DigitalSign?name='+encodeName+'&phone='+encodePhone+'&address='+encodeAddress+'&payment='+encodePayment+'&total='+total;
+            console.log(url);
+            const windowFeatures = 'width=1920,height=1080,resizable=yes,scrollbars=yes';
+
+            // Mở cửa sổ mới
+            const newWindow = window.open(url, '_blank', windowFeatures);
+
+            if (!newWindow) {
+                alert('Cửa sổ không được mở do trình duyệt chặn popup.');
+                return;
+            }
+
+            const interval = setInterval(function () {
+                if (newWindow.closed) {
+                    // Khi cửa sổ xác minh đóng lại, kiểm tra trạng thái xác minh
+                    $.ajax({
+                        url: '<%= request.getContextPath()%>/verifyStatus',
+                        type: 'POST',
+                        success: function (response) {
+                                $('#verify-status').css({
+                                    'background-color': '#5CB85C', // Màu xanh lá
+                                    'border': 'none'
+                                })
+                        },
+                        error: function () {
+                            alert('Lỗi khi kiểm tra trạng thái xác minh.');
+                        }
+                    });
+                    clearInterval(interval);
+                }
+            }, 1000);
+        });
+
 
         $('#continue-checkout').click(function () {
             if ($('#COD').is(':checked') || $('#BANK').is(':checked')) {
@@ -218,11 +291,14 @@
                 const address = $('input[name="address"]').val();
                 const payment = $('#COD').is(':checked') ? 'COD' : 'BANK';
 
-                if(name == '' || phone == '' || address == ''){
+                if (name == '' || phone == '' || address == '') {
                     alert('Vui lòng điền đầy đủ thông tin');
                     return;
                 }
-
+                if (!isVerified) {
+                    alert('Vui lòng xác minh chữ ký trước khi tiếp tục.');
+                    return;
+                }
                 const data = {
                     name: name,
                     phone: phone,
@@ -235,7 +311,7 @@
                     type: 'POST',
                     data: data,
                     success: function (response) {
-                        alert('Thêm vào giỏ hàng thành công');
+                        // alert('Thanh toán thành công');
                         // direct to cart page
                         window.location.href = '<%= request.getContextPath()%>/thank-you';
                     },

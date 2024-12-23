@@ -39,7 +39,7 @@ public class ProductDetailController extends HttpServlet {
 
                 // Lấy thông tin ảnh và màu sắc của sản phẩm
                 List<Image_Product> productImages = ImageService.getInstance().getImageByProductId(selectedProductId);
-                List<Product_Color> productColors = ColorService.getInstance().getListColorCodeByIdProduct(selectedProductId);
+                List<Product_Color> productColors = ColorService.getInstance().getAllColor();
 
                 List<Review> productReviews = ReviewService.getInstance().getReviewByProductId(selectedProductId);
                 List<User> users = UserService.getInstance().getAllUser();
