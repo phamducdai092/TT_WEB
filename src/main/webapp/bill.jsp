@@ -1,3 +1,4 @@
+<%@ page import="bean.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -5,6 +6,7 @@
 <fmt:setBundle basename="java.text.resources"/>
 <html>
 <head>
+    <c:set var="auth" value="${sessionScope.auth}"/>
     <title>Hóa Đơn của bạn</title>
     <style>
         .height {
@@ -211,7 +213,7 @@
         });
 
         // Sự kiện khi click vào label
-        $('.check-out-cod').click(function () {
+        $('.check-out-cod').click(function ()   {
             $('#COD').prop('checked', true);
             $('#BANK').prop('checked', false);
             $(this).addClass("checked");
@@ -245,6 +247,12 @@
             console.log("encodeAddress: ", encodeAddress);
             console.log("encodePayment: ", encodePayment);
             console.log("Total: ", total);
+            let user= <%= request.getSession().getAttribute("auth") %>;
+            console.log("user: ", user)
+            if(user == null){
+                alert('Vui lòng đăng nhập để xác minh');
+                return;
+            }
             if (name === '' || phone === '' || address === '') {
                 alert('Vui lòng điền đầy đủ thông tin');
                 return;
@@ -273,6 +281,7 @@
                                     'background-color': '#5CB85C', // Màu xanh lá
                                     'border': 'none'
                                 })
+                            isVerified=true;
                         },
                         error: function () {
                             alert('Lỗi khi kiểm tra trạng thái xác minh.');
