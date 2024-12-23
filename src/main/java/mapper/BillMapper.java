@@ -13,9 +13,11 @@ public class BillMapper implements RowMapper<Bill> {
     public Bill map(ResultSet rs, StatementContext ctx) throws SQLException {
         Bill bill = new Bill();
         bill.setId(rs.getInt("id"));
+        bill.setIdBillDetail(rs.getInt("bd.id"));
+        bill.setProductId(rs.getInt("pd.id"));
         bill.setUserId(rs.getInt("userId"));
         bill.setCreateDate(rs.getString("createDate"));
-        bill.setTotalPrice(rs.getDouble("totalPrice"));
+        bill.setTotalPrice(rs.getDouble("bd.total_price"));
         bill.setPaymentMethod(rs.getString("payment_method"));
         bill.setFullName(rs.getString("full_name"));
         bill.setAddress(rs.getString("address"));

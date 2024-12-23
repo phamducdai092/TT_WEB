@@ -4,6 +4,7 @@ import bean.Order;
 import bean.Product;
 import db.JDBIConnector;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -283,7 +284,9 @@ public class ProductDAO {
 //        Item item = ProductDAO.getItemById(1);
 //        addProduct(new Product(0, "test", 1, 1, 1, 1, 100, 101, "test"));
 //        System.out.println(getProductId(1).getName());;
-        hiddenProduct(1);
+//        hiddenProduct(1);
+        List<Product> p = ProductDAO.adminSearchProductByName("A");
+        System.out.println(Arrays.toString(p.toArray()));
     }
 
 

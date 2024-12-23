@@ -114,6 +114,7 @@
                     <table id="orderTable">
                         <thead>
                         <tr>
+                            <th>Chỉnh sửa</th>
                             <th>Mã đơn hàng</th>
                             <th>Tên sản phâm</th>
                             <th>Số lượng</th>
@@ -130,6 +131,11 @@
                         <c:set var="userBill" value="${requestScope.userBill}"/>
                         <c:forEach items="${userBill}" var="order">
                             <tr>
+                                <td data-label="Chỉnh sửa">
+<%--                                    <a class="link" target="_blank" href="adminViewProduct?productId=${o.getId()}">--%>
+                                        <i class="fa-solid fa-pen-to-square"></i>
+<%--                                    </a>--%>
+                                </td>
                                 <td data-label="Mã đơn hàng">${order.id}</td>
                                 <td data-label="Tên sản phâm">${order.productName}</td>
                                 <td data-label="Số lượng">${order.quantity}</td>
@@ -145,6 +151,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
+                            <th>Chỉnh sửa</th>
                             <th>Mã đơn hàng</th>
                             <th>Tên sản phâm</th>
                             <th>Số lượng</th>
@@ -171,6 +178,7 @@
 
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
 <script>
     $(document).ready(function () {
         $('#orderTable').DataTable({
