@@ -40,29 +40,10 @@ public class GenerateKeyController extends HttpServlet {
             String privateKey = keyService.getPrivateKey();
             String publicKey = key.getPublicKey();
 
-            // Lưu các key vào file
-            String uploadDir = getServletContext().getRealPath("/keys");
-            File directory = new File(uploadDir);
-            if (!directory.exists()) {
-                directory.mkdir();
-            }
-
-            // Đường dẫn file
-            String privateKeyFileName = "private_key_" + userId + ".txt";
-            String publicKeyFileName = "public_key_" + userId + ".txt";
-            File privateKeyFile = new File(uploadDir, privateKeyFileName);
-            File publicKeyFile = new File(uploadDir, publicKeyFileName);
-
-            try (FileWriter privateKeyWriter = new FileWriter(privateKeyFile);
-                 FileWriter publicKeyWriter = new FileWriter(publicKeyFile)) {
-                privateKeyWriter.write(privateKey);
-                publicKeyWriter.write(publicKey);
-            }
-
-            // Trả về JSON chứa public key và đường dẫn tải private key
+            // Trả về JSON chứa public key và private key dưới dạng nội dung thay vì file
             String responseJson = String.format(
-                    "{\"publicKey\":\"%s\", \"privateKeyFile\":\"%s\"}",
-                    publicKey, privateKeyFileName
+                    "{\"publicKey\":\"%s\", \"privateKey\":\"%s\"}",
+                    publicKey, privateKey
             );
             resp.getWriter().write(responseJson);
 
@@ -73,4 +54,3 @@ public class GenerateKeyController extends HttpServlet {
         }
     }
 }
-

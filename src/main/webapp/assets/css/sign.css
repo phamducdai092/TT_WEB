@@ -45,8 +45,7 @@ input {
     resize: none;
     line-height: 1.5;
     font-size: 1.4rem;
-    padding: 0 0 12px 35px;
-    margin: 12px 0;
+    padding: 0 12px;
     background: transparent;
     border: none;
     overflow-y: auto;
