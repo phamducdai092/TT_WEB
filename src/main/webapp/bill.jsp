@@ -6,7 +6,6 @@
 <fmt:setBundle basename="java.text.resources"/>
 <html>
 <head>
-    <c:set var="auth" value="${sessionScope.auth}"/>
     <title>Hóa Đơn của bạn</title>
     <style>
         .height {
@@ -247,9 +246,8 @@
             console.log("encodeAddress: ", encodeAddress);
             console.log("encodePayment: ", encodePayment);
             console.log("Total: ", total);
-            let user= <%= request.getSession().getAttribute("auth") %>;
-            console.log("user: ", user)
-            if(user == null){
+            const userAuth = ${sessionScope.auth != null ? 'true' : 'false'};
+            if (userAuth === false) {
                 alert('Vui lòng đăng nhập để xác minh');
                 return;
             }
