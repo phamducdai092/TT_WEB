@@ -62,6 +62,8 @@ public class BillDAO {
     public void createOrder(String name, String phone, String address, String payment, HttpServletRequest req) {
         var cart = (List<Item>)req.getSession().getAttribute("cart");
         var user = req.getSession().getAttribute("auth");
+        String hashedOrderDetails = (String) req.getSession().getAttribute("hashedOrderDetails");
+        System.out.println("hashedOrderDetails :"+ hashedOrderDetails);
         if (cart != null && user != null) {
             var total = 0.0;
             for (var item : cart) {//đkiện
@@ -72,13 +74,14 @@ public class BillDAO {
             var bill = new Bill((User) user, name, phone, address, total, payment);
 
             JDBIConnector.me().useHandle(handle -> {
-                long billId = handle.createUpdate("INSERT INTO bills (userId, full_name, phone, address, totalPrice, payment_method) VALUES (:userId, :name, :phone, :address, :total, :payment)")
+                long billId = handle.createUpdate("INSERT INTO bills (userId, full_name, phone, address, totalPrice, payment_method, hashCode) VALUES (:userId, :name, :phone, :address, :total, :payment, :hashCode)")
                         .bind("userId", bill.getUser().getId())
                         .bind("name", bill.getFullName())
                         .bind("phone", bill.getPhone())
                         .bind("address", bill.getAddress())
                         .bind("total", bill.getTotalPrice())
                         .bind("payment", bill.getPaymentMethod())
+                        .bind("hashCode", hashedOrderDetails)
                         .executeAndReturnGeneratedKeys()
                         .mapTo(Long.class)
                         .findOnly();
