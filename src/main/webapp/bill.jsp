@@ -139,7 +139,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <!-- Button -->
                         <button id="verify-signature" class="btn btn-primary"
-                                style="background-color: #ee6c4d; border: 1px solid #293241; border-radius: 7px; color: #1c1c1c">
+                                style="background-color: #ee6c4d; border: none; border-radius: 7px; color: white">
                             Xác minh chữ ký
                         </button>
                         <!-- Square -->
@@ -183,7 +183,7 @@
                     <div class="single-widget get-button">
                         <div class="content">
                             <div class="button">
-                                <button type="submit" id="continue-checkout">
+                                <button type="submit" id="continue-checkout" style="color: white" >
                                     <a id="conti">Tiếp tục</a>
                                 </button>
                             </div>

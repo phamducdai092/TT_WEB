@@ -9,13 +9,10 @@ input {
 
 .profile-content-body {
     display: flex;
+    flex-direction: column;
 }
 
-.profile-content-left {
-    flex: 1;
-    padding: 2.4rem;
-}
-
+.profile-content-left,
 .profile-content-right {
     flex: 1;
     padding: 2.4rem;
@@ -191,4 +188,17 @@ input {
     justify-content: center;
     gap: 1.6rem;
     margin-top: 1.6rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+tr {
+    background: var(--main-color);
+}
+
+th {
+    color: white;
 }

@@ -66,9 +66,9 @@
     <!-- styles -->
     <link rel="stylesheet" href="./assets/css/style.css"/>
     <link rel="stylesheet" href="./assets/css/sign.css">
-    <link rel="stylesheet" href="./assets/css/custom-datatable.css"/>
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="./assets/css/custom-datatable.css"/>
 </head>
 <body>
 
@@ -122,7 +122,7 @@
                     <div class="profile-content-body">
                         <div class="profile-content-left">
                             <div class="form-grp">
-                                <label for="publicKey">Public Key</label>
+                                <label class="title" for="publicKey">Public Key</label>
                                 <div class="key-input">
                                     <textarea id="publicKey" placeholder="Public Key" readonly>
                                         ${publicKey != null ? publicKey : 'Chưa có Public Key'}
@@ -141,7 +141,7 @@
 
                         <div class="profile-content-right">
                             <div class="form-grp">
-                                <label for="keyLength">Chọn độ dài RSA Key</label>
+                                <label class="title" for="keyLength">Chọn độ dài RSA Key</label>
                                 <select id="keyLength" class="form-select">
                                     <option value="1024">1024 bit</option>
                                     <option value="2048">2048 bit</option>
@@ -253,7 +253,7 @@
 
 <div id="passwordDialog" class="modal-verify" style="display: none;">
     <div class="modal-head">
-        <h5>Xác nhận mật khẩu</h5>
+        <h4>Xác nhận mật khẩu</h4>
         <p>Vui lòng nhập mật khẩu của bạn để tiếp tục:</p>
         <div class="pw-input">
             <i class="fa-solid fa-key ic"></i>
@@ -279,7 +279,6 @@
 
     function generateKey() {
         const keyLength = document.getElementById('keyLength').value;
-
         $.ajax({
             url: '/generate-key',
             method: 'POST',
@@ -336,10 +335,12 @@
 
     function showPasswordDialog(onConfirm) {
         const dialog = document.getElementById("passwordDialog");
+        let password = document.getElementById("confirmPassword");
+        password.innerHTML = "";
         dialog.style.display = "block";
 
         document.getElementById("passwordConfirmBtn").onclick = function () {
-            const password = document.getElementById("confirmPassword").value;
+            password = password.value;
             if (password.trim() === "") {
                 alert("Mật khẩu không được để trống");
                 return;
