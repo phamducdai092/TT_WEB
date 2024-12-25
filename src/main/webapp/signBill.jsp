@@ -122,15 +122,12 @@
                     <div class="profile-content-body">
                         <div class="profile-content-left">
                             <div class="form-grp">
-                                <label class="title" for="publicKey">Public Key</label>
                                 <div class="key-input">
-                                    <textarea id="publicKey" placeholder="Public Key" readonly>
-                                        ${publicKey != null ? publicKey : 'Chưa có Public Key'}
-                                    </textarea>
+                                    <label class="title">${publicKey != null ? '' : 'Chưa có Public Key'}</label>
                                 </div>
                             </div>
                             <c:if test="${not empty message}">
-                                <div class="alert ${message.contains('lỗi') ? 'alert-danger' : 'alert-success'}">
+                                <div class="alert ${message.contains('Thông báo') ? 'alert-danger' : 'alert-success'}">
                                         ${message}
                                 </div>
                             </c:if>
@@ -159,58 +156,46 @@
                     </div>
                 </div>
                 <div class="your__cart ms-2 p-2">
-                    <table id="keysTable" class="display">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Public Key</th>
-                            <th>Ngày tạo</th>
-                            <th>Ngày hết hạn</th>
-                            <th>Hành động</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:set var="keys" value="${requestScope.keys}"/>
+                    <div class="keys-container">
+                        <c:set var="keys" value="${requestScope.keys}" />
                         <c:choose>
                             <c:when test="${not empty keys}">
                                 <c:forEach var="key" items="${keys}">
-                                    <tr class="${key.expireDate != null ? 'expired-row' : ''}">
-                                        <td>${key.id}</td>
-                                        <td>${fn:substring(key.publicKey, 0, 30)}...</td>
-                                        <td>${key.createDate}</td>
-                                        <td>
+                                    <div class="key-card ${key.expireDate != null ? 'expired-row' : ''}">
+                                        <div class="key-info">
+                                            <span>ID:</span>
+                                            <span>${key.id}</span>
+                                        </div>
+                                        <div class="key-info">
+                                            <span>Public Key:</span>
+                                            <span>${fn:substring(key.publicKey, 0, 30)}...</span>
+                                        </div>
+                                        <div class="key-info">
+                                            <span>Ngày tạo:</span>
+                                            <span>${key.createDate}</span>
+                                        </div>
+                                        <div class="key-info">
+                                            <span>Ngày hết hạn:</span>
                                             <c:choose>
                                                 <c:when test="${key.expireDate != null}">
-                                                    <p class="expired-date">${key.expireDate}</p>
+                                                    <span class="expired-date">${key.expireDate}</span>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    N/A
+                                                    <span class="available">Còn khả dụng</span>
                                                 </c:otherwise>
                                             </c:choose>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-info view-details" data-id="${key.id}">Xem
-                                                chi tiết
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                        <button class="btn view-details" data-id="${key.id}">
+                                            Xem chi tiết
+                                        </button>
+                                    </div>
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
-                                <h3>Chưa có khóa nào được tạo. Vui lòng tạo khóa trước khi ký đơn hàng.</h3>
+                                <p class="no-keys-message">Chưa có khóa nào được tạo. Vui lòng tạo khóa trước khi ký đơn hàng.</p>
                             </c:otherwise>
                         </c:choose>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th>ID</th>
-                            <th>Public Key</th>
-                            <th>Ngày tạo</th>
-                            <th>Ngày hết hạn</th>
-                            <th>Hành động</th>
-                        </tr>
-                        </tfoot>
-                    </table>
+                    </div>
                 </div>
             </div>
             <div class="col-md-10">
@@ -291,7 +276,7 @@
 
                 // Hiển thị thông báo thành công
                 showDialog('Tạo key thành công!', null, true);
-
+                location.reload();
                 // Lưu nội dung private key vào window.privateKeyContent
                 window.privateKeyFileContent = response.privateKey;
 
@@ -390,33 +375,6 @@
     }
 
     $(document).ready(function () {
-        // Khởi tạo DataTable
-        $('#keysTable').DataTable({
-            "dom": '<"top"lf>rt<"bottom"ip><"clear">',
-            "language": {
-                "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
-                "zeroRecords": "Không tìm thấy bản ghi nào",
-                "info": "Hiển thị trang _PAGE_ của _PAGES_",
-                "infoEmpty": "Không có bản ghi nào",
-                "infoFiltered": "(lọc từ _MAX_ bản ghi)",
-                "search": "Tìm kiếm:",
-                "paginate": {
-                    "first": "Đầu",
-                    "last": "Cuối",
-                    "next": "Tiếp",
-                    "previous": "Trước"
-                }
-            },
-            "lengthMenu": [5, 10, 25, 50],
-            order: [[2, 'desc']], // Sắp xếp theo cột Public Key giảm dần
-            columnDefs: [
-                {
-                    targets: 2, // Chỉ định cột datetime
-                    type: 'datetime' // Đảm bảo DataTable nhận diện kiểu datetime
-                }
-            ]
-        });
-
         // Xử lý sự kiện 'Xem chi tiết'
         $('.view-details').on('click', function () {
             var keyId = $(this).data('id');

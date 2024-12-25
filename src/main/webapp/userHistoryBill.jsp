@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="service.ImageService" %>
 <fmt:setLocale value="vi_VN"/>
 <fmt:setBundle basename="java.text.resources"/>
 
@@ -9,7 +10,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Lịch sử mua hàng</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <!-- embed fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -60,6 +62,7 @@
     <link rel="stylesheet" href="./assets/css/style.css"/>
     <link rel="stylesheet" href="assets/css/list.css">
     <link rel="stylesheet" href="./assets/css/custom-datatable.css"/>
+    <link rel="stylesheet" href="./assets/css/user-history-bill.css"/>
 
     <!-- OWL CAROUSEL CSS -->
     <link rel="stylesheet" href="./assets/css/owl.carousel.min.css"/>
@@ -111,95 +114,118 @@
             <jsp:include page="sidebar-profile.jsp"/>
             <div class="col-md-10">
                 <div class="your__cart ms-2 p-2">
-                    <table id="orderTable">
-                        <thead>
-                        <tr>
-                            <th>Chỉnh sửa</th>
-                            <th>Mã đơn hàng</th>
-                            <th>Tên sản phâm</th>
-                            <th>Số lượng</th>
-                            <th>Màu sản phẩm</th>
-                            <th>Ngày mua</th>
-                            <th>Họ và tên</th>
-                            <th>Số điện thoại</th>
-                            <th>Địa chỉ</th>
-                            <th>Phương thức thanh toán</th>
-                            <th>Trạng thái đơn hàng</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:set var="userBill" value="${requestScope.userBill}"/>
-                        <c:forEach items="${userBill}" var="order">
-                            <tr>
-                                <td data-label="Chỉnh sửa">
-<%--                                    <a class="link" target="_blank" href="adminViewProduct?productId=${o.getId()}">--%>
-                                        <i class="fa-solid fa-pen-to-square"></i>
-<%--                                    </a>--%>
-                                </td>
-                                <td data-label="Mã đơn hàng">${order.id}</td>
-                                <td data-label="Tên sản phâm">${order.productName}</td>
-                                <td data-label="Số lượng">${order.quantity}</td>
-                                <td data-label="Màu sản phẩm">${order.productColor == '1' ? 'Trắng' : 'Đen'}</td>
-                                <td data-label="Ngày mua">${order.createDate}</td>
-                                <td data-label="Họ và tên">${order.fullName}</td>
-                                <td data-label="Số điện thoại">${order.phone}</td>
-                                <td data-label="Địa chỉ">${order.address}</td>
-                                <td data-label="Phương thức thanh toán">${order.paymentMethod}</td>
-                                <td data-label="Trạng thái đơn hàng">${order.status == 'IN_PROGRESS' ? 'Chờ xử lý' : (order.status == 'DONE' ? 'Đã nhận đơn' : 'Đang giao hàng')}</td>
-                            </tr>
+                    <div class="order-history">
+                        <c:forEach items="${userBill}" var="entry">
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <p><strong>Mã đơn hàng:</strong> ${entry.key}</p>
+                                    <p class="order-status ${entry.value[0].status.toLowerCase().replace(' ', '_')}">
+                                        Trạng thái:
+                                        <c:choose>
+                                            <c:when test="${entry.value[0].status == 'IN_PROGRESS'}">Đang xử lý</c:when>
+                                            <c:when test="${entry.value[0].status == 'IN_SHIPPING'}">Đang vận chuyển</c:when>
+                                            <c:when test="${entry.value[0].status == 'DONE'}">Hoàn tất</c:when>
+                                            <c:when test="${entry.value[0].status == 'CANCEL'}">Đã hủy</c:when>
+                                        </c:choose>
+                                    </p>
+                                    <p><strong>Tổng tiền:</strong> <span
+                                            class="total-price">${entry.value[0].totalPrice} VNĐ</span></p>
+                                    <p><strong>Ngày tạo:</strong> ${entry.value[0].createDate}</p>
+                                </div>
+                                <div class="product-list">
+                                    <c:forEach items="${entry.value}" var="product">
+                                        <div class="product-item">
+                                            <div class="product-image">
+                                                <img src="${ImageService.getInstance().getImageByProductId(product.productId).get(0).getLink()}"
+                                                     alt="${product.productName}"/>
+                                            </div>
+                                            <div class="product-info">
+                                                <p><strong>Tên sản phẩm:</strong> ${product.productName}</p>
+                                                <p><strong>Số lượng:</strong> ${product.quantity}</p>
+                                                <p><strong>Màu
+                                                    sắc:</strong> ${product.productColor == '1' ? 'Trắng' : 'Đen'}</p>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                                <c:if test="${entry.value[0].status == 'IN_PROGRESS'}">
+                                    <button class="cancel-order-btn btn-submit" onclick="cancelOrder(${entry.key})">Hủy
+                                        đơn hàng
+                                    </button>
+                                </c:if>
+                            </div>
                         </c:forEach>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th>Chỉnh sửa</th>
-                            <th>Mã đơn hàng</th>
-                            <th>Tên sản phâm</th>
-                            <th>Số lượng</th>
-                            <th>Màu sản phẩm</th>
-                            <th>Ngày mua</th>
-                            <th>Họ và tên</th>
-                            <th>Số điện thoại</th>
-                            <th>Địa chỉ</th>
-                            <th>Phương thức thanh toán</th>
-                            <th>Trạng thái đơn hàng</th>
-                        </tr>
-                        </tfoot>
-                    </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div id="confirmDialog" class="modal-verify">
+    <div class="modal-head">
+        <h5 class="modal-title"></h5>
+        <div class="modal-actions">
+            <button id="confirmYes" class="btn-submit">Xác nhận</button>
+            <button id="confirmNo" class="btn-submit">Hủy</button>
+        </div>
+    </div>
+</div>
+
+
 <!-- MAIN JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
 <script>
-    $(document).ready(function () {
-        $('#orderTable').DataTable({
-            "dom": '<"top"lf>rt<"bottom"ip><"clear">',
-            "language": {
-                "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
-                "zeroRecords": "Không tìm thấy bản ghi nào",
-                "info": "Hiển thị trang _PAGE_ của _PAGES_",
-                "infoEmpty": "Không có bản ghi nào",
-                "infoFiltered": "(lọc từ _MAX_ bản ghi)",
-                "search": "Tìm kiếm:",
-                "paginate": {
-                    "first": "Đầu",
-                    "last": "Cuối",
-                    "next": "Tiếp",
-                    "previous": "Trước"
+    function showDialog(message, onConfirm, onlyOk = false) {
+        const dialog = document.getElementById("confirmDialog");
+        dialog.querySelector("h5").innerText = message;
+        dialog.style.display = "block";
+
+        const btnYes = document.getElementById("confirmYes");
+        const btnNo = document.getElementById("confirmNo");
+
+        if (onlyOk) {
+            btnYes.innerText = "OK";
+            btnNo.style.display = "none";
+        } else {
+            btnYes.innerText = "Xác nhận";
+            btnNo.style.display = "inline-block";
+        }
+
+        btnYes.onclick = function () {
+            dialog.style.display = "none";
+            if (onConfirm) onConfirm();
+        };
+
+        btnNo.onclick = function () {
+            dialog.style.display = "none";
+        };
+    }
+
+    function cancelOrder(orderId) {
+        showDialog("Bạn có chắc chắn muốn hủy đơn hàng này?", function () {
+            $.ajax({
+                url: "/cancelOrder",
+                type: "POST",
+                data: {
+                    orderId: orderId
+                },
+                success: function (response) {
+                    if (response.success === true) {
+                        location.reload(); // Tải lại trang nếu hủy thành công
+                    } else {
+                        showDialog("Hủy đơn hàng thất bại", null, true); // Thông báo thất bại
+                    }
+                },
+                error: function () {
+                    showDialog("Hủy đơn hàng thất bại", null, true); // Thông báo lỗi
                 }
-            },
-            "lengthMenu": [5, 10, 25, 50]
+            });
         });
-    });
+    }
 </script>
 </body>
 </html>

@@ -45,7 +45,7 @@ public class KeyDAO {
 
     public static List<Key> getKeysListByUserId(int userId) {
         try (Handle handle = JDBIConnector.me().open()) {
-            return handle.createQuery("SELECT * FROM public_key WHERE userId = :userId")
+            return handle.createQuery("SELECT * FROM public_key WHERE userId = :userId Order by id desc")
                     .bind("userId", userId)
                     .mapToBean(Key.class)
                     .collect(Collectors.toList());

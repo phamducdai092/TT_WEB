@@ -202,3 +202,70 @@ tr {
 th {
     color: white;
 }
+
+.keys-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.key-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+}
+
+.key-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.key-card .key-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.key-card .key-info span {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.key-card .expired-date {
+    color: #e74c3c;
+    font-style: italic;
+}
+
+.key-info .available {
+    color: #2ecc71;
+}
+
+.key-card .btn {
+    align-self: flex-start;
+    padding: 8px 16px;
+    font-size: 1.6rem;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.key-card .btn:hover {
+    background-color: #2980b9;
+}
+
+.no-keys-message {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 20px;
+    color: #999;
+}
