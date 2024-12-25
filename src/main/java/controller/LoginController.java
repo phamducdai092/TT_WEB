@@ -94,7 +94,7 @@ public class LoginController extends HttpServlet {
             if (user.getStatus() != 0) {
                 if (user.getRole() == 1) {
                     noti= new ArrayList<>();
-                    List<Bill> bills = BillDAO.getInstance().getBillsNotDONE(user);
+                    List<Bill> bills = BillDAO.getInstance().getBillListNotDONEAdmin();
                     Map<String,Integer> map=getnotiListUser(bills);
                     List<String> res=checkHash(map);
                     for(String s:res){

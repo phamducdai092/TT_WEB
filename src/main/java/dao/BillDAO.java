@@ -153,7 +153,7 @@ public class BillDAO {
                     .list();
         }
     }
-    public List<Bill> getBillListNotDONE() {
+    public List<Bill> getBillListNotDONEAdmin() {
         return JDBIConnector.me().withHandle(handle ->
                 handle.createQuery("SELECT b.*, pd.name, bd.quantity, bd.product_color \n" +
                                 "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
