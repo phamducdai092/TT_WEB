@@ -142,10 +142,32 @@ public class BillDAO {
                         .execute()
         );
     }
+    public List<Bill> getBillsNotDONE(User user) {
+        try (Handle handle = JDBIConnector.me().open()) {
+            return handle.createQuery("SELECT b.*, pd.name, bd.quantity, bd.product_color \n" +
+                            "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
+                            "JOIN product_details AS pd ON bd.productId = pd.id\n" +
+                            "WHERE b.userId = :userId AND b.status != 'DONE'\n")
+                    .bind("userId", user.getId())
+                    .map(new BillMapper())
+                    .list();
+        }
+    }
+    public List<Bill> getBillListNotDONE() {
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT b.*, pd.name, bd.quantity, bd.product_color \n" +
+                                "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
+                                "JOIN product_details AS pd ON bd.productId = pd.id\n" +
+                                "WHERE b.status != 'DONE'")
+                        .map(new BillMapper())
+                        .collect(Collectors.toList())
+        );
+    }
+
 
     public static void main(String[] args) {
-    User user = new User(1, "0", "123", "123", "123", 0, "123", "123", "0", "0", 1, 1);
-    List<Bill> bill = BillDAO.getInstance().getBillsByUser(user);
+    User user = new User(24, "0", "dai123", "dai0601", "21130304@st.hcmuaf.edu.vn", 0, "", "", "2024-12-11", "", 0, 1);
+    List<Bill> bill = BillDAO.getInstance().getBillsNotDONE(user);
     System.out.println(Arrays.toString(bill.toArray()));
 
 

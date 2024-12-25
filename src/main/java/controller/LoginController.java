@@ -1,6 +1,8 @@
 package controller;
 
+import bean.Bill;
 import bean.User;
+import dao.BillDAO;
 import mail.MailService;
 import service.SignUpService;
 import service.UserService;
@@ -11,6 +13,10 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @WebServlet(name = "controller.LoginController", value = "/log")
 public class LoginController extends HttpServlet {
@@ -91,6 +97,8 @@ public class LoginController extends HttpServlet {
                     session.setAttribute("role", "admin");
                     resp.sendRedirect("./home");
                 } else {
+                    List<String> noti = new ArrayList<>();
+                    List<Bill> bills = BillDAO.getInstance().getBillsNotDONE(user);
                     session.setAttribute("auth", user);
                     session.setAttribute("role", "user");
                     resp.sendRedirect("./home");
@@ -115,5 +123,60 @@ public class LoginController extends HttpServlet {
         }
     }
 
+    private List<String> getnotiListUser(List<Bill> bills) {
+        List<String> noti = new ArrayList<>();
+        int count = 0;
+        int tempId = 0;
+        String orderDetails = "";
+        for (int i = 0; i < bills.size(); i++) {
+            if (count == 0) {
+                tempId = bills.get(i).getId();
+                DecimalFormat decimalFormat = new DecimalFormat("#");
+                String name = bills.get(i).getFullName();
+                String phone = bills.get(i).getPhone();
+                String address = bills.get(i).getAddress();
+                String payment = bills.get(i).getPaymentMethod();
+                String total = decimalFormat.format(bills.get(i).getTotalPrice());
+                orderDetails = name + "," + phone + "," + address + "," + payment + "," + total + "," + bills.get(i).getProductName() + "," + bills.get(i).getProductColor() + "," + bills.get(i).getQuantity();
+                if(i<bills.size()-1){
+                    if (bills.get(i + 1).getId() == tempId) {
+                        count=1;
+                    } else {
+                        noti.add(orderDetails);
+                        orderDetails = "";
+                        count = 0;
+                    }
+                }else{
+                    noti.add(orderDetails);
+                }
+            } else {
+                orderDetails += "," + bills.get(i).getProductName() + "," + bills.get(i).getProductColor() + "," + bills.get(i).getQuantity();
+                if(i<bills.size()-1){
+                    if (bills.get(i + 1).getId() == tempId) {
+                        count=1;
+                    } else {
+                        noti.add(orderDetails);
+                        orderDetails = "";
+                        count = 0;
+                    }
+                }else{
+                    noti.add(orderDetails);
+                }
+            }
+        }
+        return noti;
+    }
 
+    public static void main(String[] args) {
+        User user = new User(24, "0", "dai123", "dai0601", "21130304@st.hcmuaf.edu.vn", 0, "", "", "2024-12-11", "", 0, 1);
+        List<Bill> bill = BillDAO.getInstance().getBillsNotDONE(user);
+        LoginController test= new LoginController();
+        List<String> noti= test.getnotiListUser(bill);
+        for(Bill b : bill) {
+            System.out.println("b: "+b);
+        }
+        for(String s: noti){
+            System.out.println("s: "+ s);
+        }
+    }
 }
