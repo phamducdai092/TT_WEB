@@ -67,10 +67,12 @@
             </div>
             <div class="container-leftSide__stepTwo">
                 <h4>Bước 2: Sử dụng tool cùng với key đã được cấp để ký lên file</h4>
-                <button class="btn">
-                    <i class="fa-solid fa-download"></i>
-                    Tải tool
-                </button>
+                <a href="hash/EncryptionApp.exe" download>
+                    <button class="btn">
+                        <i class="fa-solid fa-download"></i>
+                        Tải tool
+                    </button>
+                </a>
             </div>
         </div>
         <div class="container-rightSide">
