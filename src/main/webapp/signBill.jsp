@@ -124,13 +124,9 @@
                             <div class="form-grp">
                                 <label for="publicKey">Public Key</label>
                                 <div class="key-input">
-                                    <i class="ic fa-solid fa-lock-open"></i>
-                                    <div class="key-input">
-                                        <i class="ic fa-solid fa-lock-open"></i>
-                                        <textarea id="publicKey" placeholder="Public Key" readonly>
-                                            ${publicKey != null ? publicKey : 'Chưa có Public Key'}
-                                        </textarea>
-                                    </div>
+                                    <textarea id="publicKey" placeholder="Public Key" readonly>
+                                        ${publicKey != null ? publicKey : 'Chưa có Public Key'}
+                                    </textarea>
                                 </div>
                             </div>
                             <c:if test="${not empty message}">
@@ -269,6 +265,12 @@
             success: function (response) {
                 $('#publicKey').val(response.publicKey);
                 alert('Tạo key thành công!');
+
+                // Lưu nội dung private key vào window.privateKeyContent
+                window.privateKeyFileContent = response.privateKey;
+
+                // Thực hiện hành động download khi người dùng muốn tải private key
+                $('#downloadPrivateKeyBtn').css('display', 'inline-block');
             },
             error: function (xhr) {
                 const response = JSON.parse(xhr.responseText);
@@ -296,57 +298,17 @@
         }
     }
 
-
     function downloadPrivateKey() {
         const privateKeyContent = window.privateKeyFileContent || "Your private key content here"; // Nội dung private key
         const fileName = "private_key.txt";
+        console.log(privateKeyContent);
 
-        fetch('/download', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                fileName: fileName,
-                fileContent: privateKeyContent,
-            }),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Lỗi tải file");
-                }
-                return response.blob(); // Nhận phản hồi dạng blob
-            })
-            .then(blob => {
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = fileName; // Đặt tên file
-                link.click(); // Kích hoạt tải file
-            })
-            .catch(error => {
-                console.error("Error downloading file:", error);
-            });
-    }
-
-    function downloadFile(fileName) {
-        const url = '/download?fileName=' + encodeURIComponent(fileName); // Xây dựng URL với tham số fileName
-
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Lỗi tải file");
-                }
-                return response.blob(); // Chuyển nội dung file thành blob
-            })
-            .then(blob => {
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob); // Tạo URL tạm thời từ blob
-                link.download = fileName; // Đặt tên file tải về
-                link.click(); // Kích hoạt tải
-            })
-            .catch(error => {
-                console.error("Error downloading file:", error);
-            });
+        // Chuyển nội dung key thành file tải xuống
+        const blob = new Blob([privateKeyContent], {type: 'text/plain'});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName; // Đặt tên file
+        link.click(); // Kích hoạt tải file
     }
 
     $(document).ready(function () {

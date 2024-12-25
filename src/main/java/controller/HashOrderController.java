@@ -31,6 +31,7 @@ public class HashOrderController extends HttpServlet {
 
         // Băm dữ liệu sử dụng MD5
         String hashedOrderDetails = HashUtil.hashMD5(orderDetails);
+        req.getSession().setAttribute("hashedOrderDetails", hashedOrderDetails);
 
         // Tạo file chứa thông tin đã băm
         String realPath = getServletContext().getRealPath("./hash/orderInf");

@@ -30,5 +30,7 @@ public class BillController extends HttpServlet {
         BillDAO.getInstance().createOrder(name, phone, address, payment, req);
         // remove cart
         req.getSession().removeAttribute("cart");
+        req.getSession().removeAttribute("hashedOrderDetails");
+        req.getSession().removeAttribute("isVerify");
     }
 }
