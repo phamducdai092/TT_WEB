@@ -276,7 +276,7 @@
 
                 // Hiển thị thông báo thành công
                 showDialog('Tạo key thành công!', null, true);
-                location.reload();
+                // location.reload();
                 // Lưu nội dung private key vào window.privateKeyContent
                 window.privateKeyFileContent = response.privateKey;
 

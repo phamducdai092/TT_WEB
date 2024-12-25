@@ -197,7 +197,7 @@ public class BillDAO {
             return handle.createQuery("SELECT b.*,pd.id, pd.name, bd.id, bd.quantity, bd.total_price, bd.product_color \n" +
                             "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
                             "JOIN product_details AS pd ON bd.productId = pd.id\n" +
-                            "WHERE b.userId = :userId AND b.status != 'DONE'\n")
+                            "WHERE b.userId = :userId AND b.status != 'DONE' AND b.status != 'CANCEL'\n")
                     .bind("userId", user.getId())
                     .map(new BillMapper())
                     .list();
@@ -208,7 +208,7 @@ public class BillDAO {
                 handle.createQuery("SELECT b.*, pd.name, bd.quantity, bd.product_color \n" +
                                 "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
                                 "JOIN product_details AS pd ON bd.productId = pd.id\n" +
-                                "WHERE b.status != 'DONE'")
+                                "WHERE b.status != 'DONE' AND b.status != 'CANCEL'")
                         .map(new BillMapper())
                         .collect(Collectors.toList())
         );
@@ -224,7 +224,7 @@ public class BillDAO {
     }
     public static boolean cancelOrder(int orderId) {
         return JDBIConnector.me().withHandle(handle ->
-                handle.createUpdate("UPDATE bills set STATUS = 4 FROM bills WHERE id = :orderId")
+                handle.createUpdate("UPDATE bills set STATUS = 4 WHERE id = :orderId")
                         .bind("orderId", orderId)
                         .execute() > 0
         );

@@ -16,6 +16,8 @@ public class HashOrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Lấy thông tin đơn hàng từ form
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         String name = req.getParameter("name");
         String phone = req.getParameter("phone");
         String address = req.getParameter("address");
@@ -27,7 +29,7 @@ public class HashOrderController extends HttpServlet {
         for (var item : cart) {
             orderDetails = orderDetails +","+ item.getProduct().getName() +","+ item.getColorName()+","+item.getQuantity();
         }
-        System.out.println(orderDetails);
+        System.out.println("orderDetails: "+orderDetails);
 
         // Băm dữ liệu sử dụng MD5
         String hashedOrderDetails = HashUtil.hashMD5(orderDetails);
