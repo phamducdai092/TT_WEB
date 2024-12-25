@@ -56,10 +56,9 @@ public class AdminEditBill extends HttpServlet {
                     "Đơn hàng của bạn đã bị thay đổi vào " + currentDateTime + " , vui long kiểm tra lại thông tin tại webbantrong.com");
             req.setAttribute("message", "Đã cập nhật hóa đơn thành công!");
             req.getRequestDispatcher("./adminBillIndex").forward(req, resp);
-            resp.sendRedirect("./adminBillIndex");
         }else{
             req.setAttribute("message", "Đã có lỗi xảy ra, vui lòng thử lại!");
-            req.getRequestDispatcher("./adminBillIndex").forward(req, resp);
+            req.getRequestDispatcher("/adminBillIndex").forward(req, resp);
         }
     }
 }

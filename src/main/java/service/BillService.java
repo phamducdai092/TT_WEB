@@ -5,7 +5,7 @@ import dao.BillDAO;
 
 public class BillService {
     public static BillService instance;
-    private BillDAO billDAO;
+//    private BillDAO billDAO;
 
 
 
@@ -18,8 +18,13 @@ public class BillService {
         return BillDAO.getInstance().getBillById(id);
     }
 
+    public boolean cancelOrder(int orderId) {
+        return BillDAO.cancelOrder(orderId);
+    }
+
     public static void main(String[] args) {
         BillService billService = new BillService();
-        System.out.println(billService.getBillById(1));
+        System.out.println(billService.cancelOrder(159));
     }
+
 }

@@ -171,16 +171,16 @@
             <button type="submit">Lưu thay đổi</button>
         </div>
     </form>
-<%
+        <%
         // Kiểm tra nếu có thông báo thành công trong request
         String message = (String) request.getAttribute("message");
         if (message != null) {
     %>
-        <script type="text/javascript">
-            // Hiển thị thông báo thành công
-            alert('<%= message %>');
-        </script>
-            <%
+    <script type="text/javascript">
+        // Hiển thị thông báo thành công
+        alert('<%= message %>');
+    </script>
+        <%
         }
     %>
     <style>
@@ -209,71 +209,71 @@
             gap: 10px; /* Khoảng cách giữa các phần tử */
         }
     </style>
-        <script>
-            // Hàm mở dialog
-            function openDialog(idBillDetail) {
-                var dialog = document.querySelector('.dialog');
-                var overlay = document.querySelector('.overlay');
+    <script>
+        // Hàm mở dialog
+        function openDialog(idBillDetail) {
+            var dialog = document.querySelector('.dialog');
+            var overlay = document.querySelector('.overlay');
 
-                // Hiển thị dialog và overlay
-                dialog.style.display = 'block';
-                overlay.style.display = 'block';
+            // Hiển thị dialog và overlay
+            dialog.style.display = 'block';
+            overlay.style.display = 'block';
 
-                // Gửi yêu cầu AJAX để lấy thông tin hóa đơn từ server
-                $.ajax({
-                    url: 'getBillDetails',  // URL để lấy thông tin hóa đơn
-                    method: 'GET',
-                    data: { id: idBillDetail },
-                    success: function(response) {
-                        // Điền thông tin vào các trường trong form
-                        console.log(response);
+            // Gửi yêu cầu AJAX để lấy thông tin hóa đơn từ server
+            $.ajax({
+                url: 'getBillDetails',  // URL để lấy thông tin hóa đơn
+                method: 'GET',
+                data: {id: idBillDetail},
+                success: function (response) {
+                    // Điền thông tin vào các trường trong form
+                    console.log(response);
 
-                        document.getElementById("productName").value = response.productName;
-                        document.getElementById("quantity").value = response.quantity;
-                        document.getElementById("address").value = response.address;
+                    document.getElementById("productName").value = response.productName;
+                    document.getElementById("quantity").value = response.quantity;
+                    document.getElementById("address").value = response.address;
 
 
-                        // Gắn productId vào biến
-                        var productId = response.productId;  // Giả sử response.productId là ID sản phẩm
+                    // Gắn productId vào biến
+                    var productId = response.productId;  // Giả sử response.productId là ID sản phẩm
 
-                        // Cập nhật giá trị của dropdown "productName" dựa trên productId
-                        var productSelect = document.getElementById("productName");
-                        productSelect.value = productId; // Gắn giá trị productId vào dropdown
+                    // Cập nhật giá trị của dropdown "productName" dựa trên productId
+                    var productSelect = document.getElementById("productName");
+                    productSelect.value = productId; // Gắn giá trị productId vào dropdown
 
-                        // Lấy ID màu từ phản hồi và chọn màu tương ứng trong dropdown
-                        var selectedColorId = response.color;  // Giả sử response.colorId là ID màu từ hóa đơn
-                        var colorSelect = document.getElementById("color");
-                        document.getElementById("billId").value = response.id;
-                        document.getElementById("idBillDetail").value = response.idBillDetail;
-                        document.getElementById("userId").value = response.userId;
-                        // Duyệt qua các options trong dropdown và chọn màu phù hợp
-                        for (var i = 0; i < colorSelect.options.length; i++) {
-                            if (colorSelect.options[i].value == selectedColorId) {
-                                colorSelect.selectedIndex = i; // Chọn option tương ứng
-                                break;
-                            }
+                    // Lấy ID màu từ phản hồi và chọn màu tương ứng trong dropdown
+                    var selectedColorId = response.color;  // Giả sử response.colorId là ID màu từ hóa đơn
+                    var colorSelect = document.getElementById("color");
+                    document.getElementById("billId").value = response.id;
+                    document.getElementById("idBillDetail").value = response.idBillDetail;
+                    document.getElementById("userId").value = response.userId;
+                    // Duyệt qua các options trong dropdown và chọn màu phù hợp
+                    for (var i = 0; i < colorSelect.options.length; i++) {
+                        if (colorSelect.options[i].value == selectedColorId) {
+                            colorSelect.selectedIndex = i; // Chọn option tương ứng
+                            break;
                         }
-                    },
-                    error: function(error) {
-                        console.error("Error:", error);
                     }
-                });
-            }
-
-            // Hàm đóng dialog
-            function closeDialog() {
-                var dialog = document.querySelector('.dialog');
-                var overlay = document.querySelector('.overlay');
-                dialog.style.display = 'none';
-                overlay.style.display = 'none';
-            }
-
-            // Đóng dialog khi nhấn nút close
-            document.querySelector('.close-btn').addEventListener('click', function () {
-                closeDialog();
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
             });
+        }
 
-        </script>
+        // Hàm đóng dialog
+        function closeDialog() {
+            var dialog = document.querySelector('.dialog');
+            var overlay = document.querySelector('.overlay');
+            dialog.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        // Đóng dialog khi nhấn nút close
+        document.querySelector('.close-btn').addEventListener('click', function () {
+            closeDialog();
+        });
+
+    </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
