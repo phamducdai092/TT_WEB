@@ -59,10 +59,12 @@
         <c:choose>
             <c:when test="${not empty verificationSuccess}">
                 <!-- Hiển thị thông báo thành công -->
-                <p class="success-message">${verificationSuccess}</p>
-                <button class="submit sub-btn">
-                    <a class="link back-to-login" href="./logIn.jsp" >Quay lại trang đăng nhập</a>
-                </button>
+                <div class="success">
+                    <p class="success-message">${verificationSuccess}</p>
+                    <button class="submit sub-btn">
+                        <a class="link submit" href="./logIn.jsp" >Quay lại trang đăng nhập</a>
+                    </button>
+                </div>
             </c:when>
             <c:otherwise>
                 <form action="./verify"

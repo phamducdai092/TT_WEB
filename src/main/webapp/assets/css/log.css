@@ -138,7 +138,8 @@
     border-bottom: 1px solid var(--blue-color);
 }
 
-.form .submit{
+.form .submit,
+.submit {
     color: var(--blue-color);
     padding: 12px 0;
     background: transparent;
@@ -148,7 +149,8 @@
     transition: all 0.2s ease;
 }
 
-.form .submit:hover {
+.form .submit:hover,
+.submit:hover {
     opacity: 0.9;
     color: #fff;
     background: var(--blue-color);
@@ -173,6 +175,7 @@
 }
 
 .link {
+    padding: 0 12px;
     margin-top: 12px;
     font-size: 1.6rem;
     text-transform: uppercase;
@@ -184,4 +187,14 @@
 .link:hover {
     cursor: pointer;
     opacity: 0.8;
+}
+
+.success {
+    margin-top: 32px;
+}
+
+.success .success-message {
+    font-size: 2.6rem;
+    font-weight: 600;
+    margin: 12px 0;
 }

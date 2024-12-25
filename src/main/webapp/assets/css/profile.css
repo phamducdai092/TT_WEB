@@ -130,7 +130,7 @@ h2 {
 }
 
 .profile-function-list {
-    height: 420px;
+    height: 100%;
     padding: 12px;
     list-style: none;
     font-size: 13px;
