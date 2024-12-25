@@ -163,6 +163,15 @@ public class BillDAO {
                         .collect(Collectors.toList())
         );
     }
+    public String getHashCodeById(int billId){
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT b.hashCode FROM bills b where b.id = :billId")
+                        .bind("billId", billId)
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElse(null)
+        );
+    }
 
 
     public static void main(String[] args) {
