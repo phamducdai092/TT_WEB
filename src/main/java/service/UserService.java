@@ -3,6 +3,7 @@ package service;
 import bean.User;
 import dao.UserDAO;
 import db.JDBIConnector;
+import util.Encode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,9 +36,11 @@ public class UserService {
         return null;
     }
 
-    public boolean isValidPassword(String username, String password) {
+    public boolean isValidPassword(String username, String inputPassword) {
         User userByEmail = UserDAO.getUserByEmail(username);
         User userByUsername = UserDAO.getUserByUsername(username);
+
+        String password = Encode.toSHA1(inputPassword);
 
         if (userByEmail != null && userByEmail.getEmail().equals(username) && userByEmail.getPassword().equals(password)
         ) {
@@ -73,11 +76,11 @@ public class UserService {
 
 
     public static void main(String[] args) {
-        List<User> users = JDBIConnector.me().withHandle(handle ->
-                handle.createQuery("select * from users").mapToBean(User.class).collect(Collectors.toList())
-        );
-        System.out.println(users);
-
+//        List<User> users = JDBIConnector.me().withHandle(handle ->
+//                handle.createQuery("select * from users").mapToBean(User.class).collect(Collectors.toList())
+//        );
+//        System.out.println(users);
+        System.out.println(UserService.getInstance().isValidPassword("dai123", "dai0601"));
     }
 
 }

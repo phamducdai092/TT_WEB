@@ -26,7 +26,16 @@ input {
     margin-bottom: 6px;
 }
 
-.key-input {
+.modal-verify input {
+    display: inline-block;
+    width: 100%;
+    padding: 12px 0 12px 28px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--sub-main-color);
+}
+
+.pw-input  {
     position: relative;
 }
 
@@ -156,3 +165,30 @@ input {
     background-color: #000; /* Màu nền lớp phủ */
 }
 
+.modal-verify {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-head {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.6rem;
+    margin-top: 1.6rem;
+}

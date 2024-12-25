@@ -241,6 +241,31 @@
     </div>
 </div>
 
+<div id="confirmDialog" class="modal-verify">
+    <div class="modal-head">
+        <h5 class="modal-title"></h5>
+        <div class="modal-actions">
+            <button id="confirmYes" class="btn-submit">Xác nhận</button>
+            <button id="confirmNo" class="btn-submit">Hủy</button>
+        </div>
+    </div>
+</div>
+
+<div id="passwordDialog" class="modal-verify" style="display: none;">
+    <div class="modal-head">
+        <h5>Xác nhận mật khẩu</h5>
+        <p>Vui lòng nhập mật khẩu của bạn để tiếp tục:</p>
+        <div class="pw-input">
+            <i class="fa-solid fa-key ic"></i>
+            <input id="confirmPassword" name="password" type="password" required placeholder="Nhập mật khẩu ..." />
+        </div>
+        <div class="modal-actions">
+            <button id="passwordConfirmBtn" class="btn-submit">Xác nhận</button>
+            <button id="passwordCancelBtn" class="btn-submit">Hủy</button>
+        </div>
+    </div>
+</div>
+
 <!-- MAIN JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -264,7 +289,9 @@
             },
             success: function (response) {
                 $('#publicKey').val(response.publicKey);
-                alert('Tạo key thành công!');
+
+                // Hiển thị thông báo thành công
+                showDialog('Tạo key thành công!', null, true);
 
                 // Lưu nội dung private key vào window.privateKeyContent
                 window.privateKeyFileContent = response.privateKey;
@@ -274,29 +301,79 @@
             },
             error: function (xhr) {
                 const response = JSON.parse(xhr.responseText);
-                alert(response.error || 'Có lỗi xảy ra.');
+
+                // Hiển thị thông báo lỗi
+                showDialog(response.error || 'Có lỗi xảy ra.', null, true);
             }
         });
     }
 
-    function reportKey() {
-        const confirmed = confirm("Bạn có chắc chắn muốn báo cáo lộ Private Key không?");
-        if (confirmed) {
-            // Gửi yêu cầu AJAX đến kiểm tra key khả dụng
-            $.ajax({
-                url: '/report-leaked-private-key',
-                method: 'GET',
-                success: function (response) {
-                    alert(response.message || "Báo cáo thành công!");
-                    window.location.href = "/sign-bill";  // Redirect nếu thành công
-                },
-                error: function (xhr) {
-                    const response = JSON.parse(xhr.responseText);
-                    alert(response.error || "Có lỗi xảy ra.");
-                }
-            });
+    function showDialog(message, onConfirm, onlyOk = false) {
+        const dialog = document.getElementById("confirmDialog");
+        dialog.querySelector("h5").innerText = message;
+        dialog.style.display = "block";
+
+        const btnYes = document.getElementById("confirmYes");
+        const btnNo = document.getElementById("confirmNo");
+
+        if (onlyOk) {
+            btnYes.innerText = "OK";
+            btnNo.style.display = "none";
+        } else {
+            btnYes.innerText = "Xác nhận";
+            btnNo.style.display = "inline-block";
         }
+
+        btnYes.onclick = function () {
+            dialog.style.display = "none";
+            if (onConfirm) onConfirm();
+        };
+
+        btnNo.onclick = function () {
+            dialog.style.display = "none";
+        };
     }
+
+    function showPasswordDialog(onConfirm) {
+        const dialog = document.getElementById("passwordDialog");
+        dialog.style.display = "block";
+
+        document.getElementById("passwordConfirmBtn").onclick = function () {
+            const password = document.getElementById("confirmPassword").value;
+            if (password.trim() === "") {
+                alert("Mật khẩu không được để trống");
+                return;
+            }
+            dialog.style.display = "none";
+            onConfirm(password);
+        };
+
+        document.getElementById("passwordCancelBtn").onclick = function () {
+            dialog.style.display = "none";
+        };
+    }
+
+    function reportKey() {
+        showDialog("Bạn có chắc chắn muốn báo cáo lộ Private Key không?", function () {
+            showPasswordDialog(function (password) {
+                $.ajax({
+                    url: '/report-leaked-private-key',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ password: password }),
+                    success: function (response) {
+                        showDialog(response.message || "Báo cáo thành công!", null, true);
+                        window.location.href = "/sign-bill";
+                    },
+                    error: function (xhr) {
+                        const response = JSON.parse(xhr.responseText);
+                        showDialog(response.error || "Có lỗi xảy ra.", null, true);
+                    }
+                });
+            });
+        });
+    }
+
 
     function downloadPrivateKey() {
         const privateKeyContent = window.privateKeyFileContent || "Your private key content here"; // Nội dung private key
@@ -357,7 +434,7 @@
                     $('#keyDetailsModal').modal('show');
                 },
                 error: function () {
-                    alert('Không thể lấy chi tiết khóa');
+                    showDialog('Không thể lấy chi tiết khóa', null, true);
                 }
             });
         });

@@ -273,6 +273,7 @@
                                     'background-color': '#5CB85C', // Màu xanh lá
                                     'border': 'none'
                                 })
+                            isVerified = true;
                         },
                         error: function () {
                             alert('Lỗi khi kiểm tra trạng thái xác minh.');
