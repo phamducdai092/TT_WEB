@@ -25,9 +25,10 @@ html {
 }
 button {
     background-color: #ee6c4d;
-    border: 1px solid #293241;
+    /*border: 1px solid #293241;*/
+    border: none;
     border-radius: 7px;
-    color: black;
+    color: white;
     padding: 12px 25px;
     font-weight: 600;
     font-size: 1.2rem;
@@ -1004,6 +1005,55 @@ footer {
     text-decoration: underline;
     color: #0080ff;
 }
+.notification-icon {
+    position: relative;
+    margin: 0 20px;
+    cursor: pointer;
+}
+
+.notification-icon i {
+    font-size: 24px;
+    color: #e9dede;
+}
+
+.notification-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+.notification-popup {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1000;
+    max-width: 300px;
+}
+
+.notification-popup ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notification-popup li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-popup li:last-child {
+    border-bottom: none;
+}
+
 
 
 

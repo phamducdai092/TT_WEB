@@ -15,18 +15,24 @@
                         <span>Quản lý đơn hàng</span>
                     </a>
                 </li>
+                <li>
+                    <a class="nav-link" href="sign-bill">
+                        <i class="fa-solid fa-signature"></i>
+                        <span>Chữ ký</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
 </div>
 
 <script>
-    $(document).ready(function () {
-        // jQuery for adding/removing is-active class
-        $('.nav-link').on('click', function (e) {
-            e.preventDefault(); // Prevent default action (optional)
-            $('.nav-link').removeClass('is-active'); // Remove class from all links
-            $(this).addClass('is-active'); // Add class to the clicked link
-        });
-    })
+    // $(document).ready(function () {
+    //     // jQuery for adding/removing is-active class
+    //     $('.nav-link').on('click', function (e) {
+    //         e.preventDefault(); // Prevent default action (optional)
+    //         $('.nav-link').removeClass('is-active'); // Remove class from all links
+    //         $(this).addClass('is-active'); // Add class to the clicked link
+    //     });
+    // })
 </script>

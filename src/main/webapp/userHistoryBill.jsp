@@ -76,7 +76,6 @@
 <!-- HEADER -->
 <c:import url="header.jsp"/>
 
-
 <div class="container">
     <!-- PROFILE -->
     <div class="profile-container">

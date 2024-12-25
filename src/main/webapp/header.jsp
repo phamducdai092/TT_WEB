@@ -11,6 +11,7 @@
 <header>
     <c:set var="categories" value="${requestScope.categories}"/>
     <c:set var="auth" value="${sessionScope.auth}"/>
+    <c:set var="notifications" value="${sessionScope.notification}"/>
     <div class="header__content">
         <p>
             <a href="./home"><i class="fa fa-drum"></i> <span>Dr/</span>um</a>
@@ -78,11 +79,37 @@
                 </div>
             </c:otherwise>
         </c:choose>
-
+        <div class="notification-icon">
+            <i class="fa fa-bell"></i>
+            <span class="notification-count">
+                <c:out value="${not empty notifications ? fn:length(notifications) : '0'}"/>
+            </span>
+        </div>
         <a href="cart.jsp" class="cart__shopping">
             <c:set var="shoppingCart" value="${sessionScope.cart}"/>
             <i class="fa fa-shopping-cart"></i>
             <span>Giỏ Hàng (<c:out value="${not empty shoppingCart ? fn:length(shoppingCart) : '0'}"/>)</span>
         </a>
     </div>
+    <div id="notification-popup" class="notification-popup" style="display: none;">
+        <ul>
+            <c:forEach items="${notifications}" var="notification">
+                <li>${notification}</li>
+            </c:forEach>
+        </ul>
+    </div>
+
+    <script>
+        document.querySelector('.notification-icon').addEventListener('click', () => {
+            const popup = document.getElementById('notification-popup');
+            popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            const popup = document.getElementById('notification-popup');
+            if (!event.target.closest('.notification-icon')) {
+                popup.style.display = 'none';
+            }
+        });
+    </script>
 </header>

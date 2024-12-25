@@ -1,9 +1,9 @@
 :root {
-    --main-color : #ee6c4d;
+    --main-color: #ee6c4d;
     --sub-main-color: #293241;
 }
 
-span{
+span {
     font-size: 1.9rem;
 }
 
@@ -24,10 +24,11 @@ span{
 }
 
 /*!* CART INFORMATION *!*/
-.cart__content-empty{
+.cart__content-empty {
     width: 200px;
     margin: 0 45%;
 }
+
 .cart__details {
     display: flex;
     width: 100%;
@@ -35,6 +36,7 @@ span{
     flex-wrap: wrap;
     padding-top: 100px;
 }
+
 .cart__return {
     background-color: #293241;
     width: 100%;
@@ -86,6 +88,7 @@ span{
     font-size: 10px;
     margin-top: 2px;
 }
+
 .cart__return__content .breadcrumb .icon .icon__next i {
     color: white;
 }
@@ -115,14 +118,16 @@ span{
 
 }
 
-.left__content{
+.left__content {
     display: flex;
 }
-.cart__tbody{
+
+.cart__tbody {
     width: 100%;
     float: left;
 }
-.cart__item{
+
+.cart__item {
     position: relative;
     background-color: transparent;
     padding: 15px 0;
@@ -130,23 +135,27 @@ span{
     display: inline-flex;
     width: 100%;
 }
-.cart__item--img{
+
+.cart__item--img {
     padding-right: 10px;
     position: relative;
     min-height: 1px;
     width: 25%;
     padding-left: 0;
- }
-.cart__item--img .img{
+}
+
+.cart__item--img .img {
     margin: 0;
 }
-.cart__item--img .img img{
+
+.cart__item--img .img img {
     max-height: 180px;
     display: block;
     max-width: 100%;
     height: auto;
 }
-.cart__item--detail{
+
+.cart__item--detail {
     width: 75%;
     padding-left: 0;
     display: flex;
@@ -156,36 +165,42 @@ span{
     position: relative;
     min-height: 1px;
 }
-.item--info-product{
+
+.item--info-product {
     width: 350px;
     padding-right: 10px;
     padding-left: 10px;
     float: left;
 }
-.item--info-product p{
+
+.item--info-product p {
     font-size: 14px;
     margin-bottom: 7px;
     line-height: 20px;
     font-weight: 500;
     padding-top: 0;
 }
-.item--info-product p a{
+
+.item--info-product p a {
     color: #0657a3;
 }
-.action{
+
+.action {
     position: relative;
     padding: 0 !important;
     margin-bottom: 0;
     margin-top: 0;
 }
-.action a{
+
+.action a {
     border: 0;
     color: #916841;
     font-size: 13px;
     position: static;
     padding: 0;
 }
-.btn{
+
+.btn {
     display: inline-block;
     height: 40px;
     line-height: 39px;
@@ -196,36 +211,41 @@ span{
     cursor: pointer;
     border: none;
     font-weight: 400;
-    border-radius: 0;
+    border-radius: 7px;
     letter-spacing: 0;
     -webkit-transition: background-color 0.1s ease-in;
     -moz-transition: background-color 0.1s ease-in;
     -ms-transition: background-color 0.1s ease-in;
     -o-transition: background-color 0.1s ease-in;
     transition: background-color 0.1s ease-in;
-    -webkit-border-radius: 0;
+    -webkit-border-radius: 7px;
 }
-.box-price{
+
+.box-price {
     float: left;
     width: 110px;
     padding-right: 10px;
 }
-.box-price .price{
+
+.box-price .price {
     font-size: 16px;
     margin-bottom: 5px;
     font-weight: 500;
     padding-top: 0;
     color: #916841;
 }
-.quantity-block{
+
+.quantity-block {
     width: 120px;
     float: right;
 }
+
 .input-group {
     position: relative;
     display: table;
     border-collapse: separate;
 }
+
 .input-group-btn {
     position: relative;
     white-space: nowrap;
@@ -235,11 +255,13 @@ span{
     vertical-align: middle;
     margin: 0;
 }
+
 input {
     display: inline-block;
     width: auto;
 }
-.increase_pop{
+
+.increase_pop {
     border-radius: 0 3px 3px 0;
     border: 1px solid #e5e5e5;
     border-left: 0;
@@ -253,6 +275,7 @@ input {
     height: 28px;
     z-index: 2;
 }
+
 .js-quantity-product {
     display: inline-block;
     height: 28px;
@@ -277,7 +300,8 @@ input {
     line-height: 1.42857143;
     background-image: none;
 }
-.reduced_pop{
+
+.reduced_pop {
     border-radius: 3px 0 0 3px;
     border: 1px solid #e5e5e5;
     border-right: 0;
@@ -292,7 +316,8 @@ input {
     z-index: 2;
     position: relative;
 }
-.cart__sidebar{
+
+.cart__sidebar {
     display: inline-block;
     width: 25%;
     padding-left: 10px;
@@ -300,47 +325,57 @@ input {
     position: relative;
     min-height: 1px;
 }
-.box-style{
+
+.box-style {
     background-color: transparent;
     padding: 17px 0 21px 0;
 }
+
 .each-row .box-style.fee .list-info-price {
     margin: 0;
 }
+
 #right-affix .each-row .box-style.fee .list-info-price span {
     font-weight: 500;
     color: #1c1c1c;
 }
+
 #right-affix .each-row .box-style.fee .list-info-price strong {
     float: right;
     font-weight: 700;
 }
-#right-affix .each-row .box-style+.box-style {
+
+#right-affix .each-row .box-style + .box-style {
     border-top: 1px solid #f4f4f4;
 }
+
 .each-row .box-style.fee .total2 {
     font-weight: 500;
 }
+
 #right-affix .each-row .box-style.fee .total2 .text-label {
     margin-top: 5px;
     display: inline-block;
 }
+
 #right-affix .each-row .box-style.fee .total2 .amount {
     float: right;
 }
+
 #right-affix .each-row .box-style.fee .total2 .amount p {
     margin: 0;
     text-align: right;
     line-height: 1.1;
 }
+
 #right-affix .each-row .box-style.fee .total2 .amount p strong {
     color: #916841;
     font-size: 22px;
     font-weight: 700;
 }
+
 .btn-checkout {
-    margin-top: 10px;
-    margin-bottom: 0;
+    margin: 12px 0;
     font-weight: 400;
     text-align: center;
     vertical-align: middle;
@@ -348,14 +383,14 @@ input {
     cursor: pointer;
     font-size: 14px;
     line-height: 1.42857;
-    border-radius: 0;
+    border: none;
+    border-radius: 7px;
     user-select: none;
     padding-left: 15px;
     padding-right: 15px;
     height: 50px;
     position: relative;
     display: inline-block;
-    border: 1px solid #1c1c1c;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-style: normal;
@@ -364,6 +399,7 @@ input {
     -webkit-tap-highlight-color: initial;
     color: #fff;
 }
+
 #right-affix .btn-checkouts {
     margin-top: 10px;
     padding: 0 15px;
@@ -373,15 +409,13 @@ input {
     vertical-align: middle;
     touch-action: manipulation;
     cursor: pointer;
-    border: 1px solid transparent;
     white-space: nowrap;
     font-size: 14px;
     line-height: 48px;
     user-select: none;
     color: #1c1c1c;
     background-color: #fff;
-    border-color: #1c1c1c;
-    border-radius: 0;
+    border-radius: 7px;
     height: 50px;
     text-transform: uppercase;
 }

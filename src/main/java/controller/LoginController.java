@@ -1,20 +1,26 @@
 package controller;
 
+import bean.Bill;
 import bean.User;
+import dao.BillDAO;
 import mail.MailService;
 import service.SignUpService;
 import service.UserService;
 import util.Encode;
+import util.HashUtil;
 import util.VerificationCode;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.*;
 
 @WebServlet(name = "controller.LoginController", value = "/log")
 public class LoginController extends HttpServlet {
     public static final String SUBJECT = "MÃ XÁC MINH";
+    List<String> noti=new ArrayList<>();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -87,10 +93,26 @@ public class LoginController extends HttpServlet {
             }
             if (user.getStatus() != 0) {
                 if (user.getRole() == 1) {
+                    noti= new ArrayList<>();
+                    List<Bill> bills = BillDAO.getInstance().getBillListNotDONEAdmin();
+                    Map<String,Integer> map=getnotiListUser(bills);
+                    List<String> res=checkHash(map);
+                    for(String s:res){
+                        System.out.println("res: "+ s);
+                    }
+                    session.setAttribute("notification", res);
                     session.setAttribute("auth", user);
                     session.setAttribute("role", "admin");
                     resp.sendRedirect("./home");
                 } else {
+                    noti= new ArrayList<>();
+                    List<Bill> bills = BillDAO.getInstance().getBillsNotDONE(user);
+                    Map<String,Integer> map=getnotiListUser(bills);
+                    List<String> res=checkHash(map);
+                    for(String s:res){
+                        System.out.println("res: "+ s);
+                    }
+                    session.setAttribute("notification", res);
                     session.setAttribute("auth", user);
                     session.setAttribute("role", "user");
                     resp.sendRedirect("./home");
@@ -115,5 +137,70 @@ public class LoginController extends HttpServlet {
         }
     }
 
+    private Map<String, Integer> getnotiListUser(List<Bill> bills) {
+        Map<String, Integer> note= new HashMap<>();
+        int count = 0;
+        int tempId = 0;
+        String orderDetails = "";
+        for (int i = 0; i < bills.size(); i++) {
+            if (count == 0) {
+                tempId = bills.get(i).getId();
+                String name = bills.get(i).getFullName();
+                String phone = bills.get(i).getPhone();
+                String address = bills.get(i).getAddress();
+                String payment = bills.get(i).getPaymentMethod();
+                String total = String.valueOf(bills.get(i).getTotalPrice());
+                String color= bills.get(i).getProductColor()=="1" ? "Đen":"Trắng";
+                orderDetails = name + "," + phone + "," + address + "," + payment + "," + total + "," + bills.get(i).getProductName() + "," + color + "," + bills.get(i).getQuantity();
+                if(i<bills.size()-1){
+                    if (bills.get(i + 1).getId() == tempId) {
+                        count=1;
+                    } else {
+                        note.put(orderDetails,tempId);
+                        noti.add(orderDetails);
+                        orderDetails = "";
+                        count = 0;
+                    }
+                }else{
+                    noti.add(orderDetails);
+                    note.put(orderDetails,tempId);
+                }
+            } else {
+                String color= bills.get(i).getProductColor()=="1" ? "Đen":"Trắng";
+                orderDetails += "," + bills.get(i).getProductName() + "," + color + "," + bills.get(i).getQuantity();
+                if(i<bills.size()-1){
+                    if (bills.get(i + 1).getId() == tempId) {
+                        count=1;
+                    } else {
+                        noti.add(orderDetails);
+                        note.put(orderDetails,tempId);
+                        orderDetails = "";
+                        count = 0;
+                    }
+                }else{
+                    noti.add(orderDetails);
+                    note.put(orderDetails,tempId);
+                }
+            }
+        }
+        return note;
+    }
+    public List<String> checkHash(Map<String, Integer> note ){
+        List<String> res = new ArrayList<>();
+        for(String s: noti){
+            int id= note.get(s);
+            System.out.println("content: "+ s+ " id: "+ id);
+            String hashedOrderDetails = HashUtil.hashMD5(s);
+            String realRes= BillDAO.getInstance().getHashCodeById(id);
+            System.out.println("real: "+realRes);
+            if(!realRes.equals(hashedOrderDetails)){
+                res.add("Đơn hàng với mã đơn hàng: "+id+" đã bị thay đổi, vui lòng xem lại!");
+            }
+        }
+        return res;
+    }
 
+    public static void main(String[] args) {
+
+    }
 }

@@ -75,6 +75,8 @@ public class BillDAO {
     public void createOrder(String name, String phone, String address, String payment, HttpServletRequest req) {
         var cart = (List<Item>)req.getSession().getAttribute("cart");
         var user = req.getSession().getAttribute("auth");
+        String hashedOrderDetails = (String) req.getSession().getAttribute("hashedOrderDetails");
+        System.out.println("hashedOrderDetails :"+ hashedOrderDetails);
         if (cart != null && user != null) {
             var total = 0.0;
             for (var item : cart) {//đkiện
@@ -85,13 +87,14 @@ public class BillDAO {
             var bill = new Bill((User) user, name, phone, address, total, payment);
 
             JDBIConnector.me().useHandle(handle -> {
-                long billId = handle.createUpdate("INSERT INTO bills (userId, full_name, phone, address, totalPrice, payment_method) VALUES (:userId, :name, :phone, :address, :total, :payment)")
+                long billId = handle.createUpdate("INSERT INTO bills (userId, full_name, phone, address, totalPrice, payment_method, hashCode) VALUES (:userId, :name, :phone, :address, :total, :payment, :hashCode)")
                         .bind("userId", bill.getUser().getId())
                         .bind("name", bill.getFullName())
                         .bind("phone", bill.getPhone())
                         .bind("address", bill.getAddress())
                         .bind("total", bill.getTotalPrice())
                         .bind("payment", bill.getPaymentMethod())
+                        .bind("hashCode", hashedOrderDetails)
                         .executeAndReturnGeneratedKeys()
                         .mapTo(Long.class)
                         .findOnly();
@@ -189,11 +192,42 @@ public class BillDAO {
                         .execute()
         );
     }
+    public List<Bill> getBillsNotDONE(User user) {
+        try (Handle handle = JDBIConnector.me().open()) {
+            return handle.createQuery("SELECT b.*, pd.name, bd.quantity, bd.product_color \n" +
+                            "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
+                            "JOIN product_details AS pd ON bd.productId = pd.id\n" +
+                            "WHERE b.userId = :userId AND b.status != 'DONE'\n")
+                    .bind("userId", user.getId())
+                    .map(new BillMapper())
+                    .list();
+        }
+    }
+    public List<Bill> getBillListNotDONEAdmin() {
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT b.*, pd.name, bd.quantity, bd.product_color \n" +
+                                "FROM bills AS b JOIN bill_details AS bd ON b.id = bd.billId\n" +
+                                "JOIN product_details AS pd ON bd.productId = pd.id\n" +
+                                "WHERE b.status != 'DONE'")
+                        .map(new BillMapper())
+                        .collect(Collectors.toList())
+        );
+    }
+    public String getHashCodeById(int billId){
+        return JDBIConnector.me().withHandle(handle ->
+                handle.createQuery("SELECT b.hashCode FROM bills b where b.id = :billId")
+                        .bind("billId", billId)
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElse(null)
+        );
+    }
+
 
     public static void main(String[] args) {
-    User user = new User(1, "0", "123", "123", "123", 0, "123", "123", "0", "0", 1, 1);
-    Bill bill = BillDAO.getInstance().getBillByIdBillDetail(8);
-        System.out.println(bill);
+    User user = new User(24, "0", "dai123", "dai0601", "21130304@st.hcmuaf.edu.vn", 0, "", "", "2024-12-11", "", 0, 1);
+    List<Bill> bill = BillDAO.getInstance().getBillsNotDONE(user);
+    System.out.println(Arrays.toString(bill.toArray()));
 
 
     }
