@@ -93,10 +93,19 @@ public class LoginController extends HttpServlet {
             }
             if (user.getStatus() != 0) {
                 if (user.getRole() == 1) {
+                    noti= new ArrayList<>();
+                    List<Bill> bills = BillDAO.getInstance().getBillsNotDONE(user);
+                    Map<String,Integer> map=getnotiListUser(bills);
+                    List<String> res=checkHash(map);
+                    for(String s:res){
+                        System.out.println("res: "+ s);
+                    }
+                    session.setAttribute("notification", res);
                     session.setAttribute("auth", user);
                     session.setAttribute("role", "admin");
                     resp.sendRedirect("./home");
                 } else {
+                    noti= new ArrayList<>();
                     List<Bill> bills = BillDAO.getInstance().getBillsNotDONE(user);
                     Map<String,Integer> map=getnotiListUser(bills);
                     List<String> res=checkHash(map);
